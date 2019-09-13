@@ -11,6 +11,8 @@ The result of performing OCR on the above PDF, then parsing the rows into a CSV.
   - https://archive.org/details/EpsteinFlightLogsLolitaExpress
   - https://www.scribd.com/doc/261421275/Jeffrey-Epstein-flight-logs-CSV-format#
 
+Disclaimer: I make no representation as to the correctness of this data. It may be incomplete or inaccurate. Many fields in the original PDF were illegible. Please don't sue me or stage my death.
+
 ### `parsed.db`
 SQLite version of above, generated using `csvs-to-sqlite`:
 
