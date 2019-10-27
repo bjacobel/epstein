@@ -27,3 +27,5 @@ csvs-to-sqlite --replace-tables --table manifest -d "Date" -df 'd-b-Y' manifests
 
 Contains a table `logistical`, which notes IDs of flight entries I suspect (based on description or aircraft identifier) to be maintenance, training or reposition flights (and thus not interesting to the manifest analysis, as the only passengers are usually pilots).
 
+Contains a table `canonical`, which contains a mapping of initializations, misspellings (in original document) and familiar names to canonical names. Note that this is in some instances informed speculation. An entry containing "JS" several rows after the first flight of "John Smith" likely indicates John Smith's second flight, but obviously cannot be confirmed.
+
