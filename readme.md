@@ -1,7 +1,7 @@
-Records pertaining to Jeffery Epstein, digitized, cleaned and made available in several useful formats.
+Records pertaining to Jeffrey Epstein, digitized, cleaned and made available in several useful formats.
 
 ## manifests
-Flight logs from Epstein's personal plane (the "Lolita Express").
+Flight logs from Epstein's personal planes and helicopters.
 
 ### `Epstein-v-Edwards.pdf`
 The "original" logs as presented in Epstein v. Edwards, obtained by [Gawker.com](https://gawker.com/flight-logs-put-clinton-dershowitz-on-pedophile-billio-1681039971) in 2015 and downloaded from [DocumentCloud](https://www.documentcloud.org/documents/1507315-epstein-flight-manifests.html).
