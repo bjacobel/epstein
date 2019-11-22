@@ -83,10 +83,6 @@ resource "aws_iam_role_policy" "allow_aurora" {
   ]
 }
 EOF
-
-  tags = {
-    Project = var.name
-  }
 }
 
 resource "aws_appsync_datasource" "datasource" {
@@ -97,7 +93,7 @@ resource "aws_appsync_datasource" "datasource" {
 
   # Blocked on https://github.com/terraform-providers/terraform-provider-aws/pull/9337
   relational_database_config {
-    http_endpoint_config = {
+    http_endpoint_config {
       cluster_identifier = var.rds_cluster_id
       secret_store_arn   = var.rds_cluster_secret_store_arn
       database_name      = var.rds_cluster_db_name
