@@ -15,5 +15,5 @@ output "rds_cluster_db_name" {
 }
 
 output "rds_cluster_secret_store_arn" {
-  value = "@TODO"
+  value = aws_secretsmanager_secret_version.rds_creds.arn
 }
