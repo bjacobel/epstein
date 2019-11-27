@@ -1,6 +1,5 @@
 # import Flight from './flight.graphql'
 
-type Flight {
-  source: String!
-  destination: String!
+type Query {
+  flight(id: ID): Flight
 }
