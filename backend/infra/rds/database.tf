@@ -35,7 +35,7 @@ resource "aws_rds_cluster" "rds_db" {
   db_subnet_group_name    = aws_db_subnet_group.rds_db.name
   engine                  = "aurora-postgresql"
   engine_mode             = "serverless"
-  engine_version          = "10.5"
+  engine_version          = "10.7"
   master_username         = var.username
   master_password         = var.password
   database_name           = var.name

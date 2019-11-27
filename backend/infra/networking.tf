@@ -1,7 +1,4 @@
-provider "aws" {
-  region  = "us-east-2"
-  version = "~> 2.39"
-}
+data "aws_region" "current" {}
 
 resource "aws_vpc" "vpc" {
   cidr_block           = "172.31.0.0/16"
@@ -90,24 +87,4 @@ resource "aws_default_network_acl" "default" {
   tags = {
     Project = var.name
   }
-}
-
-module "rds" {
-  name       = var.name
-  source     = "./rds"
-  vpc_id     = aws_vpc.vpc.id
-  subnet_ids = aws_subnet.subnets.*.id
-  username   = "rds"
-
-  // @TODO make secure -- although the SGs *should* never let anyone get this far
-  password = "password"
-}
-
-module "appsync" {
-  name                         = var.name
-  source                       = "./appsync"
-  rds_cluster_id               = module.rds.rds_cluster_id
-  rds_cluster_arn              = module.rds.rds_cluster_arn
-  rds_cluster_db_name          = module.rds.rds_cluster_db_name
-  rds_cluster_secret_store_arn = module.rds.rds_cluster_secret_store_arn
 }
