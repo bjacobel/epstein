@@ -9,3 +9,11 @@ output "api_id" {
 output "region" {
   value = data.aws_region.current.name
 }
+
+output "database_arn" {
+  value = module.rds.rds_cluster_arn
+}
+
+output "secretsmanager_arn" {
+  value = module.rds.rds_cluster_secret_store_arn
+}

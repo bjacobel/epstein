@@ -1,1 +1,1 @@
-select * from Pets where id = '${id}'
+select * from manifest where id = '${id}'
