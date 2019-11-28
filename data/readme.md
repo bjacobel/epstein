@@ -15,23 +15,3 @@ The result of performing OCR on the above PDFs, then parsing the rows into a CSV
   - https://www.scribd.com/doc/261421275/Jeffrey-Epstein-flight-logs-CSV-format#
 
 Disclaimer: I make no representation as to the correctness of this data. It may be incomplete or inaccurate. Many names and fields in the original PDFs were illegible. Please don't sue me or stage my suicide.
-
-### `parsed.db`
-SQLite table with data from above. 
-
-#### table `manifest`
-generated using `csvs-to-sqlite`:
-
-```
-csvs-to-sqlite --replace-tables --table manifest -d "Date" -df 'd-b-Y' manifests/parsed.csv manifests/parsed.db
-```
-
-#### table `meta`
-##### column `logistical`
-notes IDs of flight entries I suspect (based on description or aircraft identifier) to be maintenance, training or reposition flights (and thus not interesting to the manifest analysis, as the only passengers are usually pilots).
-##### column `page`
-notes the page in the original PDF the log entry was transcribed from
-
-#### table `canonical`
-contains a mapping of initializations, misspellings (in original document) and familiar names to canonical names. Note that this is in some instances informed speculation. An entry containing "JS" several rows after the first flight of "John Smith" likely indicates John Smith's second flight, but obviously cannot be confirmed.
-
