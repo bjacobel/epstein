@@ -1,3 +1,9 @@
+locals {
+  vars = {
+    id = "$ctx.args.id"
+  }
+}
+
 resource "aws_appsync_resolver" "query_resolver" {
   for_each    = fileset(path.module, "../../resolvers/*.sql")
   api_id      = aws_appsync_graphql_api.appsync.id
@@ -9,7 +15,7 @@ resource "aws_appsync_resolver" "query_resolver" {
 {
     "version": "2018-05-29",
     "statements":[
-        "${replace(templatefile("${path.module}/${each.value}", { id = "$ctx.args.id" }), "\n", "\\n")}"
+        "${replace(templatefile("${path.module}/${each.value}", local.vars), "\n", "\\n")}"
     ]
 }
 EOF
