@@ -70,11 +70,33 @@ resource "aws_iam_role_policy" "allow_aurora" {
   "Statement": [
     {
       "Action": [
-        "rds:*"
+        "rds-data:*"
       ],
       "Effect": "Allow",
       "Resource": [
         "${var.rds_cluster_arn}"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "allow_secretsmanager" {
+  name = "tf-${var.name}-role-policy-secrets"
+  role = aws_iam_role.assumerole_rds.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "${var.rds_cluster_secret_store_arn}"
       ]
     }
   ]

@@ -16,10 +16,13 @@ apply:
 refresh:
 	@cd infra && terraform refresh
 
+plan:
+	@cd infra && terraform plan
+
 upload-schema:
 	@cd schema && \
 		yarn --silent upload \
 		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".api_id.value"` \
-		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".region.value.name"`
+		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".region.value"`
 
 deploy: apply upload-schema

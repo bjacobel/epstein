@@ -7,5 +7,5 @@ output "api_id" {
 }
 
 output "region" {
-  value = data.aws_region.current
+  value = data.aws_region.current.name
 }
