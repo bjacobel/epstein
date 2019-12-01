@@ -1,0 +1,4 @@
+type Passenger {
+  literal: String!
+  canonical: String
+}

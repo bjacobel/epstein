@@ -1,0 +1,17 @@
+# import Aircraft from './Aircraft.graphql'
+# import Airfield from './Airfield.graphql'
+# import Passenger from './Passenger.graphql'
+
+scalar AWSDate
+
+type Flight {
+  id: Int
+  date: AWSDate
+  logistical: Boolean!
+  remarks: String
+  aircraft: Aircraft
+  source: Airfield
+  destination: Airfield
+  
+  passengers: [Passenger]
+}
