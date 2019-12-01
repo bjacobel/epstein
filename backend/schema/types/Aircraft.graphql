@@ -1,0 +1,4 @@
+type Aircraft {
+  tailsign: String!
+  model: String!
+}

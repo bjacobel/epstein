@@ -1,4 +1,0 @@
-type Flight {
-  source: String!
-  destination: String!
-}

@@ -1,4 +1,4 @@
-# import Flight from './flight.graphql'
+# import Flight from './types/flight.graphql'
 
 type Query {
   flight(id: ID): Flight

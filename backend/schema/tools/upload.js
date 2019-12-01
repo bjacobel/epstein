@@ -17,7 +17,7 @@ const AppSync = require('aws-sdk/clients/appsync');
 
     const preStatus = (await client.getSchemaCreationStatus({ apiId }).promise()).status;
     // NOT_APPLICABLE will literally only happen the first time
-    if (!['ACTIVE', 'NOT_APPLICABLE', 'FAILED'].includes(preStatus)) {
+    if (!['ACTIVE', 'NOT_APPLICABLE', 'FAILED', 'SUCCESS'].includes(preStatus)) {
       throw new Error(`Schema can't be updated because it's currently in state: ${preStatus}`);
     }
 

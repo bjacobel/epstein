@@ -1,0 +1,21 @@
+#if($ctx.error)
+    $utils.error($ctx.error.message, $ctx.error.type)
+#end
+
+#set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
+
+## aircraft info
+#set($resp.aircraft = {
+	'model': $resp.aircraft_model,
+    'tailsign': $resp.aircraft_tailsign
+})
+
+## airfield fields
+#set($resp.source = {
+  'code': $resp.source
+})
+#set($resp.destination = {
+  'code': $resp.destination
+})
+
+$utils.toJson($resp)
