@@ -1,0 +1,36 @@
+#if($ctx.error)
+    $utils.error($ctx.error.message, $ctx.error.type)
+#end
+
+## makes this easier to test in aws console
+#if($ctx.arguments['test'])
+  #set($resp = $ctx.result)
+#{else}
+  #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
+#end
+
+#foreach( $flight in $resp )
+
+  ## aircraft info
+  #set($flight.aircraft = {
+    'model': $flight.aircraft_model,
+      'tailsign': $flight.aircraft_tailsign
+  })
+
+  ## airfield fields
+  #set($flight.source = {
+    'code': $flight.source
+  })
+  #set($flight.destination = {
+    'code': $flight.destination
+  })
+
+  ## parsing passengers
+  #set($flight.passengers = [])
+  #foreach($p in $flight.remarks.split(", "))
+    $util.quiet($flight.passengers.add({ "literal": $p }))
+  #end
+
+#end
+
+$utils.toJson($resp)

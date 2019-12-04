@@ -2,7 +2,12 @@
     $utils.error($ctx.error.message, $ctx.error.type)
 #end
 
-#set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
+## makes this easier to test in aws console
+#if($ctx.arguments['test'])
+  #set($resp = $ctx.result)
+#{else}
+  #set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
+#end
 
 ## aircraft info
 #set($resp.aircraft = {
@@ -17,5 +22,11 @@
 #set($resp.destination = {
   'code': $resp.destination
 })
+
+## parsing passengers
+#set($resp.passengers = [])
+#foreach($p in $resp.remarks.split(", "))
+  $util.quiet($resp.passengers.add({ "literal": $p }))
+#end
 
 $utils.toJson($resp)
