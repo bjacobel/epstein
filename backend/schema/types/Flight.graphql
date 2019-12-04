@@ -12,6 +12,5 @@ type Flight {
   aircraft: Aircraft
   source: Airfield
   destination: Airfield
-  
   passengers: [Passenger]
 }
