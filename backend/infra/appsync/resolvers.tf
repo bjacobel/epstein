@@ -1,5 +1,5 @@
 locals {
-  resolver_dir = "${path.module}/../../resolvers"
+  resolver_dir = "${path.module}/resolvers"
 }
 
 resource "aws_appsync_resolver" "query_resolver" {
