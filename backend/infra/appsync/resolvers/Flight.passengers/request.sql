@@ -7,7 +7,7 @@ WITH RECURSIVE split (
 		remarks || ', '
 	FROM
 		manifest
-  WHERE id = '$ctx.source.id'
+  WHERE id = 125
   UNION ALL
   SELECT
     substr(str, 0, strpos(str, ', ')),
@@ -15,7 +15,8 @@ WITH RECURSIVE split (
   FROM split
   WHERE str <> ''
 )
-SELECT canonical.canonical, coalesce(literal, passenger) as literal
+SELECT passengers.*, split.passenger as literal
 FROM split
 LEFT JOIN canonical ON split.passenger = canonical.literal
-WHERE passenger <> ''
+left join passengers on canonical.passenger = passengers.id
+WHERE split.passenger <> ''
