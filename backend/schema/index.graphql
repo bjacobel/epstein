@@ -2,6 +2,6 @@
 
 type Query {
   flight(id: Int!): Flight
-  searchFlights(query: String!): [Flight]
   passenger(id: Int!): Passenger
+  searchPassengers(query: String!): [Flight]
 }
