@@ -7,7 +7,7 @@ WITH RECURSIVE split (
 		remarks || ', '
 	FROM
 		manifest
-  WHERE id = 125
+  WHERE id = $ctx.source.id
   UNION ALL
   SELECT
     substr(str, 0, strpos(str, ', ')),
