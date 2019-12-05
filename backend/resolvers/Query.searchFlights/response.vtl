@@ -17,14 +17,6 @@
       'tailsign': $flight.aircraft_tailsign
   })
 
-  ## airfield fields
-  #set($flight.source = {
-    'code': $flight.source
-  })
-  #set($flight.destination = {
-    'code': $flight.destination
-  })
-
   ## parsing passengers
   #set($flight.passengers = [])
   #foreach($p in $flight.remarks.split(", "))
