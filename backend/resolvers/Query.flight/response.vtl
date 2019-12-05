@@ -15,10 +15,4 @@
     'tailsign': $resp.aircraft_tailsign
 })
 
-## parsing passengers
-#set($resp.passengers = [])
-#foreach($p in $resp.remarks.split(", "))
-  $util.quiet($resp.passengers.add({ "literal": $p }))
-#end
-
 $utils.toJson($resp)
