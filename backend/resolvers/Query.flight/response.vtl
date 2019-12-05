@@ -15,14 +15,6 @@
     'tailsign': $resp.aircraft_tailsign
 })
 
-## airfield fields
-#set($resp.source = {
-  'code': $resp.source
-})
-#set($resp.destination = {
-  'code': $resp.destination
-})
-
 ## parsing passengers
 #set($resp.passengers = [])
 #foreach($p in $resp.remarks.split(", "))
