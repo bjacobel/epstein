@@ -25,4 +25,4 @@ upload-schema:
 		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".api_id.value"` \
 		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".region.value"`
 
-deploy: apply upload-schema
+deploy: upload-schema apply
