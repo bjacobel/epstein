@@ -26,12 +26,17 @@ module "appsync" {
   rds_cluster_arn              = module.rds.rds_cluster_arn
   rds_cluster_db_name          = module.rds.rds_cluster_db_name
   rds_cluster_secret_store_arn = module.rds.rds_cluster_secret_store_arn
+  files_distro                 = module.files.distro_domain
 }
 
 module "cloudfront" {
   name             = var.name
   source           = "./cloudfront"
-  vpc_id           = aws_vpc.vpc.id
   appsync_endpoint = module.appsync.endpoint
   origin_api_key   = module.appsync.api_key
+}
+
+module "files" {
+  name   = var.name
+  source = "./files"
 }
