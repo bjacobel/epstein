@@ -1,7 +1,15 @@
 # import Flight from './types/flight.graphql'
+# import Passenger from './Passenger.graphql'
+# import FlightConnection from './FlightConnection.graphql'
+# import PassengerConnection from './PassengerConnection.graphql'
+
+type Node {
+  id: Int
+}
 
 type Query {
   flight(id: Int!): Flight
   passenger(id: Int!): Passenger
-  searchPassengers(query: String!): [Flight]
+
+  searchPassengers(query: String!): PassengerConnection
 }

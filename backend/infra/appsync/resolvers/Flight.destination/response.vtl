@@ -9,4 +9,5 @@
   #set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
 #end
 
+# Returns an Airfield
 $utils.toJson($resp)

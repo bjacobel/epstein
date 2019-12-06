@@ -1,0 +1,6 @@
+type PageInfo {
+  hasNext: Boolean!
+  hasPrev: Boolean!
+  startCursor: Int!
+  endCursor: Int!
+}

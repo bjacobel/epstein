@@ -1,11 +1,11 @@
 scalar AWSURL
 
-type Passenger {
-  id: Int
+type Passenger implements Node {
+  id: Int  # 'literal' passengers will not have ids. ids are only given when they are canonicalized
   literal: String!
   name: String
   biography: String
   wikipedia_link: AWSURL
   image: AWSURL
-  flights: [Flight]
+  flights: FlightConnection
 }

@@ -9,4 +9,10 @@
   #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
 #end
 
-$utils.toJson($resp)
+## Returns a FlightConnection
+$utils.toJson({
+  edges: $resp,
+  count: $resp.length,
+  ## TODO implement pageInfo
+  pageInfo: {}
+})
