@@ -1,5 +1,3 @@
-Records pertaining to Jeffrey Epstein, digitized, cleaned and made available in several useful formats.
-
 ## manifests
 Flight logs from Epstein's personal planes and helicopters.
 
