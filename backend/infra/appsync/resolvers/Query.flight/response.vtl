@@ -1,0 +1,18 @@
+#if($ctx.error)
+    $utils.error($ctx.error.message, $ctx.error.type)
+#end
+
+## makes this easier to test in aws console
+#if($ctx.arguments['test'])
+  #set($resp = $ctx.result)
+#{else}
+  #set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
+#end
+
+## aircraft info
+#set($resp.aircraft = {
+	'model': $resp.aircraft_model,
+    'tailsign': $resp.aircraft_tailsign
+})
+
+$utils.toJson($resp)

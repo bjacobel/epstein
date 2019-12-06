@@ -1,0 +1,12 @@
+type Airfield {
+  id: Int!
+  gps_code: String
+  iata_code: String
+  type: String!
+  name: String!
+  latitude_deg: Float!
+  longitude_deg: Float!
+  iso_country: String!,
+  iso_region: String!,
+  wikipedia_link: String,
+}

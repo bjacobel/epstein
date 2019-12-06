@@ -1,0 +1,13 @@
+{
+  "name": "schema",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.580.0",
+    "graphql": "^14.5.8",
+    "graphql-import": "^0.7.1"
+  },
+  "scripts": {
+    "upload": "node tools/upload.js"
+  }
+}
