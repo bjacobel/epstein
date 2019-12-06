@@ -1,5 +1,8 @@
 locals {
   resolver_dir = "${path.module}/resolvers"
+  replacements = {
+    "filesDistro" = var.files_distro
+  }
 }
 
 resource "aws_appsync_resolver" "query_resolver" {
@@ -20,5 +23,5 @@ resource "aws_appsync_resolver" "query_resolver" {
 }
 EOF
 
-  response_template = file(replace("${local.resolver_dir}/${each.value}", basename(each.value), "response.vtl"))
+  response_template = templatefile(replace("${local.resolver_dir}/${each.value}", basename(each.value), "response.vtl"), local.replacements)
 }
