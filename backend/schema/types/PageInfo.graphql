@@ -1,6 +1,5 @@
 type PageInfo {
+  count: Int!
   hasNext: Boolean!
   hasPrev: Boolean!
-  startCursor: Int!
-  endCursor: Int!
 }
