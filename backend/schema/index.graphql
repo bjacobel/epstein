@@ -1,11 +1,7 @@
 # import Flight from './types/flight.graphql'
-# import Passenger from './Passenger.graphql'
-# import FlightConnection from './FlightConnection.graphql'
-# import PassengerConnection from './PassengerConnection.graphql'
-
-type Node {
-  id: Int
-}
+# import Passenger from './types/Passenger.graphql'
+# import FlightConnection from './types/FlightConnection.graphql'
+# import PassengerConnection from './types/PassengerConnection.graphql'
 
 type Query {
   flight(id: Int!): Flight

@@ -4,7 +4,7 @@
 scalar AWSDate
 scalar AWSURL
 
-type Flight implements Node{
+type Flight {
   id: Int!
   date: AWSDate
   logistical: Boolean!

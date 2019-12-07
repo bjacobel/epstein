@@ -1,4 +1,4 @@
-type Aircraft implements Node {
+type Aircraft {
   id: Int! # TODO this is unimplemented, because aircraft is a fucked-up type
   tailsign: String!
   model: String!

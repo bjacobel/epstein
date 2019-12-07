@@ -1,6 +1,6 @@
 scalar AWSURL
 
-type Passenger implements Node {
+type Passenger {
   id: Int  # 'literal' passengers will not have ids. ids are only given when they are canonicalized
   literal: String!
   name: String
