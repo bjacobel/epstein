@@ -7,11 +7,15 @@ type Query {
   flight(id: Int!): Flight
   flights(
     includeLogistical: Boolean = true,
-    limit: Int
+    limit: Int,
     offset: Int
   ): FlightConnection
 
   passenger(id: Int!): Passenger
 
-  searchPassengers(query: String!): PassengerConnection
+  searchPassengers(
+    query: String!,
+    limit: Int,
+    offset: Int
+  ): PassengerConnection
 }
