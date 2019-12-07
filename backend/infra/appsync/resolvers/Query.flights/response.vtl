@@ -9,7 +9,7 @@
   #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
 #end
 
-## Returns a PassengerConnection
+## should return a FlightConnection
 $utils.toJson({
   edges: $resp,
   ## TODO implement pageInfo
