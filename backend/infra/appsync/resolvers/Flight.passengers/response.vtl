@@ -10,10 +10,12 @@
 #end
 
 ## Returns a PassengerConnection
-## TODO fully implement pageInfo
+## The list of passengers will NEVER be long enough that we'd need to paginate. Fake it.
 $utils.toJson({
   "edges": $resp,
   "pageInfo": {
-    "count": $resp.size()
+    "count": $resp.size(),
+    "hasNext": false,
+    "hasPrev": false
   }
 })

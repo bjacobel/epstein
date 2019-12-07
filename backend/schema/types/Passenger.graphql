@@ -7,5 +7,5 @@ type Passenger {
   biography: String
   wikipedia_link: AWSURL
   image: AWSURL
-  flights: FlightConnection
+  flights(limit: Int, offset: Int): FlightConnection
 }

@@ -8,3 +8,5 @@ where to_tsvector(remarks) @@ to_tsquery((
   where id = $utils.defaultIfNull($ctx.source.id, 0)
 ))
 order by date asc
+limit $util.defaultIfNull($ctx.args.limit, 100)
+offset $util.defaultIfNull($ctx.args.offset, 0)
