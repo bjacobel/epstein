@@ -1,7 +1,6 @@
 # import PageInfo from './PageInfo.graphql'
 
 type FlightConnection {
-  results: [Flight]!
-  count: Int!
+  edges: [Flight]!
   pageInfo: PageInfo!
 }

@@ -20,10 +20,10 @@
 #end
 
 ## Returns a PassengerConnection
+## TODO fully implement pageInfo
 $utils.toJson({
-  edges: $resp,
-  ## TODO implement pageInfo
-  pageInfo: {
-    count: $resp.length
+  "edges": $resp,
+  "pageInfo": {
+    "count": $resp.size()
   }
 })
