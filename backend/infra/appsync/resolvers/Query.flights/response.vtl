@@ -10,10 +10,18 @@
 #end
 
 ## should return a FlightConnection
-## TODO fully implement pageInfo
+#set($count = $resp.size())
+#if($ctx.args.limit > $count - 1)          
+    #set($fixedCount = $count)
+#else
+    #set($fixedCount = $ctx.args.limit)
+#end
+#set($edges = $resp.subList(0, $fixedCount))
+#set($hasNext = $count > $ctx.args.limit)
 $utils.toJson({
-  "edges": $resp,
+  "edges": $edges,
   "pageInfo": {
-    "count": $resp.size()
+    "count": $fixedCount,
+    "hasNext": $hasNext
   }
 })
