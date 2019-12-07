@@ -6,7 +6,7 @@
 type Query {
   flight(id: Int!): Flight
   flights(
-    includeLogistical: Boolean = true,
+    includeLogistical: Boolean,
     limit: Int,
     offset: Int
   ): FlightConnection

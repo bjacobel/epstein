@@ -10,14 +10,15 @@
 #end
 
 ## Returns a FlightConnection
+#set($limit = $util.defaultIfNull($ctx.args.limit, 100))
 #set($count = $resp.size())
-#if($ctx.args.limit > $count - 1)          
+#if($limit > $count - 1)          
     #set($fixedCount = $count)
 #else
-    #set($fixedCount = $ctx.args.limit)
+    #set($fixedCount = $limit)
 #end
 #set($edges = $resp.subList(0, $fixedCount))
-#set($hasNext = $count > $ctx.args.limit)
+#set($hasNext = $count > $limit)
 $utils.toJson({
   "edges": $edges,
   "pageInfo": {
