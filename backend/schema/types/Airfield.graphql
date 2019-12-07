@@ -1,4 +1,4 @@
-type Airfield {
+type Airfield implements Node {
   id: Int!
   gps_code: String
   iata_code: String

@@ -1,0 +1,7 @@
+# import PageInfo from './PageInfo.graphql'
+
+type PassengerConnection {
+  edges: [Passenger]!
+  count: Int!
+  pageInfo: PageInfo!
+}

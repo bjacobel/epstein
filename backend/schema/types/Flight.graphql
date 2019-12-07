@@ -1,18 +1,17 @@
 # import Aircraft from './Aircraft.graphql'
 # import Airfield from './Airfield.graphql'
-# import Passenger from './Passenger.graphql'
 
 scalar AWSDate
 scalar AWSURL
 
-type Flight {
-  id: Int
+type Flight implements Node{
+  id: Int!
   date: AWSDate
   logistical: Boolean!
   remarks: String
   aircraft: Aircraft
   source: Airfield
   destination: Airfield
-  passengers: [Passenger]
+  passengers: PassengerConnection
   page: AWSURL!
 }
