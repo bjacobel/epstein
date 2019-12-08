@@ -1,5 +1,5 @@
 type Aircraft {
-  id: Int! # TODO this is unimplemented, because aircraft is a fucked-up type
+  id: ID!
   tailsign: String!
   model: String!
 }
