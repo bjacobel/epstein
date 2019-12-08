@@ -1,9 +1,9 @@
-name: 'Terraform Validation'
+name: 'Backend Stack Validation'
 on:
   push:
     paths:
       - backend/infra/**
-      - .github/workflows/terraform.yml
+      - .github/workflows/*.yml
 jobs:
   terraform:
     name: 'Terraform'
@@ -14,18 +14,19 @@ jobs:
       - name: 'Terraform Format'
         uses: hashicorp/terraform-github-actions@master
         with:
-          tf_actions_version: 0.12.13
+          tf_actions_version: 0.12.17
           tf_actions_subcommand: 'fmt'
           tf_actions_working_dir: 'backend/infra'
-      - name: 'Terraform Init'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.12.13
-          tf_actions_subcommand: 'init'
-          tf_actions_working_dir: 'backend/infra'
-      - name: 'Terraform Validate'
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.12.13
-          tf_actions_subcommand: 'validate'
-          tf_actions_working_dir: 'backend/infra'
+      # Until the issues with the two TF aws-provider PRs are resolved, this is a no go
+      # - name: 'Terraform Init'
+      #   uses: hashicorp/terraform-github-actions@master
+      #   with:
+      #     tf_actions_version: 0.12.17
+      #     tf_actions_subcommand: 'init'
+      #     tf_actions_working_dir: 'backend/infra'
+      # - name: 'Terraform Validate'
+      #   uses: hashicorp/terraform-github-actions@master
+      #   with:
+      #     tf_actions_version: 0.12.17
+      #     tf_actions_subcommand: 'validate'
+      #     tf_actions_working_dir: 'backend/infra'
