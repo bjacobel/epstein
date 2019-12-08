@@ -1,0 +1,28 @@
+#if($ctx.error)
+    $utils.error($ctx.error.message, $ctx.error.type)
+#end
+
+## makes this easier to test in aws console
+#if($ctx.arguments['test'])
+  #set($resp = $ctx.result)
+#{else}
+  #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
+#end
+
+## Returns a PassengerConnection
+#set($limit = $util.defaultIfNull($ctx.args.limit, 100))
+#set($count = $resp.size())
+#if($limit > $count - 1)          
+    #set($fixedCount = $count)
+#else
+    #set($fixedCount = $limit)
+#end
+#set($edges = $resp.subList(0, $fixedCount))
+#set($hasNext = $count > $limit)
+$utils.toJson({
+  "edges": $edges,
+  "pageInfo": {
+    "count": $fixedCount,
+    "hasNext": $hasNext
+  }
+})
