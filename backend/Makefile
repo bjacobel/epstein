@@ -22,7 +22,7 @@ plan:
 upload-schema:
 	@cd schema && \
 		yarn --silent upload \
-		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".api_id.value"` \
-		`terraform output -state ../infra/terraform.tfstate -json | jq -er ".region.value"`
+		`cd ../infra && terraform output -json | jq -er ".api_id.value"` \
+		`cd ../infra && terraform output -json | jq -er ".region.value"`
 
 deploy: upload-schema apply

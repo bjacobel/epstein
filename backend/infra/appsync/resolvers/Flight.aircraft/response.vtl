@@ -9,5 +9,9 @@
   #set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
 #end
 
-## Should return a Flight type
-$utils.toJson($resp)
+## Returns an Aircraft
+$utils.toJson({
+  "id": $resp.id,
+  "tailsign": $ctx.source.aircraft_tailsign,
+  "model": $ctx.source.aircraft_model
+})

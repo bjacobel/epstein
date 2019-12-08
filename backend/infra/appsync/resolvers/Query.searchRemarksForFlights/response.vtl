@@ -9,16 +9,6 @@
   #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
 #end
 
-#foreach( $flight in $resp )
-
-  ## aircraft info
-  #set($flight.aircraft = {
-    'model': $flight.aircraft_model,
-    'tailsign': $flight.aircraft_tailsign
-  })
-
-#end
-
 ## Returns a FlightConnection
 #set($limit = $util.defaultIfNull($ctx.args.limit, 100))
 #set($count = $resp.size())
