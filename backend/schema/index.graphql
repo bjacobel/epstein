@@ -12,6 +12,10 @@ type Query {
   ): FlightConnection
 
   passenger(id: Int!): Passenger
+  passengers(
+    limit: Int,
+    offset: Int
+  ): PassengerConnection
 
   searchRemarksForFlights(
     query: String!,
