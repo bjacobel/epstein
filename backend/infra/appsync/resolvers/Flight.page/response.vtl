@@ -2,4 +2,4 @@
 #set($padPage = $String.format("%03d", $ctx.source.page))
 
 ## Returns an AWSURL
-$utils.toJson($String.format("${filesDistro}/manifest09/page-%s.png", $padPage))
+$utils.toJson($String.format("${filesDistro}/$ctx.source.document/page-%s.png", $padPage))
