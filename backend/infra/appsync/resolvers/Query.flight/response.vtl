@@ -6,8 +6,12 @@
 #if($ctx.arguments['test'])
   #set($resp = $ctx.result)
 #{else}
-  #set($resp = $utils.rds.toJsonObject($ctx.result)[0][0])
+  #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
+#end
+
+#if($resp.size() == 0)
+  $utils.error("Couldn't find Flight with id $ctx.args.id", "NotFound")
 #end
 
 ## Should return a Flight type
-$utils.toJson($resp)
+$utils.toJson($resp[0])
