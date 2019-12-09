@@ -1,21 +1,15 @@
 resource "null_resource" "manifest09" {
+  triggers = {
+    script = file("${path.module}/extract.sh")
+  }
+
   provisioner "local-exec" {
     working_dir = "../../data/manifests"
-    command     = <<HERE
-mkdir -p /tmp/manifest09-images/ && \
-pdfimages -png Epstein-v-Edwards.pdf /tmp/manifest09-images/page
-HERE
+    command = templatefile("${path.module}/extract.sh", {
+      name : "manifest09",
+      pdf : "Epstein-v-Edwards.pdf",
+      bucket : aws_s3_bucket.files.id,
+      rotation : 270
+    })
   }
-}
-
-resource "aws_s3_bucket_object" "manifest09" {
-  for_each     = fileset("/tmp/manifest09-images/", "*.png")
-  bucket       = aws_s3_bucket.files.id
-  key          = "/manifest09/${basename(each.value)}"
-  source       = "/tmp/manifest09-images/${each.value}"
-  content_type = "image/png"
-
-  depends_on = [
-    null_resource.manifest09
-  ]
 }
