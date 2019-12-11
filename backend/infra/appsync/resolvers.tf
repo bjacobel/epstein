@@ -1,8 +1,13 @@
 locals {
   resolver_dir = "${path.module}/resolvers"
-  replacements = {
-    "filesDistro" = var.files_distro
-  }
+  replacements = merge(
+    {
+      "filesDistro" = var.files_distro
+    },
+    { for f in fileset("${local.resolver_dir}/snippets", "*.vtl") :
+      regex("(\\w+)\\.vtl", f)[0] => file("${local.resolver_dir}/snippets/${f}")
+    }
+  )
 }
 
 resource "aws_appsync_resolver" "query_resolver" {
@@ -23,5 +28,11 @@ resource "aws_appsync_resolver" "query_resolver" {
 }
 EOF
 
-  response_template = templatefile(replace("${local.resolver_dir}/${each.value}", basename(each.value), "response.vtl"), local.replacements)
+  response_template = templatefile(
+    replace(
+      "${local.resolver_dir}/${each.value}",
+      basename(each.value), "response.vtl"
+    ),
+    local.replacements
+  )
 }
