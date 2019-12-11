@@ -1,0 +1,63 @@
+name: 'Frontend App Deploy'
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - frontend/**
+      - .github/workflows/*.yml
+jobs:
+  deploy:
+    name: 'Build to S3'
+    needs: bucket
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: Cache node_modules
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+      - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Build
+        run: yarn webpack
+        env:
+          NODE_ENV: production
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --cache-control max-age=31536000
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: 'us-west-2'
+          SOURCE_DIR: 'frontend/dist'
+
+  invalidate:
+    name: 'Invalidate CF cache'
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: yarn fe aws-utils invalidate '/index.html'
+
+  sentry:
+    name: 'Notify Sentry'
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: $(yarn bin)/sentry-cli releases -o $(node frontend/config SentryOrg) -p $(node frontend/config SentryProject) new $TRAVIS_COMMIT
+      - run: $(yarn bin)/sentry-cli releases -o $(node frontend/config SentryOrg) -p $(node frontend/config SentryProject) files $TRAVIS_COMMIT upload-sourcemaps dist
+    
