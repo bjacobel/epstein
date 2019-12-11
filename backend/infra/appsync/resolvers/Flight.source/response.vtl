@@ -5,5 +5,5 @@ ${rdsResp}
   $utils.error("Couldn't find Airfield with IATA or GPS code $ctx.source.source", "NotFound")
 #end
 
-# Returns an Airfield
+## Returns an Airfield
 $utils.toJson($resp[0])

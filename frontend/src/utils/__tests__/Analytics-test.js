@@ -1,4 +1,4 @@
-import Analytics from 'services/Analytics';
+import Analytics from 'utils/Analytics';
 import * as constants from 'src/constants';
 
 jest.mock('constants');
