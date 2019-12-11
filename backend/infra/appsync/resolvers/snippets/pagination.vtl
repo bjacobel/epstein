@@ -1,0 +1,9 @@
+#set($limit = $util.defaultIfNull($ctx.args.limit, 100))
+#set($count = $resp.size())
+#if($limit > $count - 1)          
+    #set($fixedCount = $count)
+#else
+    #set($fixedCount = $limit)
+#end
+#set($edges = $resp.subList(0, $fixedCount))
+#set($hasNext = $count > $limit)

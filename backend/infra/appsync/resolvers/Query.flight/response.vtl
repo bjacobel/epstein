@@ -1,13 +1,5 @@
-#if($ctx.error)
-    $utils.error($ctx.error.message, $ctx.error.type)
-#end
-
-## makes this easier to test in aws console
-#if($ctx.arguments['test'])
-  #set($resp = $ctx.result)
-#{else}
-  #set($resp = $utils.rds.toJsonObject($ctx.result)[0])
-#end
+${errorHandler}
+${rdsResp}
 
 #if($resp.size() == 0)
   $utils.error("Couldn't find Flight with id $ctx.args.id", "NotFound")
