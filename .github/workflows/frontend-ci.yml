@@ -40,9 +40,13 @@ jobs:
     needs: lint-test
     runs-on: ubuntu-latest
     steps:
+      # checkout only needed because codecov wants to know app file structure during upload
+      - name: 'Checkout'
+        uses: actions/checkout@master
       - uses: actions/download-artifact@v1
         with:
           name: coverage
+          path: frontend/coverage
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
