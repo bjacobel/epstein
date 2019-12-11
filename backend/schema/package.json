@@ -8,6 +8,8 @@
     "graphql-import": "^0.7.1"
   },
   "scripts": {
-    "upload": "node tools/upload.js"
+    "tf": "cd ../infra && terraform",
+    "tfval": "yarn --silent tf output --json | jq -er",
+    "upload-schema": "node tools/upload.js `yarn --silent tfval \".api_id.value\"` `yarn --silent tfval \".region.value\"`"
   }
 }

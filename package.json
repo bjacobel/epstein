@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": ["backend/schema", "frontend"],
+  "scripts": {
+    "tf": "cd backend/infra && terraform",
+    "tfval": "yarn --silent tf output --json | jq -er",
+    "upload-schema": "yarn --silent workspace schema run upload-schema",
+    "init-provider": "backend/infra/init-provider.sh",
+    "fe": "yarn --silent workspace frontend run"
+  }
+}
