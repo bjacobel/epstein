@@ -1,20 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`main component un-Connected component matches snapshot 1`] = `
-<Fragment>
-  <div />
-  <h3>
-    foo
-  </h3>
-  <Link
-    to="/child/foo"
-  >
-    Routing demo
-  </Link>
-  <Link
-    to="/asdf"
-  >
-    404 demo
-  </Link>
-</Fragment>
-`;
+exports[`main component un-Connected component matches snapshot 1`] = `<Fragment />`;

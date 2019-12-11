@@ -1,6 +1,6 @@
 import { init, captureException, configureScope } from '@sentry/browser';
 
-import logToRaven from 'services/errors';
+import logToRaven from 'utils/errors';
 import * as constants from 'src/constants';
 
 jest.mock('constants');

@@ -34,6 +34,7 @@ jobs:
         run: yarn fe webpack
         env:
           NODE_ENV: production
+          GITHUB_SHA: ${{ github.sha }}
       - name: Verify bucket exists
         run: if [ "$(yarn --silent fe awsUtils bucketExists)" = "false" ]; then exit 1; fi
       - name: Upload dist to bucket
@@ -59,7 +60,7 @@ jobs:
         with:
           name: dist
       - name: Notify Sentry of deploy
-        run: npx sentry-cli releases -o bjacobelcom -p epsteinbrain new $GITHUB_SHA
+        run: npx sentry-cli releases -o bjacobelcom -p epsteinbrain new $${{ github.sha }}
       - name: Add sourcemaps to Sentry
-        run: npx sentry-cli releases -o bjacobelcom -p epsteinbrain files $GITHUB_SHA upload-sourcemaps dist
+        run: npx sentry-cli releases -o bjacobelcom -p epsteinbrain files ${{ github.sha }} upload-sourcemaps dist
     
