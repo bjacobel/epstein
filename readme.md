@@ -7,4 +7,4 @@ Original PDFs from unsealed court records. OCRed results. Other data and scripts
 Terraform stuff to set up the AppSync and Aurora infrastructure serving the API
 
 ### `/frontend`
-TKTKTK
+React app for viewing data at https://epstein.flights

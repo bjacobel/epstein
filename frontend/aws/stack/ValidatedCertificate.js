@@ -114,7 +114,7 @@ module.exports = {
       Description: 'CFN Certificate Domain Resource Record Provider',
       Code: {
         S3Bucket: join(['binxio-public', '-', region]),
-        S3Key: 'lambdas/cfn-certificate-provider-0.2.1.zip',
+        S3Key: 'lambdas/cfn-certificate-provider-0.2.4.zip',
       },
       FunctionName: join([config.ProjectName, '-certificate-validator']),
       Handler: 'provider.handler',
