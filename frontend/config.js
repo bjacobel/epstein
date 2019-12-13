@@ -10,10 +10,10 @@ const config = {
   ProjectName: 'epsteinbrain',
 
   // The root domain that your project will live at. Used for creating hosted zones and connecting DNS.
-  ProjectDomain: 'epsteinbrain.org',
+  ProjectDomain: 'epstein.flights',
 
   // If project will live on a subdomain, give the fully qualified domain here. Otherwise use the same value as above.
-  ProjectFQDomain: 'epsteinbrain.org',
+  ProjectFQDomain: 'epstein.flights',
 
   // If you already have a Route53 hosted zone for the ProjectDomain domain, setting this value to `'true'` will
   // re-use the zone. Setting it to `'false'` will create a new zone.
@@ -25,7 +25,10 @@ const config = {
   RavenDSN: 'https://be801b109c2e46409e03a6b10e609bc2@sentry.io/1853268',
 
   // Configuration for Google Analytics
-  GAProperty: 'UA-34138258-8',
+  GAProperty: 'UA-154504161-1',
+
+  // AWS Region you would like services to be created in
+  Region: 'us-east-2',
 };
 
 if (!module.parent && process.argv[2]) {

@@ -14,11 +14,16 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - name: Grab config
+        id: config
+        run: |
+          echo "::set-output name=Region::$(node frontend/config Region)"
+          echo "::set-output name=ProjectFQDomain::$(node frontend/config ProjectFQDomain)"
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+          aws-region: ${{ steps.config.outputs.Region }}
       - name: 'Checkout'
         uses: actions/checkout@master
       - name: Cache node_modules
@@ -39,7 +44,7 @@ jobs:
         run: if [ "$(yarn --silent fe awsUtils bucketExists)" = "false" ]; then exit 1; fi
       - name: Upload dist to bucket
         run: |
-          aws s3 sync frontend/dist s3://epsteinbrain.org \
+          aws s3 sync frontend/dist s3://${{ steps.config.outputs.ProjectFQDomain }} \
             --acl public-read \
             --cache-control max-age=31536000
       - uses: actions/upload-artifact@v1
@@ -56,11 +61,16 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      - name: Grab config
+        id: config
+        run: |
+          echo "::set-output name=SentryOrg::$(node frontend/config SentryOrg)"
+          echo "::set-output name=SentryProject::$(node frontend/config SentryProject)"
       - uses: actions/download-artifact@v1
         with:
           name: dist
       - name: Notify Sentry of deploy
-        run: npx sentry-cli releases -o bjacobelcom -p epsteinbrain new $${{ github.sha }}
+        run: npx sentry-cli releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} new $${{ github.sha }}
       - name: Add sourcemaps to Sentry
-        run: npx sentry-cli releases -o bjacobelcom -p epsteinbrain files ${{ github.sha }} upload-sourcemaps dist
+        run: npx sentry-cli releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} files ${{ github.sha }} upload-sourcemaps dist
     
