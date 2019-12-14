@@ -11,7 +11,7 @@ type Query {
     offset: Int
   ): FlightConnection
 
-  passenger(id: Int!): Passenger
+  passenger(slug: String!): Passenger
   passengers(
     limit: Int,
     offset: Int

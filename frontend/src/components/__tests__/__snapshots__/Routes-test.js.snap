@@ -18,31 +18,10 @@ exports[`Router matches snapshot 1`] = `
           path="/flight/:id"
         />
         <GARoute
-          exact={true}
-          ga={Object {}}
-          key="foo"
-          path="/passenger/foo"
-          render={[Function]}
-        />
-        <GARoute
-          exact={true}
-          ga={Object {}}
-          key="bar"
-          path="/passenger/bar"
-          render={[Function]}
-        />
-        <GARoute
-          exact={true}
-          ga={Object {}}
-          key="baz"
-          path="/passenger/baz"
-          render={[Function]}
-        />
-        <GARoute
           component={[Function]}
           exact={true}
           ga={Object {}}
-          path="/passenger/:id"
+          path="/passenger/:slug"
         />
         <GARoute
           component={[MockFunction]}

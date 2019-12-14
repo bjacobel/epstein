@@ -2,6 +2,7 @@ scalar AWSURL
 
 type Passenger {
   id: Int  # 'literal' passengers will not have ids. ids are only given when they are canonicalized
+  slug: String
   literal: String
   name: String
   biography: String

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import Routes, { GARoute } from 'components/Routes';
+import Routes from 'components/Routes';
 import Flight from 'components/Flight';
 import Passenger from 'components/Passenger';
 import Analytics from 'utils/Analytics';
@@ -9,7 +9,6 @@ import Analytics from 'utils/Analytics';
 jest.mock('components/Main');
 jest.mock('components/Flight', () => () => null);
 jest.mock('components/Passenger', () => () => null);
-jest.mock('constants/wellKnownPassengers');
 jest.mock('components/NotFound');
 jest.mock('utils/Analytics');
 
@@ -29,7 +28,7 @@ describe('Router', () => {
       expect(routes.find('Main').length).toBe(1);
     });
 
-    it('routes passenger/:id to the Passenger component', () => {
+    it('routes flights/:id to the Flight component', () => {
       setPath('/flight/125');
       const routes = mount(<Routes />);
       expect(routes.find(Flight).length).toBe(1);
@@ -44,24 +43,19 @@ describe('Router', () => {
       );
     });
 
-    it('routes flights/:id to the Flight component', () => {
-      setPath('/passenger/40');
+    it('routes passenger/:slug to the Passenger component', () => {
+      setPath('/passenger/bill-clinton');
       const routes = mount(<Routes />);
       expect(routes.find(Passenger).length).toBe(1);
       expect(routes.find(Passenger).props()).toEqual(
         expect.objectContaining({
           match: expect.objectContaining({
             params: {
-              id: '40',
+              slug: 'bill-clinton',
             },
           }),
         }),
       );
-    });
-
-    it('has shorthand urls for well-known passengers', () => {
-      const routes = shallow(<Routes />);
-      expect(routes.find(GARoute).filter('[path^="/passenger/"]').length).toBe(4);
     });
 
     it('has a fallthrough 404', () => {

@@ -2,23 +2,25 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 const PASSENGER = gql`
-  query Passenger($id: Int!) {
-    passenger(id: $id) {
+  query Passenger($slug: String!) {
+    passenger(slug: $slug) {
       id
-      canonical
+      name
       biography
       wikipedia_link
-      image_link
+      image
       flights(limit: 10) {
-        id
+        edges {
+          id
+        }
       }
     }
   }
 `;
 
 export default ({ match }) => {
-  const { id } = match.params;
-  const { loading, error, data } = useQuery(PASSENGER, { variables: { id } });
+  const { slug } = match.params;
+  const { loading, error, data } = useQuery(PASSENGER, { variables: { slug } });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
