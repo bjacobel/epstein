@@ -11,6 +11,8 @@ jobs:
     name: 'Build static site'
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout'
+        uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
@@ -24,8 +26,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ steps.config.outputs.Region }}
-      - name: 'Checkout'
-        uses: actions/checkout@master
       - name: Cache node_modules
         id: cache
         uses: actions/cache@v1
@@ -58,19 +58,25 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
+      - name: 'Checkout'
+        uses: actions/checkout@master
       - name: Grab config
         id: config
         run: |
-          echo "::set-output name=SentryOrg::$(node frontend/config SentryOrg)"
-          echo "::set-output name=SentryProject::$(node frontend/config SentryProject)"
+          echo "::set-output name=SentryOrg::$(node config SentryOrg)"
+          echo "::set-output name=SentryProject::$(node config SentryProject)"
       - uses: actions/download-artifact@v1
         with:
           name: dist
       - name: Notify Sentry of deploy
-        run: npx sentry-cli releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} new $${{ github.sha }}
+        uses: bjacobel/sentry-cli-action@v2
+        with:
+          args: releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} new ${{ github.sha }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - name: Add sourcemaps to Sentry
-        run: npx sentry-cli releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} files ${{ github.sha }} upload-sourcemaps dist
-    
+        uses: bjacobel/sentry-cli-action@v1
+        with:
+          args: releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} files ${{ github.sha }} upload-sourcemaps dist
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
