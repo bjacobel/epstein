@@ -1,1 +1,1 @@
-select * from passengers where id = '$ctx.args.id'
+select * from passengers where slug = '$ctx.args.slug'
