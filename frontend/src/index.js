@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 
-import Routes from './components/Routes';
+import App from './components/App';
 import { setup as sentrySetup } from './utils/errors';
 import client from './utils/graphqlClient';
 
@@ -12,14 +12,14 @@ const rootEl = document.getElementById('main');
 const render = () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
-      <Routes />
+      <App />
     </ApolloProvider>,
     rootEl,
   );
 };
 
 if (module.hot) {
-  module.hot.accept('./components/Routes', () => {
+  module.hot.accept('./components/App', () => {
     render();
   });
 }
