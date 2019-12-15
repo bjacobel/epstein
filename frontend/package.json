@@ -3,6 +3,7 @@
   "dependencies": {
     "@apollo/client": "^3.0.0-beta.14",
     "@sentry/browser": "^5.9.0",
+    "classnames": "^2.2.6",
     "core-js": "^3.0.1",
     "graphql": "^14.5.4",
     "prop-types": "^15.7.2",
@@ -52,8 +53,8 @@
     "react-test-renderer": "^16.2.0",
     "script-ext-html-webpack-plugin": "^2.0.1",
     "style-loader": "^1.0.0",
-    "stylelint": "^12.0.0",
-    "stylelint-config-css-modules": "^2.1.0",
+    "stylelint": "^10.0.0",
+    "stylelint-config-css-modules": "^1.0.0",
     "stylelint-config-standard": "^19.0.0",
     "terser-webpack-plugin": "^2.2.1",
     "webpack": "^4.41.2",

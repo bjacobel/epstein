@@ -1,3 +1,5 @@
+@value black from './colors.css';
+
 .center {
   display: flex;
   justify-content: center;
@@ -5,6 +7,12 @@
   text-align: center;
 }
 
-.open-sans {
-  font-family: 'Open Sans', sans-serif;
+.roboto-mono {
+  color: black;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.roboto {
+  color: black;
+  font-family: 'Roboto', sans-serif;
 }

@@ -1,0 +1,9 @@
+:global {
+  body {
+    margin: 0;
+  }
+}
+
+.appWrap {
+  margin: 0 20px 20px 20px;
+}

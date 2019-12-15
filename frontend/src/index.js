@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './components/App';
 import { setup as sentrySetup } from './utils/errors';
@@ -12,7 +13,9 @@ const rootEl = document.getElementById('main');
 const render = () => {
   ReactDOM.render(
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ApolloProvider>,
     rootEl,
   );

@@ -1,0 +1,27 @@
+.container {
+  composes: roboto from './shared.css';
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: auto;
+  grid-gap: 0 15px;
+  justify-content: stretch;
+
+  * {
+    padding-bottom: 20px;
+  }
+
+  > :nth-child(odd) {
+    text-align: right;
+    font-weight: 500;
+    border-right: 1px solid black;
+    padding-right: 10px;
+  }
+
+  > :last-child {
+    padding-bottom: 40px;
+  }
+
+  img {
+    max-height: 300px;
+  }
+}
