@@ -1,9 +1,19 @@
-.link {
-  composes: center from './shared.css';
-  composes: open-sans from './shared.css';
+@value black, blue, dark-blue from colors;
+
+.blacklink {
+  color: black;
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.link {
+  composes: blacklink;
+  color: blue;
+
+  &:visited {
+    color: dark-blue;
   }
 }

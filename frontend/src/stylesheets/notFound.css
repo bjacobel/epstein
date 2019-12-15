@@ -1,4 +1,5 @@
 .not-found {
   composes: center from './shared.css';
-  composes: open-sans from './shared.css';
+  composes: roboto from './shared.css';
+  font-weight: 300;
 }

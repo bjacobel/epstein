@@ -1,0 +1,114 @@
+@value mobile from "./breakpoints.css";
+@value black from "./colors.css";
+
+.header {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid black;
+  align-items: center;
+  height: 75px;
+  margin-bottom: 15px;
+}
+
+.title {
+  composes: roboto-mono from './shared.css';
+  font-weight: 300;
+  flex-grow: 1;
+}
+
+.hotlink {
+  composes: roboto from './shared.css';
+  padding: 0 1em;
+}
+
+.hotlinks {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: mobile) {
+    display: none;
+  }
+
+  &.mobileHotlinks {
+    border: 1px solid black;
+    display: block;
+    padding: 1em;
+    position: absolute;
+    background-color: white;
+    right: 1em;
+    top: 75px;
+
+    .hotlink {
+      padding: 0.5em;
+    }
+  }
+}
+
+.mobileBurger {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  z-index: 2147483647;
+  display: none;
+  width: 45px;
+  height: 45px;
+  padding: 10px 5px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  @media (max-width: mobile) {
+    display: block;
+  }
+
+  .burgerLines {
+    width: 35px;
+    height: 3px;
+    display: block;
+    position: relative;
+    background-color: black;
+    top: 0;
+    right: 0;
+    opacity: 1;
+    user-select: none;
+    transition: all 0.25s ease;
+
+    &::before {
+      content: '\00A0';
+      height: 3px;
+      display: block;
+      position: relative;
+      background-color: black;
+      user-select: none;
+      transition: all 0.25s ease;
+      top: -9px;
+    }
+
+    &::after {
+      content: '\00A0';
+      height: 3px;
+      display: block;
+      position: relative;
+      background-color: black;
+      user-select: none;
+      transition: all 0.25s ease;
+      top: 6px;
+    }
+
+    &.active {
+      background: transparent;
+
+      &::before {
+        transform: rotate3d(0, 0, 1, -45deg);
+        background-color: black;
+        top: 3px;
+      }
+
+      &::after {
+        transform: rotate3d(0, 0, 1, 45deg);
+        background-color: black;
+        top: 0;
+      }
+    }
+  }
+}
