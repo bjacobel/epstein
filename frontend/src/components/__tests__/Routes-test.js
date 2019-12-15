@@ -6,7 +6,7 @@ import Flight from 'components/Flight';
 import Passenger from 'components/Passenger';
 import Analytics from 'utils/Analytics';
 
-jest.mock('components/Main');
+jest.mock('components/Home');
 jest.mock('components/Flight', () => () => null);
 jest.mock('components/Passenger', () => () => null);
 jest.mock('components/NotFound');
@@ -25,7 +25,7 @@ describe('Router', () => {
     it('has a home route', () => {
       setPath('/');
       const routes = mount(<Routes />);
-      expect(routes.find('Main').length).toBe(1);
+      expect(routes.find('Home').length).toBe(1);
     });
 
     it('routes flights/:id to the Flight component', () => {
