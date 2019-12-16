@@ -1,0 +1,30 @@
+@value black, lightgrey from '../../stylesheets/colors.css';
+@value margin from '../../stylesheets/measurements.css';
+
+.flightlink {
+  color: black;
+  text-decoration: none;
+  background-color: white;
+
+  .flightbox {
+    display: flex;
+    flex-direction: column;
+    padding: calc(margin / 2);
+    margin-bottom: calc(margin / 2);
+    border: 1px solid lightgrey;
+    max-width: 400px;
+    transition: all 0.1s ease;
+  }
+
+  &:hover {
+    .flightbox {
+      transform: scale(1.02);
+      box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}

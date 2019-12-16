@@ -1,12 +1,14 @@
+@value margin from "./measurements.css";
+
 .container {
   composes: roboto from './shared.css';
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 20% 1fr;
   grid-template-rows: auto;
-  grid-gap: 0 15px;
+  grid-gap: 0 margin;
   justify-content: stretch;
 
-  * {
+  > * {
     padding-bottom: 20px;
   }
 
@@ -14,11 +16,12 @@
     text-align: right;
     font-weight: 500;
     border-right: 1px solid black;
-    padding-right: 10px;
+    padding-right: calc(margin / 2);
+    min-width: 50px;
   }
 
   > :last-child {
-    padding-bottom: 40px;
+    padding-bottom: calc(margin * 2);
   }
 
   img {

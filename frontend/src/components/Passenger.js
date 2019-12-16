@@ -3,6 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 
 import Details from './Details';
 import FlightBrowser from './Flight/Browser';
+import Loading from './Loading';
 import { link } from '../stylesheets/link.css';
 
 const PASSENGER = gql`
@@ -26,14 +27,14 @@ export default ({ match }) => {
   const { slug } = match.params;
   const { loading, error, data } = useQuery(PASSENGER, { variables: { slug } });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading text />;
   if (error) return <p>Error :(</p>;
 
   return (
     <Details>
       <span>name</span>
       <span>{data.passenger.name}</span>
-      <span>biography</span>
+      <span>bio</span>
       <div>
         <span>{data.passenger.biography}</span>
         <br />

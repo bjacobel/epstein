@@ -1,9 +1,12 @@
+@value margin from "./measurements.css";
+
 :global {
   body {
     margin: 0;
+    box-sizing: border-box;
   }
 }
 
 .appWrap {
-  margin: 0 20px 20px 20px;
+  margin: 0 margin margin margin;
 }
