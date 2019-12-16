@@ -2,7 +2,7 @@ ${errorHandler}
 ${rdsResp}
 
 #if($resp.size() == 0)
-  $utils.error("Couldn't find Passenger with id $ctx.args.id", "NotFound")
+  $utils.error("Couldn't find Passenger with slug $ctx.args.slug", "NotFound")
 #end
 
 ## Should return a Passenger type

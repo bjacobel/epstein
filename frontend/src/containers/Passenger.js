@@ -14,6 +14,7 @@ const PASSENGER = gql`
       biography
       wikipedia_link
       image
+      flightCount
       flights(limit: 10) {
         edges {
           id
@@ -48,6 +49,8 @@ export default ({ match }) => {
           <img src={data.passenger.image} alt="" />
         </>
       ) : null}
+      <span># of flights</span>
+      <span>{data.passenger.flightCount}</span>
       <span>flights</span>
       <div>
         <FlightBrowser ids={data.passenger.flights.edges.map(x => x.id)} />
