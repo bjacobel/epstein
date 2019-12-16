@@ -37,8 +37,8 @@ export default ({ id, done }) => {
   if (error) return <p>Error :(</p>;
 
   return (
-    <Link to={`/flight/${data.flight.id}`} className={flightlink}>
-      <div className={flightbox}>
+    <div className={flightbox}>
+      <Link to={`/flight/${data.flight.id}`} className={flightlink}>
         <div className={row}>
           <span>{format(parseISO(data.flight.date), 'MMM d, y')}</span>
           <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>
@@ -50,7 +50,7 @@ export default ({ id, done }) => {
             <span className={mono}>{data.flight.destination.iata_code}</span>
           </span>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
