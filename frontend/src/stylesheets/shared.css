@@ -7,7 +7,7 @@
   text-align: center;
 }
 
-.roboto-mono {
+.robotoMono {
   color: black;
   font-family: 'Roboto Mono', monospace;
 }
@@ -15,4 +15,8 @@
 .roboto {
   color: black;
   font-family: 'Roboto', sans-serif;
+}
+
+.hidden {
+  display: none;
 }

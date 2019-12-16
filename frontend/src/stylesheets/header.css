@@ -1,4 +1,4 @@
-@value mobile from "./breakpoints.css";
+@value mobile, margin from "./measurements.css";
 @value black from "./colors.css";
 
 .header {
@@ -7,18 +7,18 @@
   border-bottom: 1px solid black;
   align-items: center;
   height: 75px;
-  margin-bottom: 15px;
+  margin-bottom: margin;
 }
 
 .title {
-  composes: roboto-mono from './shared.css';
+  composes: robotoMono from './shared.css';
   font-weight: 300;
   flex-grow: 1;
 }
 
 .hotlink {
   composes: roboto from './shared.css';
-  padding: 0 1em;
+  padding: 0 margin;
 }
 
 .hotlinks {
@@ -33,10 +33,11 @@
   &.mobileHotlinks {
     border: 1px solid black;
     display: block;
-    padding: 1em;
+    padding: margin;
     position: absolute;
     background-color: white;
-    right: 1em;
+    right: margin;
+    margin: 0;
     top: 75px;
 
     .hotlink {

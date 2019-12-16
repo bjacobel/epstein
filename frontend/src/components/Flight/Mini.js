@@ -1,24 +1,56 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
+
+import Loading from '../Loading';
+import { flightbox, flightlink, row } from './mini.css';
+import { robotoMono as mono } from '../../stylesheets/shared.css';
 
 const FLIGHT = gql`
   query flight($id: Int!) {
     flight(id: $id) {
+      id
+      date
       source {
-        name
+        iata_code
       }
       destination {
-        name
+        iata_code
+      }
+      passengers {
+        pageInfo {
+          count
+        }
       }
     }
   }
 `;
 
-export default ({ id }) => {
-  const { loading, error, data } = useQuery(FLIGHT, { variables: { id } });
+export default ({ id, done }) => {
+  const { loading, error, data } = useQuery(FLIGHT, {
+    variables: { id },
+    onCompleted: done,
+  });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return done ? null : <Loading />;
   if (error) return <p>Error :(</p>;
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  return (
+    <Link to={`/flight/${data.flight.id}`} className={flightlink}>
+      <div className={flightbox}>
+        <div className={row}>
+          <span>{format(parseISO(data.flight.date), 'MMM d, y')}</span>
+          <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>
+        </div>
+        <div className={row}>
+          <span>
+            <span className={mono}>{data.flight.source.iata_code}</span>
+            <span> to </span>
+            <span className={mono}>{data.flight.destination.iata_code}</span>
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
 };

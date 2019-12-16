@@ -1,0 +1,41 @@
+@value margin from './measurements.css';
+@value black from './colors.css';
+
+.spinWrap {
+  composes: center from './shared.css';
+  width: 100%;
+  top: calc(margin / 2);
+  right: calc(margin / 2);
+  flex-direction: column;
+}
+
+.spinner {
+  height: 30px;
+  width: 30px;
+  animation: rotate 0.8s infinite linear;
+  border: 7px solid black;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinText {
+  composes: roboto from './shared.css';
+  font-style: italic;
+  margin-top: margin;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+
+  &.active {
+    opacity: 1;
+  }
+}
