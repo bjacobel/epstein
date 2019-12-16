@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
 
 import Routes from 'components/Routes';
 import Flight from 'components/Flight';
@@ -17,6 +18,15 @@ const setPath = value => {
 };
 
 describe('Router', () => {
+  let RoutedRoutes;
+  beforeEach(() => {
+    RoutedRoutes = () => (
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    );
+  });
+
   it('matches snapshot', () => {
     expect(shallow(<Routes />)).toMatchSnapshot();
   });
@@ -24,13 +34,13 @@ describe('Router', () => {
   describe('Routing config', () => {
     it('has a home route', () => {
       setPath('/');
-      const routes = mount(<Routes />);
+      const routes = mount(<RoutedRoutes />);
       expect(routes.find('Home').length).toBe(1);
     });
 
     it('routes flights/:id to the Flight component', () => {
       setPath('/flight/125');
-      const routes = mount(<Routes />);
+      const routes = mount(<RoutedRoutes />);
       expect(routes.find(Flight).length).toBe(1);
       expect(routes.find(Flight).props()).toEqual(
         expect.objectContaining({
@@ -45,7 +55,7 @@ describe('Router', () => {
 
     it('routes passenger/:slug to the Passenger component', () => {
       setPath('/passenger/bill-clinton');
-      const routes = mount(<Routes />);
+      const routes = mount(<RoutedRoutes />);
       expect(routes.find(Passenger).length).toBe(1);
       expect(routes.find(Passenger).props()).toEqual(
         expect.objectContaining({
@@ -60,7 +70,7 @@ describe('Router', () => {
 
     it('has a fallthrough 404', () => {
       setPath('/asdfasaddf');
-      const routes = mount(<Routes />);
+      const routes = mount(<RoutedRoutes />);
       expect(routes.find('NotFound').length).toBe(1);
     });
   });
@@ -72,18 +82,18 @@ describe('Router', () => {
     });
 
     it('inits the analytics class', () => {
-      mount(<Routes />);
+      mount(<RoutedRoutes />);
       expect(Analytics).toHaveBeenCalled();
     });
 
     it('calls the analytics pageview fn when you navigate to a new route', () => {
-      mount(<Routes />);
+      mount(<RoutedRoutes />);
       setPath('/child/1');
       expect(Analytics.prototype.pageview).toHaveBeenCalledTimes(1);
     });
 
     it('supplies GA to routed components via props', () => {
-      const routes = mount(<Routes />);
+      const routes = mount(<RoutedRoutes />);
       expect(routes.find('Route').props()).toEqual(
         expect.objectContaining({
           ga: {},
