@@ -8,7 +8,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const config = require('./config.js');
 
 module.exports = (env = {}, { mode } = {}) => {
-  const isProd = env.production || ['production', 'staging'].includes(process.env.NODE_ENV) || mode === 'production';
+  const isProd =
+    env.production ||
+    ['production', 'staging'].includes(process.env.NODE_ENV) ||
+    mode === 'production';
 
   if (isProd) {
     process.env.BABEL_ENV = 'production';
