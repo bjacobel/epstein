@@ -1,9 +1,9 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
-import Details from './Details';
-import FlightBrowser from './Flight/Browser';
-import Loading from './Loading';
+import Details from '../components/Details';
+import FlightBrowser from '../components/Flight/Browser';
+import Loading from '../components/Loading';
 import { link } from '../stylesheets/link.css';
 
 const PASSENGER = gql`

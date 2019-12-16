@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import App from './components/App';
+import App from './containers/App';
 import { setup as sentrySetup } from './utils/errors';
 import client from './utils/graphqlClient';
 
@@ -22,7 +22,7 @@ const render = () => {
 };
 
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
+  module.hot.accept('./containers/App', () => {
     render();
   });
 }

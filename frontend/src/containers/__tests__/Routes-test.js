@@ -2,15 +2,15 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
-import Routes from 'components/Routes';
-import Flight from 'components/Flight';
-import Passenger from 'components/Passenger';
+import Routes from 'containers/Routes';
+import Flight from 'containers/Flight';
+import Passenger from 'containers/Passenger';
 import Analytics from 'utils/Analytics';
 
-jest.mock('components/Home');
-jest.mock('components/Flight', () => () => null);
-jest.mock('components/Passenger', () => () => null);
-jest.mock('components/NotFound');
+jest.mock('containers/Home');
+jest.mock('containers/Flight', () => () => null);
+jest.mock('containers/Passenger', () => () => null);
+jest.mock('containers/NotFound');
 jest.mock('utils/Analytics');
 
 const setPath = value => {
