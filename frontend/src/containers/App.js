@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Routes from './Routes';
-import Header from './Header';
+import Header from '../components/Header';
 import { appWrap } from '../stylesheets/app.css';
 
 export default () => (
