@@ -1,7 +1,7 @@
 {
   "author": "Brian Jacobel <brian@bjacobel.com> (https://bjacobel.com)",
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.14",
+    "@apollo/client": "^3.0.0-beta.15",
     "@sentry/browser": "^5.9.0",
     "classnames": "^2.2.6",
     "core-js": "^3.0.1",
