@@ -1,34 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Router matches snapshot 1`] = `
-<Fragment>
-  <BrowserRouter>
-    <div>
-      <Switch>
-        <GARoute
-          component={[MockFunction]}
-          exact={true}
-          ga={Object {}}
-          path="/"
-        />
-        <GARoute
-          component={[Function]}
-          exact={true}
-          ga={Object {}}
-          path="/flight/:id"
-        />
-        <GARoute
-          component={[Function]}
-          exact={true}
-          ga={Object {}}
-          path="/passenger/:slug"
-        />
-        <GARoute
-          component={[MockFunction]}
-          ga={Object {}}
-        />
-      </Switch>
-    </div>
-  </BrowserRouter>
-</Fragment>
+<div>
+  <Switch>
+    <GARoute
+      component={[MockFunction]}
+      exact={true}
+      ga={Object {}}
+      path="/"
+    />
+    <GARoute
+      component={[Function]}
+      exact={true}
+      ga={Object {}}
+      path="/flight/:id"
+    />
+    <GARoute
+      component={[Function]}
+      exact={true}
+      ga={Object {}}
+      path="/passenger/:slug"
+    />
+    <GARoute
+      component={[MockFunction]}
+      ga={Object {}}
+    />
+  </Switch>
+</div>
 `;
