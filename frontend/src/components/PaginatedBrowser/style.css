@@ -1,0 +1,37 @@
+@value margin from "../../stylesheets/measurements.css";
+@value black, lightgrey from "../../stylesheets/colors.css";
+
+.browser {
+  max-width: 450px;
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: margin;
+}
+
+.pageCount {
+  composes: roboto from '../../stylesheets/shared.css';
+  margin: 0 calc(margin / 2);
+}
+
+.pageControl {
+  composes: roboto from '../../stylesheets/shared.css';
+  composes: hoverEffect from '../../stylesheets/shared.css';
+  cursor: pointer;
+  font-size: 0.8em;
+  outline: none;
+  display: block;
+  padding: calc(margin / 4) calc(margin / 2);
+  height: 35px;
+  width: 70px;
+  border: 1px solid lightgrey;
+
+  &:disabled {
+    color: lightgrey;
+    cursor: not-allowed;
+  }
+}

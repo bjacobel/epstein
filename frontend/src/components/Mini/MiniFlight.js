@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 
 import Loading from '../Loading';
-import { flightbox, flightlink, row } from './mini.css';
+import { box, link, row } from './mini.css';
 import { robotoMono as mono } from '../../stylesheets/shared.css';
 
 const FLIGHT = gql`
@@ -31,14 +31,15 @@ export default ({ id, done }) => {
   const { loading, error, data } = useQuery(FLIGHT, {
     variables: { id },
     onCompleted: done,
+    onError: done,
   });
 
   if (loading) return done ? null : <Loading />;
   if (error) return <p>Error :(</p>;
 
   return (
-    <div className={flightbox}>
-      <Link to={`/flight/${data.flight.id}`} className={flightlink}>
+    <div className={box}>
+      <Link to={`/flight/${data.flight.id}`} className={link}>
         <div className={row}>
           <span>{format(parseISO(data.flight.date), 'MMM d, y')}</span>
           <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>

@@ -2,13 +2,15 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 import Details from '../components/Details';
-import FlightBrowser from '../components/Flight/Browser';
+import PaginatedBrowser from '../components/PaginatedBrowser';
 import Loading from '../components/Loading';
-import Paginator from '../components/Paginator';
+import MiniFlight from '../components/Mini/MiniFlight';
 import { link } from '../stylesheets/link.css';
 
+const FLIGHT_LIMIT = 10;
+
 const PASSENGER = gql`
-  query Passenger($slug: String!, $offset: Int) {
+  query Passenger($slug: String!, $offset: Int, $limit: Int!) {
     passenger(slug: $slug) {
       id
       name
@@ -16,7 +18,7 @@ const PASSENGER = gql`
       wikipedia_link
       image
       flightCount
-      flights(limit: 10, offset: $offset) {
+      flights(offset: $offset, limit: $limit) {
         edges {
           id
         }
@@ -29,10 +31,24 @@ const PASSENGER = gql`
   }
 `;
 
+const range = histogram => {
+  if (!histogram) return '';
+
+  const months = Object.keys(histogram);
+  const [firstDate] = months[0];
+  const [lastDate] = months[months.length - 1];
+
+  if (firstDate === lastDate) {
+    return `in ${firstDate}`;
+  } else {
+    return `between ${firstDate} and ${lastDate}`;
+  }
+};
+
 export default ({ match }) => {
   const { slug } = match.params;
   const { loading, error, data, fetchMore } = useQuery(PASSENGER, {
-    variables: { slug },
+    variables: { slug, limit: FLIGHT_LIMIT },
   });
 
   if (loading) return <Loading text />;
@@ -50,44 +66,50 @@ export default ({ match }) => {
           <span>See more on Wikipedia →</span>
         </a>
       </div>
+      <span>history</span>
+      <div>
+        <span>{`Appears in the flight logs at least ${data.passenger.flightCount} times`}</span>
+        <span>{range(data.passenger.histogram)}</span>
+      </div>
       {data.passenger.image ? (
         <>
           <span>image</span>
           <img src={data.passenger.image} alt="" />
         </>
       ) : null}
-      <span># of flights</span>
-      <span>{data.passenger.flightCount}</span>
       <span>flights</span>
-      <div>
-        <Paginator
-          fetchMore={fetchMore}
-          offset={data.passenger.flights.edges.length + 1}
-          updateQuery={(prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev;
-            return {
-              passenger: {
-                ...prev.passenger,
-                flights: {
-                  // eslint-disable-next-line no-underscore-dangle
-                  ...fetchMoreResult.passenger.flights,
-                  pageInfo: {
-                    ...fetchMoreResult.passenger.flights.pageInfo,
-                    count:
-                      prev.passenger.flights.pageInfo.count +
-                      fetchMoreResult.passenger.flights.pageInfo.count,
+      <PaginatedBrowser
+        browserComponent={MiniFlight}
+        ids={data.passenger.flights.edges.map(x => x.id)}
+        totalAvailable={data.passenger.flightCount}
+        pageSize={FLIGHT_LIMIT}
+        fetchMore={() =>
+          fetchMore({
+            variables: { offset: data.passenger.flights.edges.length + 1 },
+            updateQuery: (prev, { fetchMoreResult }) => {
+              if (!fetchMoreResult) return prev;
+              return {
+                passenger: {
+                  ...prev.passenger,
+                  flights: {
+                    ...fetchMoreResult.passenger.flights,
+                    pageInfo: {
+                      ...fetchMoreResult.passenger.flights.pageInfo,
+                      count:
+                        prev.passenger.flights.pageInfo.count +
+                        fetchMoreResult.passenger.flights.pageInfo.count,
+                    },
+                    edges: [
+                      ...prev.passenger.flights.edges,
+                      ...fetchMoreResult.passenger.flights.edges,
+                    ],
                   },
-                  edges: [
-                    ...prev.passenger.flights.edges,
-                    ...fetchMoreResult.passenger.flights.edges,
-                  ],
                 },
-              },
-            };
-          }}
-        />
-        <FlightBrowser ids={data.passenger.flights.edges.map(x => x.id)} />
-      </div>
+              };
+            },
+          })
+        } // eslint-disable-line
+      />
     </Details>
   );
 };

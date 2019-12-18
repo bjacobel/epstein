@@ -1,3 +1,5 @@
+# import Histogram from './Histogram';
+
 scalar AWSURL
 
 type Passenger {
@@ -9,5 +11,6 @@ type Passenger {
   wikipedia_link: AWSURL
   image: AWSURL
   flightCount: Int
+  histogram: Histogram
   flights(limit: Int, offset: Int): FlightConnection
 }

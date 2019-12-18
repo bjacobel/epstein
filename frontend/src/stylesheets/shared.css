@@ -20,3 +20,12 @@
 .hidden {
   display: none;
 }
+
+.hoverEffect {
+  transition: all 0.1s ease;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.02);
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.1);
+  }
+}
