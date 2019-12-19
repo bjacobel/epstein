@@ -1,5 +1,5 @@
-@value black, lightgrey from '../../stylesheets/colors.css';
-@value margin from '../../stylesheets/measurements.css';
+@value black, lightgrey from stylesheets/colors;
+@value margin from stylesheets/measurements;
 
 .link {
   color: black;
@@ -8,7 +8,7 @@
 }
 
 .box {
-  composes: hoverEffect from '../../stylesheets/shared.css';
+  composes: hoverEffect from '../../stylesheets/shared';
   display: flex;
   background-color: white;
   flex-direction: column;

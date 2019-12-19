@@ -1,8 +1,8 @@
-@value margin from './measurements.css';
-@value black from './colors.css';
+@value margin from stylesheets/measurements;
+@value black from stylesheets/colors;
 
 .spinWrap {
-  composes: center from './shared.css';
+  composes: center from '../../stylesheets/shared';
   width: 100%;
   top: calc(margin / 2);
   right: calc(margin / 2);
@@ -29,7 +29,7 @@
 }
 
 .spinText {
-  composes: roboto from './shared.css';
+  composes: roboto from '../../stylesheets/shared';
   font-style: italic;
   margin-top: margin;
   opacity: 0;

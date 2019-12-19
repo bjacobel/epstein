@@ -1,4 +1,4 @@
-@value margin from "./measurements.css";
+@value margin from stylesheets/measurements;
 
 :global {
   body {
