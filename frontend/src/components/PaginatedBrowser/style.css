@@ -1,5 +1,5 @@
-@value margin from "../../stylesheets/measurements.css";
-@value black, lightgrey from "../../stylesheets/colors.css";
+@value margin from stylesheets/measurements;
+@value black, lightgrey from stylesheets/colors;
 
 .browser {
   max-width: 450px;
@@ -14,13 +14,13 @@
 }
 
 .pageCount {
-  composes: roboto from '../../stylesheets/shared.css';
+  composes: roboto from '../../stylesheets/shared';
   margin: 0 calc(margin / 2);
 }
 
 .pageControl {
-  composes: roboto from '../../stylesheets/shared.css';
-  composes: hoverEffect from '../../stylesheets/shared.css';
+  composes: roboto from '../../stylesheets/shared';
+  composes: hoverEffect from '../../stylesheets/shared';
   cursor: pointer;
   font-size: 0.8em;
   outline: none;

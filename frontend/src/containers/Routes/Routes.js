@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import NotFound from './NotFound';
-import Home from './Home';
-import Flight from './Flight';
-import Passenger from './Passenger';
-import Analytics from '../utils/Analytics';
+import NotFound from '../NotFound';
+import Home from '../Home';
+import Flight from '../Flight';
+import Passenger from '../Passenger';
+import Analytics from '../../utils/Analytics';
 
 export class GARoute extends Route {
   render() {

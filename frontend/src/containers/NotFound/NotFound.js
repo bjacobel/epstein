@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
-import styles from '../stylesheets/notFound.css';
-import { link } from '../stylesheets/link.css';
-import { center, roboto } from '../stylesheets/shared.css';
+import styles from './style.css';
+import { center, roboto, link } from '../../stylesheets/shared.css';
 
 export default class NotFound extends Component {
   render() {

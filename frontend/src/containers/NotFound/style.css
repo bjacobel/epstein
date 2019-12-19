@@ -1,0 +1,5 @@
+.not-found {
+  composes: center from '../../stylesheets/shared';
+  composes: roboto from '../../stylesheets/shared';
+  font-weight: 300;
+}

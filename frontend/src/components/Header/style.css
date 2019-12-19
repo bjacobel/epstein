@@ -1,5 +1,5 @@
-@value mobile, margin from "./measurements.css";
-@value black from "./colors.css";
+@value mobile, margin from stylesheets/measurements;
+@value black from stylesheets/colors;
 
 .header {
   display: flex;
@@ -11,13 +11,13 @@
 }
 
 .title {
-  composes: robotoMono from './shared.css';
+  composes: robotoMono from '../../stylesheets/shared';
   font-weight: 300;
   flex-grow: 1;
 }
 
 .hotlink {
-  composes: roboto from './shared.css';
+  composes: roboto from '../../stylesheets/shared';
   padding: 0 margin;
 }
 

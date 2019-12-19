@@ -11,8 +11,8 @@ import {
   burgerLines,
   active,
   mobileHotlinks,
-} from '../stylesheets/header.css';
-import { blacklink } from '../stylesheets/link.css';
+} from './style.css';
+import { blacklink } from '../../stylesheets/shared.css';
 
 const MenuButton = ({ toggleMenu, menuActive }) => {
   return (

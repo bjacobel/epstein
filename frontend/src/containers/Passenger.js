@@ -5,7 +5,7 @@ import Details from '../components/Details';
 import PaginatedBrowser from '../components/PaginatedBrowser';
 import Loading from '../components/Loading';
 import MiniFlight from '../components/Mini/MiniFlight';
-import { link } from '../stylesheets/link.css';
+import { link } from '../stylesheets/shared.css';
 
 const FLIGHT_LIMIT = 10;
 

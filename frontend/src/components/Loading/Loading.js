@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { spinWrap, spinner, spinText, active } from '../stylesheets/spinner.css';
+import { spinWrap, spinner, spinText, active } from './style.css';
 
 export default ({ text }) => {
   const [timeoutMet, meetTimeout] = useState(false);
