@@ -4,6 +4,7 @@ module.exports = {
     'max-classes-per-file': 0,
     'no-else-return': 0,
     'no-console': 0,
+    'one-var': [1, { initialized: 'never' }],
     'import/prefer-default-export': 1,
     'import/no-extraneous-dependencies': [
       2,

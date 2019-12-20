@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`passenger details container matches snapshot 1`] = `""`;
+
+exports[`passenger details container renders spinner before gql loads 1`] = `
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
+`;

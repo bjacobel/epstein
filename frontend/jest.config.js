@@ -3,9 +3,10 @@ module.exports = {
   coveragePathIgnorePatterns: ['polyfills.js'],
   moduleNameMapper: {
     '^.+\\.css$': '<rootDir>/__mocks__/stylesheets.js',
+    '^apollo-link$': '@apollo/client',
   },
   moduleDirectories: [__dirname, 'node_modules', 'src'],
   snapshotSerializers: ['enzyme-to-json/serializer'],
-  setupFiles: ['./jest.setup.js'],
+  setupFiles: ['<rootDir>/jest.setup.js'],
   testURL: 'http://localhost',
 };
