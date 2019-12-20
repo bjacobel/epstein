@@ -1,1 +1,6 @@
-export default {};
+module.exports = new Proxy(
+  {},
+  {
+    get: (target, key) => key,
+  },
+);

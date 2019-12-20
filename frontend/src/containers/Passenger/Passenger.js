@@ -1,15 +1,15 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
-import Details from '../components/Details';
-import PaginatedBrowser from '../components/PaginatedBrowser';
-import Loading from '../components/Loading';
-import MiniFlight from '../components/Mini/MiniFlight';
-import { link } from '../stylesheets/shared.css';
+import Details from '../../components/Details';
+import PaginatedBrowser from '../../components/PaginatedBrowser';
+import Loading from '../../components/Loading';
+import MiniFlight from '../../components/Mini/MiniFlight';
+import { link } from '../../stylesheets/shared.css';
 
 const FLIGHT_LIMIT = 10;
 
-const PASSENGER = gql`
+export const PASSENGER = gql`
   query Passenger($slug: String!, $offset: Int, $limit: Int!) {
     passenger(slug: $slug) {
       id

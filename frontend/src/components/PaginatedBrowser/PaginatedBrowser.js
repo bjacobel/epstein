@@ -23,7 +23,7 @@ export default ({ ids, totalAvailable, pageSize, fetchMore, browserComponent }) 
   const incrementSet = async () => {
     if (page + 1 === pages) return Promise.resolve();
 
-    if (ids.length < pageSize * (page + 2)) {
+    if (ids.length < Math.min(totalAvailable, pageSize * (page + 2))) {
       await fetchMore();
     }
     return Promise.resolve(setPage(page + 1));
