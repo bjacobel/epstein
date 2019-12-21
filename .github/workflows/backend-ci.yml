@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - backend/infra/**
+      - backend/schema/**
       - .github/workflows/*.yml
 jobs:
   terraform:
@@ -30,3 +31,23 @@ jobs:
       #     tf_actions_version: 0.12.17
       #     tf_actions_subcommand: 'validate'
       #     tf_actions_working_dir: 'backend/infra'
+  graphql:
+    name: 'GraphQL Schema'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: 'Checkout'
+        uses: actions/checkout@master
+      - name: Cache node_modules
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+      - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --ignore-scripts
+      - name: Validate schema
+        run: yarn validate-schema

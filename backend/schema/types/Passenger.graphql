@@ -1,4 +1,4 @@
-# import Histogram from './Histogram';
+# import Histogram from './Histogram.graphql';
 
 scalar AWSURL
 

@@ -5,6 +5,7 @@
     "tf": "cd backend/infra && terraform",
     "tfval": "yarn --silent tf output --json | jq -er",
     "upload-schema": "yarn --silent workspace schema run upload-schema",
+    "validate-schema": "yarn --silent workspace schema run validate-schema",
     "init-provider": "backend/infra/init-provider.sh",
     "fe": "yarn workspace frontend run --silent"
   }
