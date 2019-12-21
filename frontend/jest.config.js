@@ -3,8 +3,11 @@ module.exports = {
   coveragePathIgnorePatterns: ['polyfills.js'],
   moduleNameMapper: {
     '^.+\\.css$': '<rootDir>/__mocks__/stylesheets.js',
-    '^apollo-link$': '@apollo/client',
   },
+  transformIgnorePatterns: [
+    // Change MODULE_NAME_HERE to your module that isn't being compiled
+    '/node_modules/(?!@apollo/client/utilities/observables/).+\\.js$',
+  ],
   moduleDirectories: [__dirname, 'node_modules', 'src'],
   snapshotSerializers: ['enzyme-to-json/serializer'],
   setupFiles: ['<rootDir>/jest.setup.js'],

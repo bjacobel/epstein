@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import PaginatedBrowser from '../PaginatedBrowser';
 import Loading from '../../Loading';
 import { pageCount, hidden } from '../style.css';
-import updateWrapper from '../../../utils/updateWrapper';
+import updateWrapper from '../../../utils/testing/updateWrapper';
 
 jest.useFakeTimers();
 
