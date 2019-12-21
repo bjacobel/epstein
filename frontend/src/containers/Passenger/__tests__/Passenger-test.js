@@ -10,6 +10,7 @@ const passengerData = {
   data: {
     passenger: {
       id: 1,
+      slug: 'bill-clinton',
       name: 'Bill Clinton',
       biography: 'prez',
       wikipedia_link: 'wikipedia dot com',

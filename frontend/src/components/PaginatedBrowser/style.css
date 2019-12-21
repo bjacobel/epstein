@@ -1,5 +1,5 @@
-@value margin from stylesheets/measurements;
-@value black, lightgrey from stylesheets/colors;
+@value margin from '../../stylesheets/measurements';
+@value black, lightgrey from '../../stylesheets/colors';
 
 .browser {
   max-width: 450px;

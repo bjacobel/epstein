@@ -1,5 +1,5 @@
-@value mobile, margin from stylesheets/measurements;
-@value black from stylesheets/colors;
+@value mobile, margin from '../../stylesheets/measurements';
+@value black from '../../stylesheets/colors';
 
 .header {
   display: flex;

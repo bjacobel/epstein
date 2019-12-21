@@ -1,4 +1,4 @@
-@value black, blue, dark-blue from colors;
+@value black, blue, dark-blue from './colors';
 
 .center {
   display: flex;

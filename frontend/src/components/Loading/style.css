@@ -1,5 +1,5 @@
-@value margin from stylesheets/measurements;
-@value black from stylesheets/colors;
+@value margin from '../../stylesheets/measurements';
+@value black from '../../stylesheets/colors';
 
 .spinWrap {
   composes: center from '../../stylesheets/shared';
