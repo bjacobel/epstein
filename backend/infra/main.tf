@@ -27,6 +27,7 @@ module "appsync" {
   rds_cluster_db_name          = module.rds.rds_cluster_db_name
   rds_cluster_secret_store_arn = module.rds.rds_cluster_secret_store_arn
   files_distro                 = module.files.distro_domain
+  cache_distro_id              = module.cloudfront.distribution_id
 }
 
 module "cloudfront" {

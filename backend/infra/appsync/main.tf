@@ -134,3 +134,15 @@ POLICY
     Project = var.name
   }
 }
+
+// invalidate the CF distro when any text in the VTL directory changes (this is a sledgehammer)
+resource "null_resource" "distro_invalidation" {
+  triggers = {
+    vtl = join(" ", values({ for f in fileset("${path.module}/resolvers", "**/*") : f => file("${path.module}/resolvers/${f}") }))
+  }
+
+  provisioner "local-exec" {
+    working_dir = "../"
+    command     = "aws cloudfront create-invalidation --distribution-id ${var.cache_distro_id} --paths \"/?query*\""
+  }
+}
