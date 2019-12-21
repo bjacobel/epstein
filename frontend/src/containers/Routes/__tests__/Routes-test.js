@@ -2,10 +2,10 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { BrowserRouter } from 'react-router-dom';
 
-import Routes from 'containers/Routes';
-import Flight from 'containers/Flight';
-import Passenger from 'containers/Passenger';
-import Analytics from 'utils/Analytics';
+import Routes from '../Routes';
+import Flight from '../../Flight';
+import Passenger from '../../Passenger';
+import Analytics from '../../../utils/Analytics';
 
 jest.mock('containers/Home');
 jest.mock('containers/Flight', () => () => null);
