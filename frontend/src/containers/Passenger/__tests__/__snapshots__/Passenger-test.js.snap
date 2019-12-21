@@ -1,9 +1,151 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`passenger details container matches snapshot 1`] = `""`;
+exports[`passenger details container matches snapshot with data resolution 1`] = `
+<_default
+  match={
+    Object {
+      "params": Object {
+        "slug": "bill-clinton",
+      },
+    }
+  }
+>
+  <_default>
+    <div
+      className="container"
+    >
+      <span>
+        name
+      </span>
+      <span>
+        Bill Clinton
+      </span>
+      <span>
+        bio
+      </span>
+      <div>
+        <span>
+          prez
+        </span>
+        <br />
+        <a
+          className="link"
+          href="wikipedia dot com"
+        >
+          <span>
+            See more on Wikipedia →
+          </span>
+        </a>
+      </div>
+      <span>
+        history
+      </span>
+      <div>
+        <span>
+          Appears in the flight logs at least 26 times
+        </span>
+        <span />
+      </div>
+      <span>
+        image
+      </span>
+      <img
+        alt=""
+        src="jpeg"
+      />
+      <span>
+        flights
+      </span>
+      <_default
+        browserComponent={[Function]}
+        fetchMore={[Function]}
+        ids={Array []}
+        pageSize={10}
+        totalAvailable={26}
+      >
+        <div
+          className="browser"
+        >
+          <div
+            className="controls"
+          >
+            <button
+              aria-controls="detailsList"
+              aria-label="previous page of flights"
+              className="pageControl"
+              disabled={true}
+              onClick={[Function]}
+              type="button"
+            >
+              ◀ prev
+            </button>
+            <span
+              className="pageCount"
+            >
+              1 / 3
+            </span>
+            <button
+              aria-controls="detailsList"
+              aria-label="next page of flights"
+              className="pageControl"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              next ▶
+            </button>
+          </div>
+          <div
+            className="hidden"
+          >
+            <_default>
+              <div
+                className="spinWrap"
+              >
+                <div
+                  className="spinner"
+                />
+              </div>
+            </_default>
+          </div>
+          <div
+            aria-live="polite"
+            className=""
+            id="detailsList"
+            role="region"
+          />
+        </div>
+      </_default>
+    </div>
+  </_default>
+</_default>
+`;
 
 exports[`passenger details container renders spinner before gql loads 1`] = `
-<ContextConsumer>
-  <Component />
-</ContextConsumer>
+<_default
+  match={
+    Object {
+      "params": Object {
+        "slug": "bill-clinton",
+      },
+    }
+  }
+>
+  <_default
+    text={true}
+  >
+    <div
+      className="spinWrap"
+    >
+      <div
+        className="spinner"
+      />
+      <span
+        className="spinText"
+      >
+        Hang tight!
+      </span>
+    </div>
+  </_default>
+</_default>
 `;

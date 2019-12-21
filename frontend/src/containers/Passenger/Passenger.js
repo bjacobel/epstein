@@ -52,7 +52,7 @@ export default ({ match }) => {
   });
 
   if (loading) return <Loading text />;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>{error.message}</p>;
 
   return (
     <Details>

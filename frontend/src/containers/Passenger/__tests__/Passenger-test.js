@@ -1,44 +1,55 @@
 import React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { mount } from 'enzyme';
 
 import Passenger, { PASSENGER } from '../Passenger';
-import createMockClient from '../../../utils/createMockClient';
-import updateWrapper from '../../../utils/updateWrapper';
+import MockLink from '../../../utils/testing/MockLink';
+import updateWrapper from '../../../utils/testing/updateWrapper';
 
 const passengerData = {
-  passenger: {
-    id: 1,
+  data: {
+    passenger: {
+      id: 1,
+      name: 'Bill Clinton',
+      biography: 'prez',
+      wikipedia_link: 'wikipedia dot com',
+      image: 'jpeg',
+      flightCount: 26,
+      flights: { edges: [], pageInfo: { count: 10, hasNext: true } },
+    },
   },
 };
 
 describe('passenger details container', () => {
-  let client;
-  let queryHandler;
+  let client, link;
 
   beforeEach(() => {
-    queryHandler = jest.fn().mockResolvedValue(passengerData);
-    client = createMockClient(PASSENGER, queryHandler);
+    link = new MockLink();
+    client = new ApolloClient({
+      cache: new InMemoryCache({
+        addTypename: false,
+      }),
+      link,
+    });
   });
 
-  fit('queries by slug from params', async () => {
+  it('queries by slug from params', async () => {
+    const queryHandler = jest.fn(() => new Promise(() => {}));
+    link.setRequestHandler(PASSENGER, queryHandler);
+    const slug = 'bill-clinton';
     const wrapper = mount(
       <ApolloProvider client={client}>
-        <Passenger match={{ params: { slug: 'bill-clinton' } }} />
+        <Passenger match={{ params: { slug } }} />
       </ApolloProvider>,
     );
     await updateWrapper(wrapper);
 
-    console.log(client.link.requestHandlers);
-
-    expect(queryHandler).lastCalledWith({ variables: {} });
+    expect(queryHandler).lastCalledWith(expect.objectContaining({ slug }));
   });
 
   it('renders spinner before gql loads', async () => {
-    queryHandler = jest.fn(() => new Promise());
-    client = createMockClient(PASSENGER, queryHandler);
-
-    console.log(client.link.requestHandlers);
+    const queryHandler = jest.fn(() => new Promise(() => {}));
+    link.setRequestHandler(PASSENGER, queryHandler);
 
     const wrapper = mount(
       <ApolloProvider client={client}>
@@ -51,7 +62,9 @@ describe('passenger details container', () => {
     expect(wrapper.find(Passenger)).toMatchSnapshot();
   });
 
-  it('matches snapshot', async () => {
+  it('matches snapshot with data resolution', async () => {
+    const queryHandler = jest.fn().mockResolvedValue(passengerData);
+    link.setRequestHandler(PASSENGER, queryHandler);
     const wrapper = mount(
       <ApolloProvider client={client}>
         <Passenger match={{ params: { slug: 'bill-clinton' } }} />

@@ -5,10 +5,12 @@ export function wait(amount = 0) {
 }
 
 export default async (wrapper, amount = 0) => {
+  // eslint-disable-next-line no-underscore-dangle
+  const fakeTimers = setTimeout._isMockFunction;
   await act(async () => {
-    jest.useRealTimers();
+    if (fakeTimers) jest.useRealTimers();
     await wait(amount);
-    jest.useFakeTimers();
+    if (fakeTimers) jest.useFakeTimers();
     wrapper.update();
   });
 };
