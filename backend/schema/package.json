@@ -10,6 +10,7 @@
   "scripts": {
     "tf": "cd ../infra && terraform",
     "tfval": "yarn --silent tf output --json | jq -er",
-    "upload-schema": "node tools/upload.js `yarn --silent tfval \".api_id.value\"` `yarn --silent tfval \".region.value\"`"
+    "upload-schema": "node tools/upload.js `yarn --silent tfval \".api_id.value\"` `yarn --silent tfval \".region.value\"`",
+    "validate-schema": "node tools/generate.js"
   }
 }
