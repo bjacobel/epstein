@@ -1,0 +1,9 @@
+${errorHandler}
+${rdsResp}
+
+#if($resp.size() == 0)
+  $utils.error("Couldn't find either source airfield $ctx.source.source or destination airfield $ctx.source.destination", "NotFound")
+#end
+
+## Returns meters
+$utils.toJson($resp[0].distance)

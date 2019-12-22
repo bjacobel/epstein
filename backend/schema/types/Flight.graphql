@@ -12,6 +12,7 @@ type Flight {
   aircraft: Aircraft
   source: Airfield
   destination: Airfield
+  distance: Float
   passengers: PassengerConnection
   page: AWSURL!
   document: String!
