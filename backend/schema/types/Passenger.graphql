@@ -1,5 +1,10 @@
 scalar AWSURL
-scalar AWSJSON
+scalar AWSDate
+
+type MonthCount {
+  month: AWSDate!
+  count: Int!
+}
 
 type Passenger {
   id: Int  # 'literal' passengers will not have ids. ids are only given when they are canonicalized
@@ -10,6 +15,6 @@ type Passenger {
   wikipedia_link: AWSURL
   image: AWSURL
   flightCount: Int
-  histogram: AWSJSON
+  histogram: [MonthCount]
   flights(limit: Int, offset: Int): FlightConnection
 }
