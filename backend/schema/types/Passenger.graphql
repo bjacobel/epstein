@@ -1,6 +1,5 @@
-# import Histogram from './Histogram.graphql';
-
 scalar AWSURL
+scalar AWSJSON
 
 type Passenger {
   id: Int  # 'literal' passengers will not have ids. ids are only given when they are canonicalized
@@ -11,6 +10,6 @@ type Passenger {
   wikipedia_link: AWSURL
   image: AWSURL
   flightCount: Int
-  histogram: Histogram
+  histogram: AWSJSON
   flights(limit: Int, offset: Int): FlightConnection
 }

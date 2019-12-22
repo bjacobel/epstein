@@ -1,3 +1,0 @@
-type Histogram {
-  [isoMonth: String] : Int
-}
