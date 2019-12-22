@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { format, parseISO, isEqual, isSameYear } from 'date-fns';
 
 import Details from '../../components/Details';
 import PaginatedBrowser from '../../components/PaginatedBrowser';
@@ -20,6 +21,10 @@ export const PASSENGER = gql`
       wikipedia_link
       image
       flightCount
+      histogram {
+        count
+        month
+      }
       flights(offset: $offset, limit: $limit) {
         edges {
           id
@@ -33,17 +38,19 @@ export const PASSENGER = gql`
   }
 `;
 
-const range = histogram => {
-  if (!histogram) return '';
+export const range = histogram => {
+  const firstDate = parseISO(histogram[0].month);
+  const lastDate = parseISO(histogram[histogram.length - 1].month);
 
-  const months = Object.keys(histogram);
-  const [firstDate] = months[0];
-  const [lastDate] = months[months.length - 1];
+  const firstFormatted = format(firstDate, 'MMMM y');
+  const lastFormatted = format(lastDate, 'MMMM y');
 
-  if (firstDate === lastDate) {
-    return `in ${firstDate}`;
+  if (isEqual(firstDate, lastDate)) {
+    return `in ${firstFormatted}`;
+  } else if (isSameYear(firstDate, lastDate)) {
+    return `between ${format(firstDate, 'MMMM')} and ${lastFormatted}`;
   } else {
-    return `between ${firstDate} and ${lastDate}`;
+    return `between ${firstFormatted} and ${lastFormatted}`;
   }
 };
 
