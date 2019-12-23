@@ -25,7 +25,7 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': [2, { specialLink: ['to'] }],
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       modules: true,

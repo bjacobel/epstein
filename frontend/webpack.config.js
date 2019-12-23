@@ -52,10 +52,19 @@ module.exports = (env = {}, { mode } = {}) => {
         },
         {
           test: /\.css$/,
+          include: path.join(__dirname, 'src'),
           loaders: [
             isProd ? { loader: MiniCssExtractPlugin.loader } : { loader: 'style-loader' },
             cssLoader,
             { loader: 'postcss-loader' },
+          ],
+        },
+        {
+          test: /\.css$/,
+          include: /node_modules/,
+          loaders: [
+            isProd ? { loader: MiniCssExtractPlugin.loader } : { loader: 'style-loader' },
+            { loader: 'css-loader' },
           ],
         },
         {
