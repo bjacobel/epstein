@@ -17,7 +17,7 @@ const errorLink = onError(({ graphQLErrors, networkError, response }) => {
     graphQLErrors.forEach(err =>
       logErr(new GraphQLError(err.message), {
         errorType: err.errorType,
-        query: err.path.join('.'),
+        query: err.path && err.path.length ? err.path.join('.') : undefined,
         source: 'graphql',
         response,
       }),
