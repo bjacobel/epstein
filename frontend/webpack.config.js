@@ -93,7 +93,7 @@ module.exports = (env = {}, { mode } = {}) => {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
             enforce: true,
-            chunks: 'all',
+            chunks: 'initial',
           },
         },
       },

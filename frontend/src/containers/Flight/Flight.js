@@ -54,14 +54,16 @@ export default ({ match }) => {
 
   const isoDate = parseISO(data.flight.date);
 
-  const SuspenseMap = React.lazy(() => import('../../components/Map'));
+  const SuspenseMap = React.lazy(() =>
+    import(/* webpackChunkName: "map" */ '../../components/Map'),
+  );
 
   return (
     <>
       <MetaTags
         title={`${data.flight.source.iata_code} to ${
           data.flight.destination.iata_code
-        } on ${format(isoDate, 'd/M/yy')}`}
+        } on ${format(isoDate, 'M/d/yy')}`}
         description={''}
         image={''}
         uri={`flight/${data.flight.id}`}
