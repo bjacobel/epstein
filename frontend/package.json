@@ -4,6 +4,7 @@
     "@apollo/client": "^3.0.0-beta.15",
     "@sentry/browser": "^5.9.0",
     "apollo-link-error": "^1.1.12",
+    "arc": "^0.1.1",
     "classnames": "^2.2.6",
     "core-js": "^3.0.1",
     "date-fns": "^2.8.1",
