@@ -3,6 +3,9 @@
 # import FlightConnection from './types/FlightConnection.graphql'
 # import PassengerConnection from './types/PassengerConnection.graphql'
 
+# see https://aws.amazon.com/blogs/mobile/using-multiple-authorization-types-with-aws-appsync-graphql-apis/
+directive @aws_cognito_user_pools on FIELD
+
 type Query {
   flight(id: Int!): Flight
   flights(
@@ -22,4 +25,14 @@ type Query {
     limit: Int,
     offset: Int
   ): FlightConnection
+}
+
+type Mutation @aws_cognito_user_pools {
+  createOrUpdatePassenger(
+    slug: String!
+    name: String
+    biography: String
+    wikipedia_link: String
+    image: AWSURL
+  ): Passenger!
 }

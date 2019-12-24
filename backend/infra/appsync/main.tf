@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 resource "aws_appsync_graphql_api" "appsync" {
   authentication_type = "API_KEY"
   name                = "tf-${var.name}-appsync-api"
@@ -5,6 +7,15 @@ resource "aws_appsync_graphql_api" "appsync" {
   log_config {
     cloudwatch_logs_role_arn = aws_iam_role.assumerole_logs.arn
     field_log_level          = "ERROR"
+  }
+
+  additional_authentication_provider {
+    authentication_type = "AMAZON_COGNITO_USER_POOLS"
+    user_pool_config {
+      user_pool_id        = aws_cognito_user_pool.admins.id
+      app_id_client_regex = "^${aws_cognito_user_pool_client.client.id}$"
+      aws_region          = data.aws_region.current.name
+    }
   }
 
   tags = {
@@ -136,13 +147,13 @@ POLICY
 }
 
 // invalidate the CF distro when any text in the VTL directory changes (this is a sledgehammer)
-resource "null_resource" "distro_invalidation" {
-  triggers = {
-    vtl = join(" ", values({ for f in fileset("${path.module}/resolvers", "**/*") : f => file("${path.module}/resolvers/${f}") }))
-  }
+# resource "null_resource" "distro_invalidation" {
+#   triggers = {
+#     vtl = join(" ", values({ for f in fileset("${path.module}/resolvers", "**/*") : f => file("${path.module}/resolvers/${f}") }))
+#   }
 
-  provisioner "local-exec" {
-    working_dir = "../"
-    command     = "aws cloudfront create-invalidation --distribution-id ${var.cache_distro_id} --paths \"/?query*\""
-  }
-}
+#   provisioner "local-exec" {
+#     working_dir = "../"
+#     command     = "aws cloudfront create-invalidation --distribution-id ${var.cache_distro_id} --paths \"/?query*\""
+#   }
+# }
