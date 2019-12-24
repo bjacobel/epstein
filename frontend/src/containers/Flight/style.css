@@ -8,7 +8,13 @@
   }
 }
 
-.noslug {
-  composes: robotoMono from '../../stylesheets/shared';
+.noslug,
+.explainLiteral {
+  composes: roboto from '../../stylesheets/shared';
   color: darkgrey;
+}
+
+.explainLiteral {
+  display: block;
+  padding-bottom: calc(margin / 2);
 }
