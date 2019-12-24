@@ -8,5 +8,6 @@ type Airfield {
   longitude_deg: Float!
   iso_country: String!,
   iso_region: String!,
+  municipality: String!,
   wikipedia_link: String,
 }

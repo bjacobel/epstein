@@ -6,9 +6,18 @@ import { Link } from 'react-router-dom';
 import Details from '../../components/Details';
 import Loading from '../../components/Loading';
 import MetaTags from '../../components/MetaTags';
+import { passengers, noslug } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
 const FLIGHT = gql`
+  fragment airfield on Airfield {
+    name
+    iata_code
+    latitude_deg
+    longitude_deg
+    municipality
+    iso_country
+  }
   query Flight($id: Int!) {
     flight(id: $id) {
       id
@@ -27,16 +36,10 @@ const FLIGHT = gql`
         tailsign
       }
       source {
-        name
-        iata_code
-        latitude_deg
-        longitude_deg
+        ...airfield
       }
       destination {
-        name
-        iata_code
-        latitude_deg
-        longitude_deg
+        ...airfield
       }
     }
   }
@@ -44,6 +47,12 @@ const FLIGHT = gql`
 
 const formatKm = m =>
   `${new Intl.NumberFormat().format(Number.parseFloat(m / 1000).toPrecision(4))} km`;
+
+/* eslint-disable camelcase */
+const Airfield = ({ name, municipality, iso_country }) => (
+  <span>{`${name} (${municipality}, ${iso_country})`}</span>
+);
+/* eslint-enable camelcase */
 
 export default ({ match }) => {
   const { id } = match.params;
@@ -72,9 +81,9 @@ export default ({ match }) => {
         <span>date</span>
         <span>{format(isoDate, 'MMM d, y')}</span>
         <span>source</span>
-        <span>{data.flight.source.name}</span>
+        <Airfield {...data.flight.source} />
         <span>destination</span>
-        <span>{data.flight.destination.name}</span>
+        <Airfield {...data.flight.destination} />
         <span>distance</span>
         <span>{formatKm(data.flight.distance)}</span>
         <span>map</span>
@@ -88,6 +97,33 @@ export default ({ match }) => {
               ]}
             />
           </Suspense>
+        </div>
+        <span>source</span>
+        <span>
+          <Link className={link} to={data.flight.page}>
+            original PDF document
+          </Link>
+        </span>
+        <span>passengers</span>
+        <div className={passengers}>
+          <ul>
+            {data.flight.passengers.edges
+              .filter(x => x.slug)
+              .map(({ slug, name }) => (
+                <li key={slug}>
+                  <Link className={link} to={`/passenger/${slug}`}>
+                    {name}
+                  </Link>
+                </li>
+              ))}
+            {data.flight.passengers.edges
+              .filter(x => !x.slug)
+              .map(({ literal }) => (
+                <li key={literal} className={noslug}>
+                  {literal}
+                </li>
+              ))}
+          </ul>
         </div>
         <span>aircraft</span>
         <div>

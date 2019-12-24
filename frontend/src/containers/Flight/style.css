@@ -1,0 +1,14 @@
+@value margin from '../../stylesheets/measurements';
+@value darkgrey from '../../stylesheets/colors';
+
+.passengers {
+  ul {
+    margin: 0;
+    padding-left: margin;
+  }
+}
+
+.noslug {
+  composes: robotoMono from '../../stylesheets/shared';
+  color: darkgrey;
+}

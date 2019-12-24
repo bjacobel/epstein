@@ -1563,6 +1563,11 @@ aproba@^1.0.3, aproba@^1.1.1:
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
+arc@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/arc/-/arc-0.1.1.tgz#ec52a6c41d1e5ecbd54fc812dafad80febf4127b"
+  integrity sha512-gJsNNbnJW7UMU9ccjBaRh2evSyltbinzRGNPX9aiW28QxbGMtwMDC0YL6lkF73b+y+BUAOT/dUN2DMQDB1Is5w==
+
 are-we-there-yet@~1.1.2:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/are-we-there-yet/-/are-we-there-yet-1.1.5.tgz#4b35c2944f062a8bfcda66410760350fe9ddfc21"
