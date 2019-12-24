@@ -1,0 +1,4 @@
+{
+  "main": "./ErrorBoundary.js",
+  "private": true
+}
