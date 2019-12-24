@@ -54,6 +54,21 @@ const Airfield = ({ name, municipality, iso_country }) => (
 );
 /* eslint-enable camelcase */
 
+export const describePassengers = plist => {
+  const notablePassengers = plist.filter(x => x.name).map(x => x.name);
+  const listablePassengers = notablePassengers.slice(0, notablePassengers.length - 1);
+  const listedPassengers = listablePassengers.join(', ');
+  const lastPassenger = notablePassengers[notablePassengers.length - 1];
+
+  return `${plist.length} passengers were listed on the manifest${
+    notablePassengers.length
+      ? `, including ${listedPassengers}${
+          listedPassengers.length ? ' and ' : ''
+        }${lastPassenger}`
+      : ''
+  }`;
+};
+
 export default ({ match }) => {
   const { id } = match.params;
   const { loading, error, data } = useQuery(FLIGHT, { variables: { id } });
@@ -73,8 +88,7 @@ export default ({ match }) => {
         title={`${data.flight.source.iata_code} to ${
           data.flight.destination.iata_code
         } on ${format(isoDate, 'M/d/yy')}`}
-        description={''}
-        image={''}
+        description={describePassengers(data.flight.passengers.edges)}
         uri={`flight/${data.flight.id}`}
       />
       <Details>
