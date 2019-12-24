@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Details from '../../components/Details';
 import Loading from '../../components/Loading';
 import MetaTags from '../../components/MetaTags';
-import { passengers, noslug } from './style.css';
+import { passengers, noslug, explainLiteral } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
 const FLIGHT = gql`
@@ -130,11 +130,16 @@ export default ({ match }) => {
                   </Link>
                 </li>
               ))}
+            <hr />
+            <span className={explainLiteral}>
+              As well as the following, who have not been linked to an identified
+              passenger:
+            </span>
             {data.flight.passengers.edges
               .filter(x => !x.slug)
               .map(({ literal }) => (
                 <li key={literal} className={noslug}>
-                  {literal}
+                  <span>{`“${literal}”`}</span>
                 </li>
               ))}
           </ul>
