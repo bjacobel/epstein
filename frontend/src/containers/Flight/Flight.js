@@ -23,6 +23,7 @@ const FLIGHT = gql`
       id
       distance
       date
+      page
       passengers {
         edges {
           name
@@ -114,9 +115,14 @@ export default ({ match }) => {
         </div>
         <span>source</span>
         <span>
-          <Link className={link} to={data.flight.page}>
+          <a
+            className={link}
+            href={data.flight.page}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             original PDF document
-          </Link>
+          </a>
         </span>
         <span>passengers</span>
         <div className={passengers}>
