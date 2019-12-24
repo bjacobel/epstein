@@ -2,6 +2,8 @@
 @value darkgrey from '../../stylesheets/colors';
 
 .passengers {
+  max-width: 450px;
+
   ul {
     margin: 0;
     padding-left: margin;
