@@ -115,7 +115,7 @@ module.exports = (env = {}, { mode } = {}) => {
       new HtmlWebpackPlugin({
         template: './src/index.html.jsx',
         favicon: './src/assets/images/favicon.ico',
-        title: config.ProjectName,
+        title: config.ProjectFQDomain,
         inject: true,
       }),
       new ScriptExtHtmlWebpackPlugin({

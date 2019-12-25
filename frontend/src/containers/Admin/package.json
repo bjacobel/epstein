@@ -1,0 +1,4 @@
+{
+  "main": "./Admin.js",
+  "private": true
+}
