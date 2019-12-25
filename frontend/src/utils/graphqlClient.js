@@ -2,8 +2,10 @@ import { ApolloClient, HttpLink, InMemoryCache, ApolloLink } from '@apollo/clien
 import { onError } from 'apollo-link-error';
 import ExtendableError from 'extendable-error';
 
+import { getJwtToken } from './auth.js';
+
 import logErr from './errors';
-import { BACKEND_URL, SHOW_DEV_TOOLS } from '../constants';
+import { BACKEND_URL, BACKEND_UNCACHED_URL, SHOW_DEV_TOOLS } from '../constants';
 
 const httpLink = new HttpLink({
   uri: BACKEND_URL,
@@ -29,5 +31,27 @@ const errorLink = onError(({ graphQLErrors, networkError, response }) => {
 export default new ApolloClient({
   cache: new InMemoryCache(),
   link: ApolloLink.from([errorLink, httpLink]),
+  connectToDevTools: SHOW_DEV_TOOLS,
+});
+
+const authedFetch = (uri, options) => {
+  return fetch(uri, {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: getJwtToken(),
+    },
+  });
+};
+
+export const AdminClient = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: ApolloLink.from([
+    errorLink,
+    new HttpLink({
+      uri: BACKEND_UNCACHED_URL,
+      fetch: authedFetch,
+    }),
+  ]),
   connectToDevTools: SHOW_DEV_TOOLS,
 });

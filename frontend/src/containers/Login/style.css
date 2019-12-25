@@ -1,0 +1,5 @@
+.loginLink {
+  composes: roboto from '../../stylesheets/shared.css';
+  composes: link from '../../stylesheets/shared.css';
+  composes: center from '../../stylesheets/shared.css';
+}

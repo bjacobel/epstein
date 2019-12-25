@@ -1,3 +1,10 @@
+locals {
+  base_uris = [
+    "http://localhost:8080",
+    "https://${var.domain}"
+  ]
+}
+
 resource "aws_cognito_user_pool" "admins" {
   name = "${var.name}-admin-pool"
 
@@ -24,4 +31,18 @@ resource "aws_cognito_user_pool_client" "client" {
   explicit_auth_flows = [
     "USER_PASSWORD_AUTH"
   ]
+  allowed_oauth_flows                  = ["implicit"]
+  allowed_oauth_flows_user_pool_client = true
+  callback_urls                        = [for u in local.base_uris : "${u}/login"]
+  logout_urls                          = local.base_uris
+  supported_identity_providers         = ["COGNITO"]
+  allowed_oauth_scopes = [
+    "aws.cognito.signin.user.admin"
+  ]
+}
+
+resource "aws_cognito_user_pool_domain" "main" {
+  domain = var.name # replace with var.domain once deployed and ACM cert is live
+  # certificate_arn = aws_acm_certificate.cert.arn
+  user_pool_id = aws_cognito_user_pool.admins.id
 }

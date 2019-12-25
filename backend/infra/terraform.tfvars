@@ -1,1 +1,2 @@
-name = "epsteinbrain"
+name   = "epsteinbrain"
+domain = "epstein.flights"
