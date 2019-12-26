@@ -23,7 +23,7 @@ resource "aws_appsync_resolver" "query_resolver" {
 {
     "version": "2018-05-29",
     "statements":[
-        "${replace(file("${local.resolver_dir}/${each.value}"), "/[\\n\\t]/", " ")}"
+        "${join("\",\"", split("-- statementbreak", replace(file("${local.resolver_dir}/${each.value}"), "/[\\n\\t]/", " ")))}"
     ]
 }
 EOF

@@ -4,7 +4,8 @@
 # import PassengerConnection from './types/PassengerConnection.graphql'
 
 # see https://aws.amazon.com/blogs/mobile/using-multiple-authorization-types-with-aws-appsync-graphql-apis/
-directive @aws_cognito_user_pools on FIELD
+directive @aws_api_key on OBJECT
+directive @aws_cognito_user_pools on OBJECT
 
 type Query {
   flight(id: Int!): Flight

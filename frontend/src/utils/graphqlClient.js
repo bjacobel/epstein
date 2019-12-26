@@ -2,8 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache, ApolloLink } from '@apollo/clien
 import { onError } from 'apollo-link-error';
 import ExtendableError from 'extendable-error';
 
-import { getJwtToken } from './auth.js';
-
+import { getJwtToken } from './auth';
 import logErr from './errors';
 import { BACKEND_URL, BACKEND_UNCACHED_URL, SHOW_DEV_TOOLS } from '../constants';
 
