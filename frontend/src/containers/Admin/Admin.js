@@ -1,10 +1,13 @@
 import React from 'react';
 
-import PassengerAdmin from './PassengerAdmin';
+import PassengerSelect from './PassengerSelect';
 import ErrorBoundary from '../../components/ErrorBoundary';
+import { adminConsole } from './style.css';
 
 export default () => (
   <ErrorBoundary>
-    <PassengerAdmin />
+    <div className={adminConsole}>
+      <PassengerSelect />
+    </div>
   </ErrorBoundary>
 );
