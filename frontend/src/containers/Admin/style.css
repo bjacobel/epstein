@@ -1,0 +1,42 @@
+@value margin from '../../stylesheets/measurements.css';
+
+.adminConsole {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.form {
+  composes: roboto from '../../stylesheets/shared.css';
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: flex;
+    margin-bottom: calc(margin / 2);
+    align-items: baseline;
+
+    span {
+      flex-basis: 100px;
+      text-align: right;
+      margin-right: margin;
+    }
+
+    input {
+      flex-grow: 1;
+      padding: calc(margin / 4);
+    }
+  }
+}
+
+.submit {
+  composes: hoverEffect from '../../stylesheets/shared';
+  width: 100%;
+  cursor: pointer;
+  font-size: 0.8em;
+  outline: none;
+  display: block;
+  padding: calc(margin / 4) calc(margin / 2);
+  height: 35px;
+  border: 1px solid lightgrey;
+}

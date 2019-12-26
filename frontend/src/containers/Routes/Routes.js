@@ -32,7 +32,7 @@ const PrivateRoute = ({ children, ...rest }) => (
           }}
         />
       )
-    } // eslint-disable-line
+    }
   />
 );
 

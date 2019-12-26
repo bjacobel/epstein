@@ -130,7 +130,7 @@ export default ({ match }) => {
                 };
               },
             })
-          } // eslint-disable-line
+          }
         />
       </Details>
     </>
