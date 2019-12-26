@@ -21,6 +21,17 @@ exports[`Router matches snapshot 1`] = `
       ga={Object {}}
       path="/passenger/:slug"
     />
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/login"
+    />
+    <PrivateRoute
+      exact={true}
+      path="/admin"
+    >
+      <_default />
+    </PrivateRoute>
     <GARoute
       component={[MockFunction]}
       ga={Object {}}

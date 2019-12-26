@@ -7,17 +7,17 @@ import { loginLink } from './style.css';
 
 export default ({ history }) => {
   // if a hash is set, we're finishing an auth redirect. store it in cookies and clear it
-  if (window.location.hash) {
+  if (window.location.hash && window.location.hash.length) {
     const hash = new URLSearchParams(window.location.hash.slice(1));
     if (!hash.has('access_token')) {
-      throw new Error("Redirect uri doesn't include an access_token");
+      return <span>Error: Redirect uri should include an access_token</span>;
     }
     const token = hash.get('access_token');
     const expiry = hash.get('expires_in');
     setJwtToken(token, expiry);
     history.replace({
       ...window.location,
-      hash: '',
+      hash: undefined,
       href: `${window.location.origin}${window.location.pathname}`,
     });
   }

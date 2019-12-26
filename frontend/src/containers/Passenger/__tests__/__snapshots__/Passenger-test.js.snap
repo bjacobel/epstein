@@ -11,7 +11,7 @@ exports[`passenger details container matches snapshot with data resolution 1`] =
   }
 >
   <Component
-    description="Bill Clinton appears in the Epstein flight logs at least 26 times between February and March 2002"
+    description="Bill Clinton appears in the Epstein flight logs 26 times between February and March 2002"
     title="Bill Clinton"
     uri="passenger/bill-clinton"
   />
@@ -46,7 +46,7 @@ exports[`passenger details container matches snapshot with data resolution 1`] =
         history
       </span>
       <div>
-        Appears in the Epstein flight logs at least 26 times between February and March 2002
+        Appears in the Epstein flight logs 26 times between February and March 2002
       </div>
       <span>
         image
