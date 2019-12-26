@@ -12,8 +12,6 @@ describe('map component', () => {
     it('draws a curve with the right commands', () => {
       const wrapper = mount(<Map source={[0, 0]} dest={[0, 10]} />);
 
-      console.log(wrapper.debug());
-
       expect(wrapper.find(Curve).prop('positions')).toMatchInlineSnapshot(`
         Array [
           "M",

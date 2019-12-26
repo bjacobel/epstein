@@ -1,24 +1,24 @@
-const storedTokenName = 'cognito_jwt_token';
-const storedTokenExpiry = `${storedTokenName}_expiry`;
+export const STORED_TOKEN_NAME = 'cognito_jwt_token';
+export const STORED_TOKEN_EXPIRY = `${STORED_TOKEN_NAME}_expiry`;
 
 export const setJwtToken = (val, expiry) => {
-  window.localStorage.setItem(storedTokenName, val);
+  window.localStorage.setItem(STORED_TOKEN_NAME, val);
   window.localStorage.setItem(
-    storedTokenExpiry,
+    STORED_TOKEN_EXPIRY,
     Math.floor(Date.now() / 1000) + parseInt(expiry, 10),
   );
 };
 
 export const hasValidJwtToken = () => {
   return (
-    !!window.localStorage.getItem(storedTokenName) &&
-    !!window.localStorage.getItem(storedTokenExpiry) &&
-    parseInt(window.localStorage.getItem(storedTokenExpiry), 10) >
+    !!window.localStorage.getItem(STORED_TOKEN_NAME) &&
+    !!window.localStorage.getItem(STORED_TOKEN_EXPIRY) &&
+    parseInt(window.localStorage.getItem(STORED_TOKEN_EXPIRY), 10) >
       Math.floor(Date.now() / 1000)
   );
 };
 
 export const getJwtToken = () => {
   if (!hasValidJwtToken()) throw new Error('token is missing or not valid');
-  return window.localStorage.getItem(storedTokenName);
+  return window.localStorage.getItem(STORED_TOKEN_NAME);
 };
