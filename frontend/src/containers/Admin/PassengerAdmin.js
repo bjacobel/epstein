@@ -1,6 +1,7 @@
 import React from 'react';
 import { useMutation, gql } from '@apollo/client';
 
+import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
 
 const CREATE_OR_UPDATE_PASSENGER = gql`
@@ -17,6 +18,7 @@ export default () => {
     CREATE_OR_UPDATE_PASSENGER,
     {
       variables: { slug },
+      client: AdminClient,
     },
   );
 

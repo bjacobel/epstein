@@ -39,6 +39,7 @@ export const PASSENGER = gql`
 `;
 
 export const range = histogram => {
+  if (!histogram.length) return '';
   const firstDate = parseISO(histogram[0].month);
   const lastDate = parseISO(histogram[histogram.length - 1].month);
 
@@ -55,9 +56,9 @@ export const range = histogram => {
 };
 
 const historyText = ({ passenger }) => {
-  return `Appears in the Epstein flight logs at least ${
-    passenger.flightCount
-  } times ${range(passenger.histogram)}`;
+  return `Appears in the Epstein flight logs ${passenger.flightCount} times ${range(
+    passenger.histogram,
+  )}`;
 };
 
 export default ({ match }) => {

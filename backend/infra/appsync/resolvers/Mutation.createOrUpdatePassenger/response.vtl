@@ -1,9 +1,6 @@
 ${errorHandler}
-${rdsResp}
 
-#if($resp.size() == 0)
-  $utils.error("Couldn't find Passenger with slug $ctx.args.slug", "NotFound")
-#end
+#set($resp = $utils.rds.toJsonObject($ctx.result)[1])
 
 ## Should return a Passenger type
 $utils.toJson($resp[0])
