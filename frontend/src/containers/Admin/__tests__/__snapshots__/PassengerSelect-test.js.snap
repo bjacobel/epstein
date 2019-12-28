@@ -2,6 +2,7 @@
 
 exports[`PassengerSelect component has a go back button that erases state and renders initial UI 1`] = `
 <label
+  className="selectPass"
   htmlFor="pass-select"
 >
   Select a passenger
@@ -29,6 +30,7 @@ exports[`PassengerSelect component has a go back button that erases state and re
 
 exports[`PassengerSelect component renders a dropdown with passengers from a query initially 1`] = `
 <label
+  className="selectPass"
   htmlFor="pass-select"
 >
   Select a passenger
