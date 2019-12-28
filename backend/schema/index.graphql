@@ -7,7 +7,7 @@
 directive @aws_api_key on OBJECT
 directive @aws_cognito_user_pools on OBJECT
 
-type Query {
+type Query @aws_cognito_user_pools @aws_api_key {
   flight(id: Int!): Flight
   flights(
     includeLogistical: Boolean,
@@ -17,6 +17,7 @@ type Query {
 
   passenger(slug: String!): Passenger
   passengers(
+    includeUnverified: Boolean,
     limit: Int,
     offset: Int
   ): PassengerConnection
@@ -33,7 +34,7 @@ type Mutation @aws_cognito_user_pools {
     slug: String!
     name: String
     biography: String
-    wikipedia_link: String
+    wikipedia_link: AWSURL
     image: AWSURL
   ): Passenger!
 }

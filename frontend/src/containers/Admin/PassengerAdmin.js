@@ -20,6 +20,7 @@ const CREATE_OR_UPDATE_PASSENGER = gql`
       wikipedia_link: $wikipedia_link
       image: $image
     ) {
+      id
       slug
       name
       biography
@@ -30,35 +31,39 @@ const CREATE_OR_UPDATE_PASSENGER = gql`
 `;
 
 export default (props = {}) => {
-  const { mode } = props;
   const fields = ['slug', 'name', 'biography', 'wikipedia_link', 'image'];
-  const [fieldData, setFieldData] = useState(
-    Object.entries(props).filter(([k]) =>
-      fields.includes(k).reduce((prev, [k, v]) => ({ ...prev, [k]: v }), {}),
-    ),
-  );
+  const { mode } = props;
+  const filteredProps = Object.entries(props)
+    .filter(([key]) => fields.includes(key))
+    .reduce((prev, [k, v]) => ({ ...prev, [k]: v }), {});
+  const [fieldData, setFieldData] = useState(filteredProps);
 
   const [
     createOrUpdatePassenger,
     { loading: mutationLoading, error: mutationError, data: mutationResult },
   ] = useMutation(CREATE_OR_UPDATE_PASSENGER, {
-    variables: { ...fields },
+    variables: { ...fieldData },
     client: AdminClient,
   });
+
+  const handleFormSubmit = event => {
+    createOrUpdatePassenger();
+    event.preventDefault();
+  };
 
   if (mutationLoading) return <Loading />;
   if (mutationError) throw mutationError;
 
   return (
     <>
-      <form className={form} onSubmit={createOrUpdatePassenger}>
+      <form className={form} onSubmit={handleFormSubmit}>
         {fields.map(field => (
           <label htmlFor={field} key={field}>
             <span>{field}</span>
             <input
               type="text"
               name={field}
-              value={fieldData[field]}
+              value={fieldData[field] || ''}
               onChange={ev =>
                 setFieldData({ ...fieldData, [ev.target.name]: ev.target.value })
               }
@@ -70,7 +75,7 @@ export default (props = {}) => {
       {mutationResult && (
         <div>
           <span>mutation complete</span>
-          <pre>JSON.stringify(mutationResult, null, 2)</pre>
+          <pre>{JSON.stringify(mutationResult, null, 2)}</pre>
         </div>
       )}
     </>
