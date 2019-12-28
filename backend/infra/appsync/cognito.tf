@@ -41,8 +41,14 @@ resource "aws_cognito_user_pool_client" "client" {
   ]
 }
 
+data "aws_acm_certificate" "cert" {
+  domain      = var.domain
+  types       = ["AMAZON_ISSUED"]
+  most_recent = true
+}
+
 resource "aws_cognito_user_pool_domain" "main" {
-  domain = var.name # replace with var.domain once deployed and ACM cert is live
-  # certificate_arn = aws_acm_certificate.cert.arn
-  user_pool_id = aws_cognito_user_pool.admins.id
+  domain          = var.domain
+  certificate_arn = data.aws_acm_certificate.cert.arn
+  user_pool_id    = aws_cognito_user_pool.admins.id
 }
