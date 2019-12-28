@@ -1,6 +1,6 @@
 # import PageInfo from './PageInfo.graphql'
 
-type PassengerConnection {
+type PassengerConnection @aws_api_key @aws_cognito_user_pools {
   edges: [Passenger]!
   pageInfo: PageInfo!
 }

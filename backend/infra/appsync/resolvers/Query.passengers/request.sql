@@ -1,3 +1,4 @@
+#set($includeUnverified = $util.defaultIfNull($ctx.args.includeUnverified, true))
 with recursive split (
   passenger,
   str
@@ -19,8 +20,8 @@ select
   passengers.*
 from split
 left join canonical on split.passenger = canonical.literal
-left join passengers on canonical.passenger = passengers.id
-where split.passenger <> ''
+full join passengers on canonical.passenger = passengers.id
+where (split.passenger <> '' or not $includeUnverified) and (passengers.id is not null or $includeUnverified)
 group by coalesce(passengers.name, split.passenger), passengers.id
 order by count(*) desc
 limit 100

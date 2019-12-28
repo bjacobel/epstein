@@ -4,7 +4,7 @@
 scalar AWSDate
 scalar AWSURL
 
-type Flight {
+type Flight @aws_api_key @aws_cognito_user_pools {
   id: Int!
   date: AWSDate
   logistical: Boolean!

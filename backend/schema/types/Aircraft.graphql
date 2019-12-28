@@ -1,4 +1,4 @@
-type Aircraft {
+type Aircraft @aws_api_key @aws_cognito_user_pools {
   id: ID!
   tailsign: String!
   model: String!
