@@ -1,17 +1,19 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Routes from '../Routes';
+import Routes, { PrivateRoute } from '../Routes';
 import Flight from '../../Flight';
 import Passenger from '../../Passenger';
 import Analytics from '../../../utils/Analytics';
+import { hasValidJwtToken } from '../../../utils/auth';
 
 jest.mock('containers/Home');
 jest.mock('containers/Flight', () => () => null);
 jest.mock('containers/Passenger', () => () => null);
 jest.mock('containers/NotFound');
 jest.mock('utils/Analytics');
+jest.mock('utils/auth');
 
 const setPath = value => {
   global.history.pushState({}, value, value);
@@ -99,6 +101,36 @@ describe('Router', () => {
           ga: {},
         }),
       );
+    });
+  });
+
+  describe('private routes', () => {
+    let PrivateRoutes;
+    beforeEach(() => {
+      PrivateRoutes = () => (
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/login" render={() => 'login page'} />
+            <PrivateRoute>
+              <Route exact path="/admin" render={() => 'protected resource'} />
+            </PrivateRoute>
+          </Switch>
+        </BrowserRouter>
+      );
+    });
+
+    it('redirects when auth is not present', () => {
+      hasValidJwtToken.mockReturnValueOnce(false);
+      setPath('/admin');
+      const wrapper = mount(<PrivateRoutes />);
+      expect(wrapper.text()).toEqual('login page');
+    });
+
+    it('renders the specified child when auth is present', () => {
+      hasValidJwtToken.mockReturnValueOnce(true);
+      setPath('/admin');
+      const wrapper = mount(<PrivateRoutes />);
+      expect(wrapper.text()).toEqual('protected resource');
     });
   });
 });
