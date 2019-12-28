@@ -18,7 +18,7 @@ export class GARoute extends Route {
   }
 }
 
-const PrivateRoute = ({ children, ...rest }) => (
+export const PrivateRoute = ({ children, ...rest }) => (
   <Route
     {...rest}
     render={({ location }) =>

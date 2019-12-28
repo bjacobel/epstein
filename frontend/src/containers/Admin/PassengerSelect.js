@@ -4,8 +4,9 @@ import { gql, useQuery } from '@apollo/client';
 import PassengerAdmin from './PassengerAdmin';
 import Loading from '../../components/Loading';
 import { AdminClient } from '../../utils/graphqlClient';
+import { backBtn } from './style.css';
 
-const PASSENGERS = gql`
+export const PASSENGERS = gql`
   query {
     passengers(includeUnverified: false) {
       edges {
@@ -20,10 +21,13 @@ const PASSENGERS = gql`
   }
 `;
 
-export default () => {
+export default props => {
+  const { clientForTests } = props || {};
   const [createFormSelected, selectCreateForm] = useState(false);
   const [passenger, setPassenger] = useState();
-  const { data, loading, error } = useQuery(PASSENGERS, { client: AdminClient });
+  const { data, loading, error } = useQuery(PASSENGERS, {
+    client: clientForTests || AdminClient,
+  });
 
   const handleSelectChange = ({ target }) => {
     if (target.value === 'new') return selectCreateForm(true);
@@ -36,6 +40,7 @@ export default () => {
   const backButton = (
     <button
       type="button"
+      className={backBtn}
       onClick={() => {
         selectCreateForm(false);
         setPassenger();

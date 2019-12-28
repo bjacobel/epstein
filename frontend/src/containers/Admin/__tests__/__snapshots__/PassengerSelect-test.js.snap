@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PassengerSelect component has a go back button that erases state and renders initial UI 1`] = `
+<label
+  htmlFor="pass-select"
+>
+  Select a passenger
+  <select
+    name="pass-select"
+    onChange={[Function]}
+  >
+    <option>
+      -----
+    </option>
+    <option
+      value="new"
+    >
+      Create new passenger
+    </option>
+    <option
+      key="bill-clinton"
+      value="bill-clinton"
+    >
+      Bill Clinton
+    </option>
+  </select>
+</label>
+`;
+
+exports[`PassengerSelect component renders a dropdown with passengers from a query initially 1`] = `
+<label
+  htmlFor="pass-select"
+>
+  Select a passenger
+  <select
+    name="pass-select"
+    onChange={[Function]}
+  >
+    <option>
+      -----
+    </option>
+    <option
+      value="new"
+    >
+      Create new passenger
+    </option>
+    <option
+      key="bill-clinton"
+      value="bill-clinton"
+    >
+      Bill Clinton
+    </option>
+  </select>
+</label>
+`;
