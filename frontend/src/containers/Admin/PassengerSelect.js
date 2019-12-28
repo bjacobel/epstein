@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import PassengerAdmin from './PassengerAdmin';
 import Loading from '../../components/Loading';
 import { AdminClient } from '../../utils/graphqlClient';
-import { backBtn } from './style.css';
+import { breadcrumb, breadcrumbs, divider, selectPass } from './style.css';
 
 export const PASSENGERS = gql`
   query {
@@ -37,49 +37,43 @@ export default props => {
   if (loading) return <Loading />;
   if (error) throw error;
 
-  const backButton = (
-    <button
-      type="button"
-      className={backBtn}
-      onClick={() => {
-        selectCreateForm(false);
-        setPassenger();
-      }}
-    >
-      Go back
-    </button>
+  const crumbs = current => (
+    <div className={breadcrumbs}>
+      <button
+        type="button"
+        className={breadcrumb}
+        onClick={() => {
+          selectCreateForm(false);
+          setPassenger();
+        }}
+      >
+        Admin
+      </button>
+      <span className={divider} />
+      <span className={breadcrumb}>{current}</span>
+    </div>
   );
 
-  if (createFormSelected) {
-    return (
-      <>
-        {backButton}
-        <PassengerAdmin mode="create" />
-      </>
-    );
-  }
-
-  if (passenger) {
-    return (
-      <>
-        {backButton}
-        <PassengerAdmin mode="update" {...passenger} />
-      </>
-    );
-  }
-
   return (
-    <label htmlFor="pass-select">
-      Select a passenger
-      <select name="pass-select" onChange={handleSelectChange}>
-        <option>-----</option>
-        <option value="new">Create new passenger</option>
-        {data.passengers.edges.map(p => (
-          <option key={p.slug} value={p.slug}>
-            {p.name}
-          </option>
-        ))}
-      </select>
-    </label>
+    <>
+      {(createFormSelected || passenger) &&
+        crumbs(passenger ? `Edit ${passenger.name}` : 'Create new passenger')}
+      {createFormSelected && <PassengerAdmin mode="create" />}
+      {passenger && <PassengerAdmin mode="update" {...passenger} />}
+      {!(createFormSelected || passenger) && (
+        <label className={selectPass} htmlFor="pass-select">
+          Select a passenger
+          <select name="pass-select" onChange={handleSelectChange}>
+            <option>-----</option>
+            <option value="new">Create new passenger</option>
+            {data.passengers.edges.map(p => (
+              <option key={p.slug} value={p.slug}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+    </>
   );
 };

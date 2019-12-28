@@ -1,4 +1,5 @@
 @value margin from '../../stylesheets/measurements.css';
+@value verylightgrey from '../../stylesheets/colors.css';
 
 .adminConsole {
   max-width: 650px;
@@ -41,5 +42,46 @@
   border: 1px solid lightgrey;
 }
 
-.backBtn {
+.selectPass {
+  composes: center from '../../stylesheets/shared.css';
+  composes: roboto from '../../stylesheets/shared.css';
+
+  select {
+    margin-left: margin;
+  }
+}
+
+.breadcrumb {
+  composes: roboto from '../../stylesheets/shared.css';
+  border: none;
+  padding: 0;
+  font-size: 14px;
+
+  &:first-of-type {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.divider {
+  width: margin;
+
+  &::after {
+    content: '>';
+    display: block;
+    text-align: center;
+  }
+}
+
+.breadcrumbs {
+  composes: roboto from '../../stylesheets/shared.css';
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  padding-bottom: calc(margin / 2);
+  margin-bottom: margin;
+  border-bottom: 1px solid verylightgrey;
 }

@@ -6,7 +6,7 @@ import PassengerAdmin from '../PassengerAdmin';
 import PassengerSelect, { PASSENGERS } from '../PassengerSelect';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
-import { backBtn } from '../style.css';
+import { breadcrumb } from '../style.css';
 
 const passengersData = {
   data: {
@@ -94,7 +94,7 @@ describe('PassengerSelect component', () => {
       .find('select')
       .simulate('change', { target: { value: 'bill-clinton' } });
 
-    wrapper.find(`button.${backBtn}`).simulate('click');
+    wrapper.find(`button.${breadcrumb}`).simulate('click');
     expect(wrapper.find(PassengerSelect).children()).toMatchSnapshot();
   });
 });
