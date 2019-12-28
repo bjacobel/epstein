@@ -36,9 +36,11 @@ module "cloudfront" {
   source           = "./cloudfront"
   appsync_endpoint = module.appsync.endpoint
   origin_api_key   = module.appsync.api_key
+  domain           = var.domain
 }
 
 module "files" {
   name   = var.name
   source = "./files"
+  domain = var.domain
 }

@@ -7,5 +7,5 @@ output "distribution_id" {
 }
 
 output "distribution_endpoint" {
-  value = "https://${aws_cloudfront_distribution.appsync_distro.domain_name}"
+  value = "https://api.${var.domain}"
 }

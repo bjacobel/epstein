@@ -9,7 +9,7 @@ export const RAVEN_ENDPT = projectConfig.RavenDSN;
 export const GA_ID = projectConfig.GAProperty;
 export const RELEASE = process.env.GITHUB_SHA;
 
-export const BACKEND_URL = 'https://d1gs0ktl8zk671.cloudfront.net';
+export const BACKEND_URL = 'https://api.epstein.flights';
 export const BACKEND_UNCACHED_URL =
   'https://r3ih5g7at5dfbmjbvrbfv7levu.appsync-api.us-east-2.amazonaws.com/graphql';
 
