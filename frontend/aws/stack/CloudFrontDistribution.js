@@ -1,4 +1,4 @@
-const { ref, join } = require('@mapbox/cloudfriend');
+const { ref, join, getAtt } = require('@mapbox/cloudfriend');
 
 module.exports = {
   Type: 'AWS::CloudFront::Distribution',
@@ -14,7 +14,7 @@ module.exports = {
       HttpVersion: 'http2',
       DefaultCacheBehavior: {
         Compress: true,
-        TargetOriginId: join(['S3-', ref('ProjectName')]),
+        TargetOriginId: join(['S3-', ref('S3Bucket')]),
         ViewerProtocolPolicy: 'redirect-to-https',
         AllowedMethods: ['HEAD', 'GET'],
         CachedMethods: ['HEAD', 'GET'],
@@ -27,8 +27,8 @@ module.exports = {
       },
       Origins: [
         {
-          DomainName: join([ref('ProjectFQDomain'), '.s3.amazonaws.com']),
-          Id: join(['S3-', ref('ProjectName')]),
+          DomainName: getAtt('S3Bucket', 'DomainName'),
+          Id: join(['S3-', ref('S3Bucket')]),
           S3OriginConfig: {},
         },
       ],

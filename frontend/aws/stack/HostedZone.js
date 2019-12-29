@@ -6,4 +6,5 @@ module.exports = {
   Properties: {
     Name: join([ref('ProjectDomain'), '.']),
   },
+  DeletionPolicy: 'Retain',
 };
