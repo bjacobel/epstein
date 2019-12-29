@@ -1,0 +1,10 @@
+${errorHandler}
+${rdsResp}
+
+#set($literals = [])
+#foreach($r in $resp)
+  $util.quiet($literals.add($r.literal))
+#end
+
+## Returns [String]
+$utils.toJson($literals)

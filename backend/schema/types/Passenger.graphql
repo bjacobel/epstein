@@ -6,10 +6,13 @@ type MonthCount {
   count: Int!
 }
 
-type Passenger @aws_api_key @aws_cognito_user_pools {
-  id: Int  # 'literal' passengers will not have ids. ids are only given when they are canonicalized
-  slug: String
-  literal: String
+type LiteralPassenger @aws_api_key @aws_cognito_user_pools {
+  literal: String!
+}
+
+type VerifiedPassenger @aws_api_key @aws_cognito_user_pools {
+  id: Int!
+  slug: String!
   name: String
   biography: String
   wikipedia_link: AWSURL
@@ -17,4 +20,8 @@ type Passenger @aws_api_key @aws_cognito_user_pools {
   flightCount: Int
   histogram: [MonthCount]
   flights(limit: Int, offset: Int): FlightConnection
+  literals: [String]
 }
+
+union Passenger = VerifiedPassenger | LiteralPassenger
+

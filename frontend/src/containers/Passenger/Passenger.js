@@ -39,7 +39,7 @@ export const PASSENGER = gql`
 `;
 
 export const range = histogram => {
-  if (!histogram.length) return '';
+  if (!histogram || !histogram.length) return '';
   const firstDate = parseISO(histogram[0].month);
   const lastDate = parseISO(histogram[histogram.length - 1].month);
 

@@ -10,12 +10,15 @@ export const PASSENGERS = gql`
   query {
     passengers(includeUnverified: false) {
       edges {
-        id
-        slug
-        name
-        biography
-        wikipedia_link
-        image
+        ... on VerifiedPassenger {
+          id
+          slug
+          name
+          biography
+          wikipedia_link
+          image
+          literals
+        }
       }
     }
   }

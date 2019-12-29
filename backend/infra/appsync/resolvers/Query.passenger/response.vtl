@@ -2,8 +2,8 @@ ${errorHandler}
 ${rdsResp}
 
 #if($resp.size() == 0)
-  $utils.error("Couldn't find Passenger with slug $ctx.args.slug", "NotFound")
+  $utils.error("Couldn't find VerifiedPassenger with slug $ctx.args.slug", "NotFound")
 #end
 
-## Should return a Passenger type
+## Should return a VerifiedPassenger
 $utils.toJson($resp[0])

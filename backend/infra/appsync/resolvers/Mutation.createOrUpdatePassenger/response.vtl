@@ -2,5 +2,5 @@ ${errorHandler}
 
 #set($resp = $utils.rds.toJsonObject($ctx.result)[1])
 
-## Should return a Passenger type
+## Should return a VerifiedPassenger type
 $utils.toJson($resp[0])

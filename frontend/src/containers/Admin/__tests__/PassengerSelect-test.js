@@ -13,12 +13,14 @@ const passengersData = {
     passengers: {
       edges: [
         {
+          __typename: 'VerifiedPassenger',
           id: 1,
           slug: 'bill-clinton',
           name: 'Bill Clinton',
           biography: '',
           wikipedia_link: '',
           image: '',
+          literals: ['PRESIDENT WILLIAM J. CLINTON'],
         },
       ],
     },
@@ -79,6 +81,7 @@ describe('PassengerSelect component', () => {
     expect(wrapper.find(PassengerAdmin).props()).toEqual({
       mode: 'update',
       ...passengersData.data.passengers.edges[0],
+      __typename: undefined,
     });
   });
 

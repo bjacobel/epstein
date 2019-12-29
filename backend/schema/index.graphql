@@ -15,7 +15,7 @@ type Query @aws_cognito_user_pools @aws_api_key {
     offset: Int
   ): FlightConnection
 
-  passenger(slug: String!): Passenger
+  passenger(slug: String!): VerifiedPassenger
   passengers(
     includeUnverified: Boolean,
     limit: Int,
@@ -36,5 +36,5 @@ type Mutation @aws_cognito_user_pools {
     biography: String
     wikipedia_link: AWSURL
     image: AWSURL
-  ): Passenger!
+  ): VerifiedPassenger!
 }
