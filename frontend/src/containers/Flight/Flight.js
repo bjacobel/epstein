@@ -26,9 +26,13 @@ const FLIGHT = gql`
       page
       passengers {
         edges {
-          name
-          slug
-          literal
+          ... on VerifiedPassenger {
+            name
+            slug
+          }
+          ... on LiteralPassenger {
+            literal
+          }
         }
       }
       aircraft {

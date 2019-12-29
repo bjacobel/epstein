@@ -1,5 +1,11 @@
 ${errorHandler}
 ${rdsResp}
+
+#foreach ($passenger in $resp)
+  #set($typeName = "#if($util.isNull($passenger.id))LiteralPassenger#{else}VerifiedPassenger#end")
+  $util.quiet($passenger.put("__typename", $typeName))
+#end
+
 ${pagination}
 
 ## Returns a PassengerConnection
