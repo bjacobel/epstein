@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 import PassengerAdmin from './PassengerAdmin';
+import LiteralsAdmin from './LiteralsAdmin';
 import Loading from '../../components/Loading';
 import { AdminClient } from '../../utils/graphqlClient';
 import { breadcrumb, breadcrumbs, divider, selectPass } from './style.css';
@@ -62,7 +63,12 @@ export default props => {
       {(createFormSelected || passenger) &&
         crumbs(passenger ? `Edit ${passenger.name}` : 'Create new passenger')}
       {createFormSelected && <PassengerAdmin mode="create" />}
-      {passenger && <PassengerAdmin mode="update" {...passenger} />}
+      {passenger && (
+        <>
+          <PassengerAdmin mode="update" {...passenger} />
+          <LiteralsAdmin passenger={passenger} />
+        </>
+      )}
       {!(createFormSelected || passenger) && (
         <label className={selectPass} htmlFor="pass-select">
           Select a passenger
