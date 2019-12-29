@@ -37,12 +37,14 @@ module "cloudfront" {
   appsync_endpoint = module.appsync.endpoint
   origin_api_key   = module.appsync.api_key
   domain           = var.domain
+  acm_cert_arn     = data.aws_acm_certificate.cert.arn
 }
 
 module "files" {
-  name   = var.name
-  source = "./files"
-  domain = var.domain
+  name         = var.name
+  source       = "./files"
+  domain       = var.domain
+  acm_cert_arn = data.aws_acm_certificate.cert.arn
 }
 
 module "email" {
