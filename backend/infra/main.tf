@@ -44,3 +44,9 @@ module "files" {
   source = "./files"
   domain = var.domain
 }
+
+module "email" {
+  name   = var.name
+  source = "./email"
+  domain = var.domain
+}
