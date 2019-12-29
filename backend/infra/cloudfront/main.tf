@@ -84,3 +84,11 @@ resource "aws_route53_record" "api" {
     evaluate_target_health = false
   }
 }
+
+resource "aws_route53_record" "google_verify" {
+  type    = "TXT"
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+  name    = data.aws_route53_zone.hosted_zone.name
+  ttl     = "600"
+  records = ["google-site-verification=Jzq-idBiV6LXXCXfmIbHgeCISUCUf09jzH7ik8gWPdM"]
+}
