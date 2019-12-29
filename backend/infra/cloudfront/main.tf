@@ -52,7 +52,7 @@ resource "aws_cloudfront_distribution" "appsync_distro" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = data.aws_acm_certificate.cert.arn
+    acm_certificate_arn = var.acm_cert_arn
     ssl_support_method  = "sni-only"
   }
 
@@ -73,20 +73,14 @@ data "aws_route53_zone" "hosted_zone" {
   name = "${var.domain}."
 }
 
-data "aws_acm_certificate" "cert" {
-  domain      = var.domain
-  types       = ["AMAZON_ISSUED"]
-  most_recent = true
-}
-
-resource "aws_route53_record" "www" {
-  zone_id = "${data.aws_route53_zone.hosted_zone.zone_id}"
+resource "aws_route53_record" "api" {
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
   name    = "api.${data.aws_route53_zone.hosted_zone.name}"
   type    = "A"
-  ttl     = "60"
 
-  alias = {
-    name    = aws_cloudfront_distribution.appsync_distro.domain_name
-    zone_id = "Z2FDTNDATAQYW2"
+  alias {
+    name                   = aws_cloudfront_distribution.appsync_distro.domain_name
+    zone_id                = "Z2FDTNDATAQYW2"
+    evaluate_target_health = false
   }
 }

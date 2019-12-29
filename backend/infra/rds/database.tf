@@ -48,7 +48,7 @@ resource "aws_rds_cluster" "rds_db" {
   scaling_configuration {
     auto_pause               = true
     max_capacity             = 8
-    min_capacity             = 8
+    min_capacity             = 2
     seconds_until_auto_pause = 300
   }
 
