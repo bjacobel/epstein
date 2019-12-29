@@ -69,7 +69,7 @@ jobs:
         with:
           name: dist
       - name: Notify Sentry of deploy
-        uses: bjacobel/sentry-cli-action@v2
+        uses: bjacobel/sentry-cli-action@v1
         with:
           args: releases -o ${{ steps.config.outputs.SentryOrg }} -p ${{ steps.config.outputs.SentryProject }} new ${{ github.sha }}
         env:
