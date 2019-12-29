@@ -37,4 +37,8 @@ type Mutation @aws_cognito_user_pools {
     wikipedia_link: AWSURL
     image: AWSURL
   ): VerifiedPassenger!
+  updateLiterals(
+    id: Int!
+    literals: [String]!
+  ): VerifiedPassenger!
 }
