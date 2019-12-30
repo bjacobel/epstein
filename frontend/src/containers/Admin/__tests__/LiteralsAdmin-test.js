@@ -2,7 +2,8 @@ import React from 'react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { mount } from 'enzyme';
 
-import LiteralsAdmin, { UPDATE_LITERALS } from '../LiteralsAdmin';
+import LiteralsAdmin from '../LiteralsAdmin';
+import { UPDATE_LITERALS } from '../queries';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
 

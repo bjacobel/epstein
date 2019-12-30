@@ -1,29 +1,12 @@
 import React, { useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import PassengerAdmin from './PassengerAdmin';
 import LiteralsAdmin from './LiteralsAdmin';
 import Loading from '../../components/Loading';
 import { AdminClient } from '../../utils/graphqlClient';
+import { PASSENGERS } from './queries';
 import { breadcrumb, breadcrumbs, divider, selectPass } from './style.css';
-
-export const PASSENGERS = gql`
-  query {
-    passengers(includeUnverified: false) {
-      edges {
-        ... on VerifiedPassenger {
-          id
-          slug
-          name
-          biography
-          wikipedia_link
-          image
-          literals
-        }
-      }
-    }
-  }
-`;
 
 export default props => {
   const { clientForTests } = props || {};
