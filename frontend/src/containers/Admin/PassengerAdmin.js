@@ -1,37 +1,11 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
 import NotifyMutationSuccess from '../../components/NotifyMutationSuccess';
 import { form, submit } from './style.css';
-import { PASSENGERS } from './PassengerSelect'; // eslint-disable-line
-
-const CREATE_OR_UPDATE_PASSENGER = gql`
-  mutation(
-    $slug: String!
-    $name: String
-    $biography: String
-    $wikipedia_link: AWSURL
-    $image: AWSURL
-  ) {
-    createOrUpdatePassenger(
-      slug: $slug
-      name: $name
-      biography: $biography
-      wikipedia_link: $wikipedia_link
-      image: $image
-    ) {
-      id
-      slug
-      name
-      biography
-      wikipedia_link
-      image
-      literals
-    }
-  }
-`;
+import { PASSENGERS, CREATE_OR_UPDATE_PASSENGER } from './queries';
 
 export default (props = {}) => {
   const fields = ['slug', 'name', 'biography', 'wikipedia_link', 'image'];

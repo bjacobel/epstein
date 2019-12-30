@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
 import NotifyMutationSuccess from '../../components/NotifyMutationSuccess';
+import { UPDATE_LITERALS } from './queries';
 import { form, submit, literalsAdmin } from './style.css';
-
-export const UPDATE_LITERALS = gql`
-  mutation($slug: String!, $literals: [String]!) {
-    updateLiterals(slug: $slug, literals: $literals) {
-      id
-      slug
-      literals
-    }
-  }
-`;
 
 export default ({ passenger, clientForTests }) => {
   const [literals, setLiterals] = useState(passenger.literals);

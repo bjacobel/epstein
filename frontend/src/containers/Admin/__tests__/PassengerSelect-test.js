@@ -3,7 +3,8 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { mount } from 'enzyme';
 
 import PassengerAdmin from '../PassengerAdmin';
-import PassengerSelect, { PASSENGERS } from '../PassengerSelect';
+import PassengerSelect from '../PassengerSelect';
+import { PASSENGERS } from '../queries';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
 import { breadcrumb } from '../style.css';
