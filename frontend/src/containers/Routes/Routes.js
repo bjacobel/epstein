@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import NotFound from '../NotFound';
@@ -6,8 +6,8 @@ import Home from '../Home';
 import Flight from '../Flight';
 import Passenger from '../Passenger';
 import Login from '../Login';
-import Admin from '../Admin';
 import Analytics from '../../utils/Analytics';
+import Loading from '../../components/Loading';
 import { hasValidJwtToken } from '../../utils/auth';
 
 export class GARoute extends Route {
@@ -17,6 +17,10 @@ export class GARoute extends Route {
     return <Route {...this.props} />;
   }
 }
+
+const SuspenseAdmin = React.lazy(() =>
+  import(/* webpackChunkName: "admin" */ '../Admin'),
+);
 
 export const PrivateRoute = ({ children, ...rest }) => (
   <Route
@@ -51,7 +55,9 @@ export default class Routes extends Component {
           <GARoute ga={this.ga} path="/passenger/:slug" exact component={Passenger} />
           <Route path="/login" exact component={Login} />
           <PrivateRoute path="/admin" exact>
-            <Admin />
+            <Suspense fallback={<Loading />}>
+              <SuspenseAdmin />
+            </Suspense>
           </PrivateRoute>
           <GARoute ga={this.ga} component={NotFound} />
         </Switch>

@@ -120,10 +120,6 @@ module.exports = (env = {}, { mode } = {}) => {
       }),
       new ScriptExtHtmlWebpackPlugin({
         defaultAttribute: 'defer',
-        preload: {
-          test: /\.js$/,
-          chunks: 'async',
-        },
       }),
       !isProd && new webpack.HotModuleReplacementPlugin(),
       isProd &&
