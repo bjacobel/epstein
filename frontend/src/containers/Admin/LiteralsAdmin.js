@@ -6,8 +6,8 @@ import Loading from '../../components/Loading';
 import { form, submit, literalsAdmin } from './style.css';
 
 export const UPDATE_LITERALS = gql`
-  mutation($id: Int!, $literals: [String]!) {
-    updateLiterals(id: $id, literals: $literals) {
+  mutation($slug: String!, $literals: [String]!) {
+    updateLiterals(slug: $slug, literals: $literals) {
       slug
       literals
     }
@@ -20,7 +20,7 @@ export default ({ passenger, clientForTests }) => {
   const [updateLiterals, { loading, error, data }] = useMutation(UPDATE_LITERALS, {
     variables: {
       literals: [...literals, ...(newLiteral.length ? [newLiteral] : [])],
-      id: passenger.id,
+      slug: passenger.slug,
     },
     client: clientForTests || AdminClient,
   });

@@ -30,7 +30,7 @@ describe('LiteralsAdmin component', () => {
   describe('when rendered with no literals', () => {
     let passenger;
     beforeEach(() => {
-      passenger = { id: 1, literals: [] };
+      passenger = { slug: 'bill-clinton', literals: [] };
     });
 
     it('matches snapshot', () => {
@@ -63,7 +63,7 @@ describe('LiteralsAdmin component', () => {
   describe('when rendered with existing literals', () => {
     let passenger;
     beforeEach(() => {
-      passenger = { id: 1, literals: ['a', 'b', 'c'] };
+      passenger = { slug: 'bill-clinton', literals: ['a', 'b', 'c'] };
     });
 
     it('matches snapshot', () => {
