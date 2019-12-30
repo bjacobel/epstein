@@ -77,6 +77,14 @@ jobs:
           SENTRY_ORG: ${{ steps.config.outputs.SentryOrg }}
           SENTRY_PROJECT: ${{ steps.config.outputs.SentryProject }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      - name: Link Git commits to Sentry
+        uses: bjacobel/sentry-cli-action@master
+        with:
+          args: releases set-commits "${{ github.sha }}" --auto
+        env:
+          SENTRY_ORG: ${{ steps.config.outputs.SentryOrg }}
+          SENTRY_PROJECT: ${{ steps.config.outputs.SentryProject }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - name: Add sourcemaps to Sentry
         uses: bjacobel/sentry-cli-action@master
         with:
