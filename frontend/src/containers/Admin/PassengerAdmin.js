@@ -5,6 +5,7 @@ import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
 import NotifyMutationSuccess from '../../components/NotifyMutationSuccess';
 import { form, submit } from './style.css';
+import { PASSENGERS } from './PassengerSelect'; // eslint-disable-line
 
 const CREATE_OR_UPDATE_PASSENGER = gql`
   mutation(
@@ -27,6 +28,7 @@ const CREATE_OR_UPDATE_PASSENGER = gql`
       biography
       wikipedia_link
       image
+      literals
     }
   }
 `;
@@ -45,11 +47,14 @@ export default (props = {}) => {
   ] = useMutation(CREATE_OR_UPDATE_PASSENGER, {
     variables: { ...fieldData },
     client: AdminClient,
+    refetchQueries: [{ query: PASSENGERS }],
   });
 
-  const handleFormSubmit = event => {
-    createOrUpdatePassenger();
-    event.preventDefault();
+  const handleFormSubmit = async () => {
+    await createOrUpdatePassenger();
+    if (mode === 'create') {
+      props.onCreate(fieldData.slug);
+    }
   };
 
   if (mutationLoading) return <Loading />;
