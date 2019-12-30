@@ -63,6 +63,7 @@ describe('PassengerSelect component', () => {
 
     expect(wrapper.find(PassengerAdmin).props()).toEqual({
       mode: 'create',
+      onCreate: expect.any(Function),
     });
   });
 

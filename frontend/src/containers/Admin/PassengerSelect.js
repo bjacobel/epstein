@@ -67,7 +67,15 @@ export default props => {
     <>
       {(createFormSelected || passengerData) &&
         crumbs(passengerData ? `Edit ${passengerData.name}` : 'Create new passenger')}
-      {createFormSelected && <PassengerAdmin mode="create" />}
+      {createFormSelected && (
+        <PassengerAdmin
+          mode="create"
+          onCreate={slug => {
+            setCurrentPassengerSlug(slug);
+            selectCreateForm(false);
+          }}
+        />
+      )}
       {passengerData && (
         <div>
           <PassengerAdmin mode="update" {...passengerData} />
