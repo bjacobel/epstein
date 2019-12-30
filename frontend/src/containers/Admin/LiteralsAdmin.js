@@ -3,11 +3,13 @@ import { useMutation, gql } from '@apollo/client';
 
 import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
+import NotifyMutationSuccess from '../../components/NotifyMutationSuccess';
 import { form, submit, literalsAdmin } from './style.css';
 
 export const UPDATE_LITERALS = gql`
   mutation($slug: String!, $literals: [String]!) {
     updateLiterals(slug: $slug, literals: $literals) {
+      id
       slug
       literals
     }
@@ -15,7 +17,7 @@ export const UPDATE_LITERALS = gql`
 `;
 
 export default ({ passenger, clientForTests }) => {
-  const [literals, setLiterals] = useState(passenger.literals || []);
+  const [literals, setLiterals] = useState(passenger.literals);
   const [newLiteral, setNewLiteral] = useState('');
   const [updateLiterals, { loading, error, data }] = useMutation(UPDATE_LITERALS, {
     variables: {
@@ -41,9 +43,14 @@ export default ({ passenger, clientForTests }) => {
           if (ev.target.form.newLiteral) {
             setNewLiteral(ev.target.form.newLiteral.value);
           }
-          if (ev.target.form.literals) {
+          const lits = ev.target.form.literals && [
+            ...(ev.target.form.literals.length
+              ? ev.target.form.literals
+              : [ev.target.form.literals]),
+          ];
+          if (lits) {
             setLiterals(
-              [...ev.target.form.literals].reduce(
+              lits.reduce(
                 (prev, l) => [...prev, ...(l.value.length ? [l.value] : [])],
                 [],
               ),
@@ -52,7 +59,7 @@ export default ({ passenger, clientForTests }) => {
         }}
         onSubmit={handleFormSubmit}
       >
-        {literals.map((literal, i) => (
+        {passenger.literals.map((literal, i) => (
           <label htmlFor="literals" key={literal}>
             <span>{i === 0 ? 'literals' : ''}</span>
             <input type="text" name="literals" defaultValue={literal} />
@@ -64,12 +71,7 @@ export default ({ passenger, clientForTests }) => {
         </label>
         <input className={submit} type="submit" value="update associated literals" />
       </form>
-      {data && (
-        <div>
-          <span>mutation complete</span>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-      )}
+      {data && <NotifyMutationSuccess data={data} />}
     </div>
   );
 };

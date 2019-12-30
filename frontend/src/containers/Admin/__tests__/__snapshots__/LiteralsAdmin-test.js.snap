@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LiteralsAdmin component when rendered with existing literals matches snapshot 1`] = `
+exports[`LiteralsAdmin component when rendered with existing literal matches snapshot 1`] = `
 <div
   className="literalsAdmin"
 >
@@ -11,35 +11,13 @@ exports[`LiteralsAdmin component when rendered with existing literals matches sn
   >
     <label
       htmlFor="literals"
-      key="a"
+      key="BILL CLINTON"
     >
       <span>
         literals
       </span>
       <input
-        defaultValue="a"
-        name="literals"
-        type="text"
-      />
-    </label>
-    <label
-      htmlFor="literals"
-      key="b"
-    >
-      <span />
-      <input
-        defaultValue="b"
-        name="literals"
-        type="text"
-      />
-    </label>
-    <label
-      htmlFor="literals"
-      key="c"
-    >
-      <span />
-      <input
-        defaultValue="c"
+        defaultValue="BILL CLINTON"
         name="literals"
         type="text"
       />

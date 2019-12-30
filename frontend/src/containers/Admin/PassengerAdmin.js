@@ -3,6 +3,7 @@ import { useMutation, gql } from '@apollo/client';
 
 import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
+import NotifyMutationSuccess from '../../components/NotifyMutationSuccess';
 import { form, submit } from './style.css';
 
 const CREATE_OR_UPDATE_PASSENGER = gql`
@@ -72,12 +73,7 @@ export default (props = {}) => {
         ))}
         <input className={submit} type="submit" value={`${mode} passenger`} />
       </form>
-      {mutationResult && (
-        <div>
-          <span>mutation complete</span>
-          <pre>{JSON.stringify(mutationResult, null, 2)}</pre>
-        </div>
-      )}
+      {mutationResult && <NotifyMutationSuccess data={mutationResult} />}
     </>
   );
 };
