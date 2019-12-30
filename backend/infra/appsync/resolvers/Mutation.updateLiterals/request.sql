@@ -16,12 +16,30 @@ literalUnion as (
   select literal, id from currentLiterals
   union
   select *, (
-    select id from currentLiterals limit 1
+    select id from passengers
+    where passengers.slug = '$ctx.args.slug'
   ) as id from unnest(ARRAY[$singleQuoteArray]::text[])
 )
 insert into canonical(literal, passenger)
 (select * from literalUnion)
-on conflict do nothing
+on conflict do nothing;
+
+with currentLiterals as (
+  select literal, passenger as id from canonical
+  where canonical.passenger = (
+    select id from passengers
+    where passengers.slug = '$ctx.args.slug'
+  )
+),
+toDelete as (
+  select literal, id from currentLiterals
+  except
+  select *, (
+    select id from passengers
+    where passengers.slug = '$ctx.args.slug'
+  ) as id from unnest(ARRAY[$singleQuoteArray]::text[])
+)
+delete from canonical where literal in (select literal from toDelete);
 
 -- statementbreak
 
