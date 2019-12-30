@@ -3,9 +3,9 @@ import { useMutation, gql } from '@apollo/client';
 
 import { AdminClient } from '../../utils/graphqlClient';
 import Loading from '../../components/Loading';
-import { form, submit } from './style.css';
+import { form, submit, literalsAdmin } from './style.css';
 
-const UPDATE_LITERALS = gql`
+export const UPDATE_LITERALS = gql`
   mutation($id: Int!, $literals: [String]!) {
     updateLiterals(id: $id, literals: $literals) {
       slug
@@ -14,11 +14,15 @@ const UPDATE_LITERALS = gql`
   }
 `;
 
-export default ({ passenger }) => {
-  const [literals, setLiterals] = useState(passenger.literals);
+export default ({ passenger, clientForTests }) => {
+  const [literals, setLiterals] = useState(passenger.literals || []);
+  const [newLiteral, setNewLiteral] = useState('');
   const [updateLiterals, { loading, error, data }] = useMutation(UPDATE_LITERALS, {
-    variables: { literals, id: passenger.id },
-    client: AdminClient,
+    variables: {
+      literals: [...literals, ...(newLiteral.length ? [newLiteral] : [])],
+      id: passenger.id,
+    },
+    client: clientForTests || AdminClient,
   });
 
   const handleFormSubmit = event => {
@@ -30,18 +34,34 @@ export default ({ passenger }) => {
   if (error) throw error;
 
   return (
-    <>
+    <div className={literalsAdmin}>
       <form
         className={form}
         onChange={ev => {
-          setLiterals([...ev.target.form.literals].map(l => l.value));
+          if (ev.target.form.newLiteral) {
+            setNewLiteral(ev.target.form.newLiteral.value);
+          }
+          if (ev.target.form.literals) {
+            setLiterals(
+              [...ev.target.form.literals].reduce(
+                (prev, l) => [...prev, ...(l.value.length ? [l.value] : [])],
+                [],
+              ),
+            );
+          }
         }}
         onSubmit={handleFormSubmit}
       >
-        {literals.map(literal => (
-          <input type="text" key={literal} name="literals" value={literal} />
+        {literals.map((literal, i) => (
+          <label htmlFor="literals" key={literal}>
+            <span>{i === 0 ? 'literals' : ''}</span>
+            <input type="text" name="literals" defaultValue={literal} />
+          </label>
         ))}
-        <input type="text" name="literals" />
+        <label htmlFor="newLiteral">
+          <span>add new</span>
+          <input type="text" name="newLiteral" />
+        </label>
         <input className={submit} type="submit" value="update associated literals" />
       </form>
       {data && (
@@ -50,6 +70,6 @@ export default ({ passenger }) => {
           <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
       )}
-    </>
+    </div>
   );
 };

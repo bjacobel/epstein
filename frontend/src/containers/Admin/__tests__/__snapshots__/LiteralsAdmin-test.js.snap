@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LiteralsAdmin component when rendered with existing literals matches snapshot 1`] = `
+<div
+  className="literalsAdmin"
+>
+  <form
+    className="form"
+    onChange={[Function]}
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="literals"
+      key="a"
+    >
+      <span>
+        literals
+      </span>
+      <input
+        defaultValue="a"
+        name="literals"
+        type="text"
+      />
+    </label>
+    <label
+      htmlFor="literals"
+      key="b"
+    >
+      <span />
+      <input
+        defaultValue="b"
+        name="literals"
+        type="text"
+      />
+    </label>
+    <label
+      htmlFor="literals"
+      key="c"
+    >
+      <span />
+      <input
+        defaultValue="c"
+        name="literals"
+        type="text"
+      />
+    </label>
+    <label
+      htmlFor="newLiteral"
+    >
+      <span>
+        add new
+      </span>
+      <input
+        name="newLiteral"
+        type="text"
+      />
+    </label>
+    <input
+      className="submit"
+      type="submit"
+      value="update associated literals"
+    />
+  </form>
+</div>
+`;
+
+exports[`LiteralsAdmin component when rendered with no literals matches snapshot 1`] = `
+<div
+  className="literalsAdmin"
+>
+  <form
+    className="form"
+    onChange={[Function]}
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="newLiteral"
+    >
+      <span>
+        add new
+      </span>
+      <input
+        name="newLiteral"
+        type="text"
+      />
+    </label>
+    <input
+      className="submit"
+      type="submit"
+      value="update associated literals"
+    />
+  </form>
+</div>
+`;
