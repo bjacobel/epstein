@@ -85,3 +85,8 @@
   margin-bottom: margin;
   border-bottom: 1px solid verylightgrey;
 }
+
+.literalsAdmin {
+  composes: roboto from '../../stylesheets/shared.css';
+  margin-top: margin;
+}

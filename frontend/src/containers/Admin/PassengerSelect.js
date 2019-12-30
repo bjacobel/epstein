@@ -64,10 +64,10 @@ export default props => {
         crumbs(passenger ? `Edit ${passenger.name}` : 'Create new passenger')}
       {createFormSelected && <PassengerAdmin mode="create" />}
       {passenger && (
-        <>
+        <div>
           <PassengerAdmin mode="update" {...passenger} />
           <LiteralsAdmin passenger={passenger} />
-        </>
+        </div>
       )}
       {!(createFormSelected || passenger) && (
         <label className={selectPass} htmlFor="pass-select">
