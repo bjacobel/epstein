@@ -1,4 +1,4 @@
-@value margin from '../../stylesheets/measurements';
+@value margin, mobile from '../../stylesheets/measurements';
 
 .container {
   composes: roboto from '../../stylesheets/shared';
@@ -18,6 +18,10 @@
     border-right: 1px solid black;
     padding-right: calc(margin / 2);
     min-width: 50px;
+
+    @media (max-width: mobile) {
+      font-size: 12px;
+    }
   }
 
   > :last-child {

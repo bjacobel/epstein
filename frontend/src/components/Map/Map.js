@@ -1,6 +1,6 @@
 import React from 'react';
 import { latLngBounds, LatLng } from 'leaflet';
-import { Map, TileLayer, LayerGroup } from 'react-leaflet';
+import { Map, TileLayer, LayerGroup, AttributionControl } from 'react-leaflet';
 import Curve from 'react-leaflet-curve/src/Curve';
 import { GreatCircle } from 'arc';
 import 'leaflet/dist/leaflet.css';
@@ -28,13 +28,9 @@ export default ({ source, dest }) => {
         className={mapContainer}
         bounds={bounds}
         boundsOptions={{ padding: [10, 10] }}
-        dragging={false}
-        zoomControl={false}
-        scrollWheelZoom={false}
-        doubleClickZoom={false}
-        touchZoom={false}
-        boxZoom={false}
+        attributionControl={false}
       >
+        <AttributionControl position="bottomright" prefix={false} />
         <TileLayer attribution={MAP_ATTRIBUTION} url={MAP_TILES} />
         <LayerGroup>
           <Curve

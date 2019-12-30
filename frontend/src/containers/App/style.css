@@ -1,4 +1,4 @@
-@value margin from '../../stylesheets/measurements';
+@value margin, mobile from '../../stylesheets/measurements';
 
 :global {
   body {
@@ -8,5 +8,9 @@
 }
 
 .appWrap {
-  margin: 0 margin margin margin;
+  margin: 0 margin;
+
+  @media (max-width: mobile) {
+    margin: 0 calc(margin / 2);
+  }
 }

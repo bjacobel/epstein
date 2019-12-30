@@ -16,7 +16,12 @@ import { blacklink } from '../../stylesheets/shared.css';
 
 const MenuButton = ({ toggleMenu, menuActive }) => {
   return (
-    <button type="button" className={mobileBurger} onClick={toggleMenu}>
+    <button
+      type="button"
+      aria-label="expand mobile menu"
+      className={mobileBurger}
+      onClick={toggleMenu}
+    >
       <span className={classNames(burgerLines, { [active]: menuActive })} />
     </button>
   );
@@ -24,6 +29,9 @@ const MenuButton = ({ toggleMenu, menuActive }) => {
 
 export default () => {
   const [menuActive, toggleMenuActive] = useState(false);
+  const menuCloseOnClick = () => {
+    if (menuActive) toggleMenuActive(false);
+  };
   return (
     <nav className={header}>
       <h1 className={title}>
@@ -31,22 +39,25 @@ export default () => {
           epstein.flights
         </Link>
       </h1>
+      <MenuButton
+        toggleMenu={() => toggleMenuActive(!menuActive)}
+        aria-haspopup="true"
+        aria-controls="menu-list"
+        aria-expanded={menuActive} // @TODO: aria-expanded should be false when css viewport is big
+        menuActive={menuActive}
+      />
       <ul className={classNames(hotlinks, { [mobileHotlinks]: menuActive })}>
-        <li className={hotlink}>
-          <Link className={blacklink} to="/about">
+        <li className={hotlink} tabIndex="-1">
+          <Link className={blacklink} to="/about" onClick={menuCloseOnClick}>
             About
           </Link>
         </li>
-        <li className={hotlink}>
-          <Link className={blacklink} to="/search">
+        <li className={hotlink} tabIndex="-1">
+          <Link className={blacklink} to="/search" onClick={menuCloseOnClick}>
             Search
           </Link>
         </li>
       </ul>
-      <MenuButton
-        toggleMenu={() => toggleMenuActive(!menuActive)}
-        menuActive={menuActive}
-      />
     </nav>
   );
 };
