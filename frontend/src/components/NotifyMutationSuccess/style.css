@@ -1,0 +1,6 @@
+@value margin from '../../stylesheets/measurements.css';
+
+.mutationSuccesss {
+  composes: roboto from '../../stylesheets/shared.css';
+  margin-top: margin;
+}

@@ -9,6 +9,7 @@ import updateWrapper from '../../../utils/testing/updateWrapper';
 const mutationResponse = {
   data: {
     updateLiterals: {
+      id: 1,
       slug: 'bill-clinton',
       literals: [],
     },
@@ -47,23 +48,23 @@ describe('LiteralsAdmin component', () => {
       const wrapper = mount(
         <LiteralsAdmin clientForTests={client} passenger={passenger} />,
       );
-      wrapper
-        .find('input[name="newLiteral"]')
-        .simulate('change', { target: { form: { newLiteral: { value: 'billy c' } } } });
+      wrapper.find('input[name="newLiteral"]').simulate('change', {
+        target: { form: { newLiteral: { value: 'BILL CLINTON' } } },
+      });
       wrapper.find('form').simulate('submit');
 
       await updateWrapper(wrapper);
 
       expect(mutationHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ literals: ['billy c'] }),
+        expect.objectContaining({ literals: ['BILL CLINTON'] }),
       );
     });
   });
 
-  describe('when rendered with existing literals', () => {
+  describe('when rendered with existing literal', () => {
     let passenger;
     beforeEach(() => {
-      passenger = { slug: 'bill-clinton', literals: ['a', 'b', 'c'] };
+      passenger = { slug: 'bill-clinton', literals: ['BILL CLINTON'] };
     });
 
     it('matches snapshot', () => {
@@ -73,22 +74,22 @@ describe('LiteralsAdmin component', () => {
       expect(wrapper.children()).toMatchSnapshot();
     });
 
-    it('calls the mutation with four literals after filling the field', async () => {
+    it('calls the mutation with two literals after filling the field', async () => {
       const mutationHandler = jest.fn().mockResolvedValue(mutationResponse);
       link.setRequestHandler(UPDATE_LITERALS, mutationHandler);
 
       const wrapper = mount(
         <LiteralsAdmin clientForTests={client} passenger={passenger} />,
       );
-      wrapper
-        .find('input[name="newLiteral"]')
-        .simulate('change', { target: { form: { newLiteral: { value: 'billy c' } } } });
+      wrapper.find('input[name="newLiteral"]').simulate('change', {
+        target: { form: { newLiteral: { value: 'PRESIDENT CLINTON' } } },
+      });
       wrapper.find('form').simulate('submit');
 
       await updateWrapper(wrapper);
 
       expect(mutationHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ literals: ['a', 'b', 'c', 'billy c'] }),
+        expect.objectContaining({ literals: ['BILL CLINTON', 'PRESIDENT CLINTON'] }),
       );
     });
 
@@ -100,14 +101,14 @@ describe('LiteralsAdmin component', () => {
         <LiteralsAdmin clientForTests={client} passenger={passenger} />,
       );
       wrapper.find('input[name="newLiteral"]').simulate('change', {
-        target: { form: { literals: [{ value: 'a' }, { value: '' }, { value: 'c' }] } },
+        target: { form: { literals: { value: '' } } },
       });
       wrapper.find('form').simulate('submit');
 
       await updateWrapper(wrapper);
 
       expect(mutationHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ literals: ['a', 'c'] }),
+        expect.objectContaining({ literals: [] }),
       );
     });
 
@@ -119,17 +120,19 @@ describe('LiteralsAdmin component', () => {
         <LiteralsAdmin clientForTests={client} passenger={passenger} />,
       );
       wrapper.find('input[name="newLiteral"]').simulate('change', {
-        target: { form: { literals: [{ value: 'a' }, { value: '' }, { value: 'c' }] } },
+        target: { form: { literals: { value: '' } } },
       });
-      wrapper
-        .find('input[name="newLiteral"]')
-        .simulate('change', { target: { form: { newLiteral: { value: 'billy c' } } } });
+      wrapper.find('input[name="newLiteral"]').simulate('change', {
+        target: { form: { newLiteral: { value: 'PRESIDENT WILLIAM J. CLINTON' } } },
+      });
       wrapper.find('form').simulate('submit');
 
       await updateWrapper(wrapper);
 
       expect(mutationHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ literals: ['a', 'c', 'billy c'] }),
+        expect.objectContaining({
+          literals: ['PRESIDENT WILLIAM J. CLINTON'],
+        }),
       );
     });
   });

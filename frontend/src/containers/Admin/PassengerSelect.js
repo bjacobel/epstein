@@ -28,14 +28,19 @@ export const PASSENGERS = gql`
 export default props => {
   const { clientForTests } = props || {};
   const [createFormSelected, selectCreateForm] = useState(false);
-  const [passenger, setPassenger] = useState();
+  const [currentPassengerSlug, setCurrentPassengerSlug] = useState();
   const { data, loading, error } = useQuery(PASSENGERS, {
     client: clientForTests || AdminClient,
   });
 
+  let passengerData;
+  if (data) {
+    passengerData = data.passengers.edges.find(p => p.slug === currentPassengerSlug);
+  }
+
   const handleSelectChange = ({ target }) => {
     if (target.value === 'new') return selectCreateForm(true);
-    return setPassenger(data.passengers.edges.find(p => p.slug === target.value));
+    return setCurrentPassengerSlug(target.value);
   };
 
   if (loading) return <Loading />;
@@ -48,7 +53,7 @@ export default props => {
         className={breadcrumb}
         onClick={() => {
           selectCreateForm(false);
-          setPassenger();
+          setCurrentPassengerSlug();
         }}
       >
         Admin
@@ -60,16 +65,16 @@ export default props => {
 
   return (
     <>
-      {(createFormSelected || passenger) &&
-        crumbs(passenger ? `Edit ${passenger.name}` : 'Create new passenger')}
+      {(createFormSelected || passengerData) &&
+        crumbs(passengerData ? `Edit ${passengerData.name}` : 'Create new passenger')}
       {createFormSelected && <PassengerAdmin mode="create" />}
-      {passenger && (
+      {passengerData && (
         <div>
-          <PassengerAdmin mode="update" {...passenger} />
-          <LiteralsAdmin passenger={passenger} />
+          <PassengerAdmin mode="update" {...passengerData} />
+          <LiteralsAdmin passenger={passengerData} />
         </div>
       )}
-      {!(createFormSelected || passenger) && (
+      {!(createFormSelected || passengerData) && (
         <label className={selectPass} htmlFor="pass-select">
           Select a passenger
           <select name="pass-select" onChange={handleSelectChange}>
