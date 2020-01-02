@@ -30,7 +30,11 @@ exports[`Router matches snapshot 1`] = `
       exact={true}
       path="/admin"
     >
-      <_default />
+      <Suspense
+        fallback={<_default />}
+      >
+        <lazy />
+      </Suspense>
     </PrivateRoute>
     <GARoute
       component={[MockFunction]}
