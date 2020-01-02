@@ -21,6 +21,12 @@ exports[`Router matches snapshot 1`] = `
       ga={Object {}}
       path="/passenger/:slug"
     />
+    <GARoute
+      exact={true}
+      ga={Object {}}
+      path="/about"
+      render={[Function]}
+    />
     <Route
       component={[Function]}
       exact={true}
