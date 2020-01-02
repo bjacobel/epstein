@@ -14,7 +14,7 @@ import {
 } from './style.css';
 import { blacklink } from '../../stylesheets/shared.css';
 
-const MenuButton = ({ toggleMenu, menuActive }) => {
+export const MenuButton = ({ toggleMenu, menuActive }) => {
   return (
     <button
       type="button"

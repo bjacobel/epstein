@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header component matches snapshot 1`] = `
+<_default>
+  <nav
+    className="header"
+  >
+    <h1
+      className="title"
+    >
+      <Link
+        className="blacklink"
+        to="/"
+      >
+        <a
+          href="/"
+        >
+          epstein.flights
+        </a>
+      </Link>
+    </h1>
+    <MenuButton
+      aria-controls="menu-list"
+      aria-expanded={false}
+      aria-haspopup="true"
+      menuActive={false}
+      toggleMenu={[Function]}
+    >
+      <button
+        aria-label="expand mobile menu"
+        className="mobileBurger"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="burgerLines"
+        />
+      </button>
+    </MenuButton>
+    <ul
+      className="hotlinks"
+    >
+      <li
+        className="hotlink"
+        tabIndex="-1"
+      >
+        <Link
+          className="blacklink"
+          onClick={[Function]}
+          to="/about"
+        >
+          <a
+            href="/about"
+          >
+            About
+          </a>
+        </Link>
+      </li>
+      <li
+        className="hotlink"
+        tabIndex="-1"
+      >
+        <Link
+          className="blacklink"
+          onClick={[Function]}
+          to="/search"
+        >
+          <a
+            href="/search"
+          >
+            Search
+          </a>
+        </Link>
+      </li>
+    </ul>
+  </nav>
+</_default>
+`;
+
+exports[`header component matches snapshot when tapped 1`] = `
+<_default>
+  <nav
+    className="header"
+  >
+    <h1
+      className="title"
+    >
+      <Link
+        className="blacklink"
+        to="/"
+      >
+        <a
+          href="/"
+        >
+          epstein.flights
+        </a>
+      </Link>
+    </h1>
+    <MenuButton
+      aria-controls="menu-list"
+      aria-expanded={true}
+      aria-haspopup="true"
+      menuActive={true}
+      toggleMenu={[Function]}
+    >
+      <button
+        aria-label="expand mobile menu"
+        className="mobileBurger"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="burgerLines active"
+        />
+      </button>
+    </MenuButton>
+    <ul
+      className="hotlinks mobileHotlinks"
+    >
+      <li
+        className="hotlink"
+        tabIndex="-1"
+      >
+        <Link
+          className="blacklink"
+          onClick={[Function]}
+          to="/about"
+        >
+          <a
+            href="/about"
+          >
+            About
+          </a>
+        </Link>
+      </li>
+      <li
+        className="hotlink"
+        tabIndex="-1"
+      >
+        <Link
+          className="blacklink"
+          onClick={[Function]}
+          to="/search"
+        >
+          <a
+            href="/search"
+          >
+            Search
+          </a>
+        </Link>
+      </li>
+    </ul>
+  </nav>
+</_default>
+`;
