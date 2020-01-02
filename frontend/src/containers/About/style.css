@@ -1,0 +1,18 @@
+@value margin from '../../stylesheets/measurements';
+
+.aboutPage {
+  composes: roboto from '../../stylesheets/shared.css';
+  max-width: 650px;
+  margin: 0 auto;
+
+  h2,
+  h3,
+  h4 {
+    font-weight: normal;
+  }
+
+  h3,
+  h4 {
+    margin-top: calc(2 * margin);
+  }
+}

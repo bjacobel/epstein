@@ -22,6 +22,10 @@ const SuspenseAdmin = React.lazy(() =>
   import(/* webpackChunkName: "admin" */ '../Admin'),
 );
 
+const SuspenseAbout = React.lazy(() =>
+  import(/* webpackChunkName: "about" */ '../About'),
+);
+
 export const PrivateRoute = ({ children, ...rest }) => (
   <Route
     {...rest}
@@ -53,6 +57,16 @@ export default class Routes extends Component {
           <GARoute ga={this.ga} path="/" exact component={Home} />
           <GARoute ga={this.ga} path="/flight/:id" exact component={Flight} />
           <GARoute ga={this.ga} path="/passenger/:slug" exact component={Passenger} />
+          <GARoute
+            ga={this.ga}
+            path="/about"
+            exact
+            render={() => (
+              <Suspense fallback={<Loading />}>
+                <SuspenseAbout />
+              </Suspense>
+            )}
+          />
           <Route path="/login" exact component={Login} />
           <PrivateRoute path="/admin" exact>
             <Suspense fallback={<Loading />}>

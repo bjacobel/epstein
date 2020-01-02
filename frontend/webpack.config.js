@@ -42,6 +42,10 @@ module.exports = (env = {}, { mode } = {}) => {
     module: {
       rules: [
         {
+          test: /\.md$/,
+          use: ['html-loader', 'markdown-loader'],
+        },
+        {
           test: /\.(png|jpe?g|gif|svg)(\?[a-z0-9=]+)?$/,
           use: 'file-loader',
         },
