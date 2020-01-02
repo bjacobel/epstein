@@ -9,7 +9,7 @@ import MetaTags from '../../components/MetaTags';
 import { passengers, noslug, explainLiteral } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
-const FLIGHT = gql`
+export const FLIGHT = gql`
   fragment airfield on Airfield {
     name
     iata_code
@@ -79,7 +79,7 @@ export default ({ match }) => {
   const { loading, error, data } = useQuery(FLIGHT, { variables: { id } });
 
   if (loading) return <Loading text />;
-  if (error) return <p>Error :(</p>;
+  if (error) throw error;
 
   const isoDate = parseISO(data.flight.date);
 
