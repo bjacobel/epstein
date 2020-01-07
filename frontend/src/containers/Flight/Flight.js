@@ -142,8 +142,14 @@ export default ({ match }) => {
               ))}
             <hr />
             <span className={explainLiteral}>
-              As well as the following, who have not been linked to an identified
-              passenger:
+              <span>As well as the following, who </span>
+              <a
+                className={link}
+                href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+              >
+                have not been linked to an identified passenger
+              </a>
+              :
             </span>
             {data.flight.passengers.edges
               .filter(x => !x.slug)
