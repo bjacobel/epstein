@@ -86,10 +86,14 @@ export default ({ match }) => {
         <span>bio</span>
         <div>
           <span>{data.passenger.biography}</span>
-          <br />
-          <a className={link} href={data.passenger.wikipedia_link}>
-            <span>See more on Wikipedia →</span>
-          </a>
+          {data.passenger.wikipedia_link && (
+            <>
+              <br />
+              <a className={link} href={data.passenger.wikipedia_link}>
+                <span>See more on Wikipedia →</span>
+              </a>
+            </>
+          )}
         </div>
         <span>history</span>
         <div>{historyText(data)}</div>
