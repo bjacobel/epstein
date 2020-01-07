@@ -1,4 +1,5 @@
 @value margin from '../../stylesheets/measurements';
+@value blue, dark-blue from '../../stylesheets/colors';
 
 .aboutPage {
   composes: roboto from '../../stylesheets/shared.css';
@@ -14,5 +15,18 @@
   h3,
   h4 {
     margin-top: calc(2 * margin);
+  }
+
+  a {
+    color: blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:visited {
+      color: dark-blue;
+    }
   }
 }
