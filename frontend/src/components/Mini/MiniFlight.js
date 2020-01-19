@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 
 import Loading from '../Loading';
+import ErrorBoundary from '../ErrorBoundary';
+import logError from '../../utils/errors';
 import { box, link, row } from './mini.css';
 import { robotoMono as mono } from '../../stylesheets/shared.css';
 
@@ -35,23 +37,28 @@ export default ({ id, done }) => {
   });
 
   if (loading) return done ? null : <Loading />;
-  if (error) return <p>Error :(</p>;
+  if (error) {
+    logError(error);
+    return null;
+  }
 
   return (
-    <div className={box}>
-      <Link to={`/flight/${data.flight.id}`} className={link}>
-        <div className={row}>
-          <span>{format(parseISO(data.flight.date), 'MMM d, y')}</span>
-          <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>
-        </div>
-        <div className={row}>
-          <span>
-            <span className={mono}>{data.flight.source.iata_code}</span>
-            <span> to </span>
-            <span className={mono}>{data.flight.destination.iata_code}</span>
-          </span>
-        </div>
-      </Link>
-    </div>
+    <ErrorBoundary>
+      <div className={box}>
+        <Link to={`/flight/${data.flight.id}`} className={link}>
+          <div className={row}>
+            <span>{format(parseISO(data.flight.date), 'MMM d, y')}</span>
+            <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>
+          </div>
+          <div className={row}>
+            <span>
+              <span className={mono}>{data.flight.source.iata_code}</span>
+              <span> to </span>
+              <span className={mono}>{data.flight.destination.iata_code}</span>
+            </span>
+          </div>
+        </Link>
+      </div>
+    </ErrorBoundary>
   );
 };
