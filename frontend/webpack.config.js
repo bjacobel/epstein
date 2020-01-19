@@ -35,7 +35,7 @@ module.exports = (env = {}, { mode } = {}) => {
     mode: isProd ? 'production' : 'development',
     output: {
       path: `${__dirname}/dist`,
-      filename: isProd ? '[name].[chunkhash].js' : '[name].js',
+      filename: isProd ? '[name].[hash].js' : '[name].js',
       publicPath: isProd ? '/' : 'http://localhost:8080/',
     },
     devtool: 'source-map',
@@ -105,6 +105,10 @@ module.exports = (env = {}, { mode } = {}) => {
         new TerserPlugin({
           terserOptions: {
             ecma: 8,
+            mangle: {
+              keep_fnames: /Error$/,
+              keep_classnames: /Error$/,
+            },
           },
         }),
       ],
