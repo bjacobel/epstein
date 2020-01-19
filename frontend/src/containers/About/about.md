@@ -1,6 +1,6 @@
 ## about
 
-This site provides a digitized, searchable record of the flight logs from Jeffrey Epstein's personal plane (sometimes killed the "Lolita Express").
+This site provides a digitized, searchable record of the flight logs from Jeffrey Epstein's personal plane (sometimes called the "Lolita Express").
 
 ### Where does the data come from?
 
