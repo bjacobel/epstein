@@ -182,6 +182,27 @@ describe('Flight page container', () => {
           ]
         `);
       });
+
+      it("doesn't show literal explanation if they don't exist", async () => {
+        const flightWithOnlyVerified = { ...flightData };
+        flightWithOnlyVerified.data.flight.passengers.edges = flightData.data.flight.passengers.edges.filter(
+          // eslint-disable-next-line no-underscore-dangle
+          x => x.__typename === 'VerifiedPassenger',
+        );
+        const queryHandler = jest.fn().mockResolvedValue(flightWithOnlyVerified);
+        link.setRequestHandler(FLIGHT, queryHandler);
+
+        const wrapper = mount(
+          <ApolloProvider client={client}>
+            <Flight match={{ params: { id: 65 } }} />
+          </ApolloProvider>,
+        );
+
+        await updateWrapper(wrapper);
+        const passList = wrapper.find(`.${passengers}`);
+
+        expect(passList).toMatchSnapshot();
+      });
     });
   });
 });

@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Flight page container details rendering passengers listing doesn't show literal explanation if they don't exist 1`] = `
+<div
+  className="passengers"
+>
+  <ul>
+    <li
+      key="bill-clinton"
+    >
+      <Link
+        className="link"
+        to="/passenger/bill-clinton"
+      >
+        <a
+          href="/passenger/bill-clinton"
+        >
+          Bill Clinton
+        </a>
+      </Link>
+    </li>
+    0
+  </ul>
+</div>
+`;
+
 exports[`Flight page container details rendering passengers listing matches snapshot 1`] = `
 <_default
   match={
@@ -124,7 +148,16 @@ exports[`Flight page container details rendering passengers listing matches snap
           <span
             className="explainLiteral"
           >
-            As well as the following, who have not been linked to an identified passenger:
+            <span>
+              As well as the following, who 
+            </span>
+            <a
+              className="link"
+              href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+            >
+              have not been linked to an identified passenger
+            </a>
+            :
           </span>
           <li
             className="noslug"

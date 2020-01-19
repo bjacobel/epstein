@@ -52,7 +52,7 @@ module.exports = () => {
     })
     .catch(err => {
       console.error(
-        `Error: ${err.message}\nTry invalidaing the distribution through the AWS console.`,
+        `Error: ${err.message}\nTry invalidating the distribution through the AWS console.`,
       );
     });
 };

@@ -140,24 +140,28 @@ export default ({ match }) => {
                   </Link>
                 </li>
               ))}
-            <hr />
-            <span className={explainLiteral}>
-              <span>As well as the following, who </span>
-              <a
-                className={link}
-                href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
-              >
-                have not been linked to an identified passenger
-              </a>
-              :
-            </span>
-            {data.flight.passengers.edges
-              .filter(x => !x.slug)
-              .map(({ literal }) => (
-                <li key={literal} className={noslug}>
-                  <span>{`“${literal}”`}</span>
-                </li>
-              ))}
+            {data.flight.passengers.edges.filter(x => !x.slug).length && (
+              <>
+                <hr />
+                <span className={explainLiteral}>
+                  <span>As well as the following, who </span>
+                  <a
+                    className={link}
+                    href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+                  >
+                    have not been linked to an identified passenger
+                  </a>
+                  :
+                </span>
+                {data.flight.passengers.edges
+                  .filter(x => !x.slug)
+                  .map(({ literal }) => (
+                    <li key={literal} className={noslug}>
+                      <span>{`“${literal}”`}</span>
+                    </li>
+                  ))}
+              </>
+            )}
           </ul>
         </div>
         <span>aircraft</span>
