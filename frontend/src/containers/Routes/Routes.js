@@ -6,6 +6,7 @@ import Home from '../Home';
 import Flight from '../Flight';
 import Passenger from '../Passenger';
 import Login from '../Login';
+import Search from '../Search';
 import Analytics from '../../utils/Analytics';
 import Loading from '../../components/Loading';
 import { hasValidJwtToken } from '../../utils/auth';
@@ -73,6 +74,7 @@ export default class Routes extends Component {
               <SuspenseAdmin />
             </Suspense>
           </PrivateRoute>
+          <GARoute ga={this.ga} path="/search" component={Search} />
           <GARoute ga={this.ga} component={NotFound} />
         </Switch>
       </div>
