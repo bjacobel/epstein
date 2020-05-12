@@ -19,7 +19,6 @@ exports[`Flight page container details rendering passengers listing doesn't show
         </a>
       </Link>
     </li>
-    0
   </ul>
 </div>
 `;

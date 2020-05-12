@@ -3,6 +3,7 @@ module.exports = {
   coveragePathIgnorePatterns: ['polyfills.js', 'testing/.*.js'],
   moduleNameMapper: {
     '^.+\\.css$': '<rootDir>/__mocks__/stylesheets.js',
+    '\\.(jpe?g|png|gif)$': '<rootDir>/__mocks__/fileMock.js',
   },
   transformIgnorePatterns: [
     '/node_modules/(?!@apollo/client/utilities/observables/).+\\.js$',
