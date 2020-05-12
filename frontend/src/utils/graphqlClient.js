@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache, ApolloLink } from '@apollo/clien
 import { onError } from 'apollo-link-error';
 import ExtendableError from 'extendable-error';
 
-import { getJwtToken } from './auth';
+import { getJwtToken, hasValidJwtToken } from './auth';
 import logErr from './errors';
 import { BACKEND_URL, BACKEND_UNCACHED_URL, SHOW_DEV_TOOLS } from '../constants';
 
@@ -30,7 +30,7 @@ const errorLink = onError(({ graphQLErrors, networkError, response }) => {
 export default new ApolloClient({
   cache: new InMemoryCache(),
   link: ApolloLink.from([errorLink, httpLink]),
-  connectToDevTools: SHOW_DEV_TOOLS,
+  connectToDevTools: SHOW_DEV_TOOLS && !hasValidJwtToken(),
 });
 
 const authedFetch = (uri, options) => {
@@ -52,5 +52,5 @@ export const AdminClient = new ApolloClient({
       fetch: authedFetch,
     }),
   ]),
-  connectToDevTools: SHOW_DEV_TOOLS,
+  connectToDevTools: SHOW_DEV_TOOLS && hasValidJwtToken(),
 });
