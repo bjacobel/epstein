@@ -1,4 +1,4 @@
-name: 'Backend Stack Validation'
+name: 'Backend'
 on:
   push:
     paths:
