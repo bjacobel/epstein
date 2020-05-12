@@ -140,7 +140,7 @@ export default ({ match }) => {
                   </Link>
                 </li>
               ))}
-            {data.flight.passengers.edges.filter(x => !x.slug).length && (
+            {!!data.flight.passengers.edges.filter(x => !x.slug).length && (
               <>
                 <hr />
                 <span className={explainLiteral}>
