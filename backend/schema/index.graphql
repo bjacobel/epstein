@@ -1,5 +1,6 @@
 # import Flight from './types/Flight.graphql'
 # import Passenger from './types/Passenger.graphql'
+# import SearchResultsFlightConnection from './types/SearchResultsFlightConnection.graphql'
 # import FlightConnection from './types/FlightConnection.graphql'
 # import PassengerConnection from './types/PassengerConnection.graphql'
 
@@ -26,7 +27,7 @@ type Query @aws_cognito_user_pools @aws_api_key {
     query: String!,
     limit: Int,
     offset: Int
-  ): FlightConnection
+  ): SearchResultsFlightConnection
 }
 
 type Mutation @aws_cognito_user_pools {
