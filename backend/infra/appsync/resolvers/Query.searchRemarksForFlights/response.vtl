@@ -1,10 +1,9 @@
 ${errorHandler}
-#set($resp = $utils.rds.toJsonObject($ctx.result)[1])
+${rdsResp}
 ${pagination}
 
-## Returns a SearchResultsFlightConnection
+## Returns a FlightConnection
 $utils.toJson({
-  "totalCount": $utils.rds.toJsonObject($ctx.result)[1],
   "edges": $edges,
   "pageInfo": {
     "count": $edges.size(),
