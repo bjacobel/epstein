@@ -32,3 +32,5 @@ export const COGNITO_LOGIN_FORM = `https://epsteinbrain.auth.us-east-2.amazoncog
 )}`;
 
 export const IGNORED_ERRORS = ['Network error: Failed to fetch', 'Failed to fetch'];
+
+export const FLIGHT_LIMIT = 10;

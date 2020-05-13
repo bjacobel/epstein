@@ -74,7 +74,7 @@ export default class Routes extends Component {
               <SuspenseAdmin />
             </Suspense>
           </PrivateRoute>
-          <GARoute ga={this.ga} path="/search" component={Search} />
+          <GARoute ga={this.ga} path="/search/:query?" exact component={Search} />
           <GARoute ga={this.ga} component={NotFound} />
         </Switch>
       </div>

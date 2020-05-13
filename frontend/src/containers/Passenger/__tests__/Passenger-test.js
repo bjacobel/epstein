@@ -6,7 +6,7 @@ import Passenger, { PASSENGER, range } from '../Passenger';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
 
-jest.mock('../../../components/MetaTags', () => () => null);
+jest.mock('../../../components/MetaTags');
 
 const passengerData = {
   data: {

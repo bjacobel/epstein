@@ -10,7 +10,7 @@ exports[`passenger details container matches snapshot with data resolution 1`] =
     }
   }
 >
-  <Component
+  <mockConstructor
     description="Bill Clinton appears in the Epstein flight logs 26 times between February and March 2002"
     title="Bill Clinton"
     uri="passenger/bill-clinton"

@@ -33,7 +33,7 @@ exports[`Flight page container details rendering passengers listing matches snap
     }
   }
 >
-  <Component
+  <mockConstructor
     description="2 passengers were listed on the manifest, including Bill Clinton"
     title="LTN to LTN on 9/1/02"
     uri="flight/100"

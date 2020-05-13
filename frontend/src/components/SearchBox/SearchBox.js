@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-export default ({ initialValue, searchComplete }) => {
+export default ({ initialValue, onClick }) => {
   const [searchQuery, updateSearchQuery] = useState(initialValue);
 
   const search = e => {
     e.preventDefault();
-    const searchResults = {};
-    searchComplete(searchQuery, searchResults);
+    onClick(searchQuery);
   };
 
   return (
