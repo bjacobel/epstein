@@ -1,7 +1,0 @@
-# import FlightConnection from './FlightConnection.graphql'
-
-type SearchResultsFlightConnection @aws_api_key @aws_cognito_user_pools {
-  totalCount: Int!
-  edges: [Flight]!
-  pageInfo: PageInfo!
-}
