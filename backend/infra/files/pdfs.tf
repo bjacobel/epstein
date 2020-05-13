@@ -5,7 +5,7 @@ resource "aws_s3_bucket_object" "manifest09pdf" {
   content_type = "application/pdf"
 }
 
-resource "aws_s3_bucket_object" "manifest09pdf" {
+resource "aws_s3_bucket_object" "manifest15pdf" {
   bucket       = aws_s3_bucket.files.id
   key          = "/manifest15.pdf"
   source       = "../../data/manifests/Giuffre-v-Maxwell.pdf"
