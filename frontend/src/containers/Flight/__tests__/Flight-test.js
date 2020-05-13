@@ -7,7 +7,7 @@ import { passengers } from '../style.css';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
 
-jest.mock('../../../components/MetaTags', () => () => null);
+jest.mock('../../../components/MetaTags');
 jest.mock('react-router-dom');
 jest.mock('../../../components/Map', () => () => 'Map goes here');
 

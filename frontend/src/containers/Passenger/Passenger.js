@@ -8,8 +8,7 @@ import Loading from '../../components/Loading';
 import MiniFlight from '../../components/Mini/MiniFlight';
 import { link } from '../../stylesheets/shared.css';
 import MetaTags from '../../components/MetaTags';
-
-const FLIGHT_LIMIT = 10;
+import { FLIGHT_LIMIT } from '../../constants';
 
 export const PASSENGER = gql`
   query Passenger($slug: String!, $offset: Int, $limit: Int!) {
