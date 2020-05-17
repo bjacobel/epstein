@@ -2,9 +2,13 @@
 
 import React from 'react';
 
+import MetaTags from '../../components/MetaTags';
 import { aboutPage } from './style.css';
 import about from './about.md';
 
 export default () => (
-  <article className={aboutPage} dangerouslySetInnerHTML={{ __html: about }} />
+  <>
+    <MetaTags title="About" />
+    <article className={aboutPage} dangerouslySetInnerHTML={{ __html: about }} />
+  </>
 );

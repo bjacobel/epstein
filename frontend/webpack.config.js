@@ -124,6 +124,7 @@ module.exports = (env = {}, { mode } = {}) => {
         template: './src/index.html.jsx',
         favicon: './src/assets/images/favicon.ico',
         title: config.ProjectFQDomain,
+        description: config.Description,
         inject: true,
       }),
       new ScriptExtHtmlWebpackPlugin({

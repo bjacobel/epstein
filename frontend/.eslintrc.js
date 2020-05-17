@@ -42,4 +42,7 @@ module.exports = {
     'import/resolver': 'webpack',
     'import/core-modules': ['path', 'stream'],
   },
+  globals: {
+    projectConfig: 'readonly',
+  },
 };

@@ -29,6 +29,9 @@ const config = {
 
   // AWS Region you would like services to be created in
   Region: 'us-east-1',
+
+  Description:
+    "A digitized, searchable record of the flight logs from Jeffrey Epstein's personal plane. View the flight logs of Bill Clinton, Larry Summers, Prince Andrew and others.",
 };
 
 if (!module.parent && process.argv[2]) {

@@ -8,8 +8,9 @@ import MiniFlight from '../../components/Mini/MiniFlight';
 import Loading from '../../components/Loading';
 import SearchBox from '../../components/SearchBox';
 import { FLIGHT_LIMIT } from '../../constants';
+import { container, remarkResultsHeader, searchControl } from './style.css';
 
-export const SEARCH = gql`
+export const SEARCH_REMARKS = gql`
   query Search($query: String!, $offset: Int, $limit: Int!) {
     countFlightSearchResults(query: $query)
     searchRemarksForFlights(query: $query, offset: $offset, limit: $limit) {
@@ -29,7 +30,13 @@ export default () => {
   const history = useHistory();
 
   // if query is defined, instantly kick off search - else wait for doSearch
-  const { data, loading, error, refetch, fetchMore } = useQuery(SEARCH, {
+  const {
+    data: remarksData,
+    loading: remarksLoading,
+    error: remarksError,
+    refetch,
+    fetchMore,
+  } = useQuery(SEARCH_REMARKS, {
     skip: !query || query.length < 1,
     variables: { query, limit: FLIGHT_LIMIT },
   });
@@ -43,45 +50,59 @@ export default () => {
     });
   };
 
-  if (loading) return <Loading text />;
-  if (error) throw error;
+  if (remarksLoading) return <Loading text />;
+  if (remarksError) throw remarksError;
 
   return (
-    <>
+    <div className={container}>
       <MetaTags title={query ? `Search Results: '${query}'` : 'Search'} />
-      <SearchBox initialValue={query} onClick={doSearch} />
-      {data && (
-        <PaginatedBrowser
-          browserComponent={MiniFlight}
-          ids={data.searchRemarksForFlights.edges.map(x => x.id)}
-          totalAvailable={data.countFlightSearchResults}
-          pageSize={FLIGHT_LIMIT}
-          fetchMore={() =>
-            fetchMore({
-              variables: { offset: data.searchRemarksForFlights.edges.length + 1 },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                return {
-                  countFlightSearchResults: prev.countFlightSearchResults,
-                  searchRemarksForFlights: {
-                    ...prev.searchRemarksForFlights,
-                    pageInfo: {
-                      ...fetchMoreResult.searchRemarksForFlights.pageInfo,
-                      count:
-                        prev.searchRemarksForFlights.pageInfo.count +
-                        fetchMoreResult.searchRemarksForFlights.pageInfo.count,
-                    },
-                    edges: [
-                      ...prev.searchRemarksForFlights.edges,
-                      ...fetchMoreResult.searchRemarksForFlights.edges,
-                    ],
+      <div className={searchControl}>
+        <SearchBox initialValue={query} onClick={doSearch} />
+      </div>
+      {remarksData && (
+        <>
+          <p className={remarkResultsHeader}>
+            <span>{remarksData.countFlightSearchResults}</span>
+            <span> matches for &#8220;</span>
+            <span>{query}</span>
+            <span>&#8221; found in the raw flight logs</span>
+          </p>
+          {remarksData.countFlightSearchResults > 0 && (
+            <PaginatedBrowser
+              browserComponent={MiniFlight}
+              ids={remarksData.searchRemarksForFlights.edges.map(x => x.id)}
+              totalAvailable={remarksData.countFlightSearchResults}
+              pageSize={FLIGHT_LIMIT}
+              fetchMore={() =>
+                fetchMore({
+                  variables: {
+                    offset: remarksData.searchRemarksForFlights.edges.length + 1,
                   },
-                };
-              },
-            })
-          }
-        />
+                  updateQuery: (prev, { fetchMoreResult }) => {
+                    if (!fetchMoreResult) return prev;
+                    return {
+                      countFlightSearchResults: prev.countFlightSearchResults,
+                      searchRemarksForFlights: {
+                        ...prev.searchRemarksForFlights,
+                        pageInfo: {
+                          ...fetchMoreResult.searchRemarksForFlights.pageInfo,
+                          count:
+                            prev.searchRemarksForFlights.pageInfo.count +
+                            fetchMoreResult.searchRemarksForFlights.pageInfo.count,
+                        },
+                        edges: [
+                          ...prev.searchRemarksForFlights.edges,
+                          ...fetchMoreResult.searchRemarksForFlights.edges,
+                        ],
+                      },
+                    };
+                  },
+                })
+              }
+            />
+          )}
+        </>
       )}
-    </>
+    </div>
   );
 };

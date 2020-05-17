@@ -3,7 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { useParams, useHistory } from 'react-router-dom';
 import { mount } from 'enzyme';
 
-import Search, { SEARCH } from '../Search';
+import Search, { SEARCH_REMARKS } from '../Search';
 import SearchBox from '../../../components/SearchBox';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
@@ -43,7 +43,7 @@ describe('search container', () => {
   describe('delayed search', () => {
     it('triggers a search if routed with a param', async () => {
       const queryHandler = jest.fn().mockResolvedValue({});
-      link.setRequestHandler(SEARCH, queryHandler);
+      link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({ query: 'searchTerm' });
 
       const wrapper = mount(
@@ -59,7 +59,7 @@ describe('search container', () => {
 
     it('does not search if no params', () => {
       const queryHandler = jest.fn().mockResolvedValue({});
-      link.setRequestHandler(SEARCH, queryHandler);
+      link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({});
 
       mount(
@@ -78,7 +78,7 @@ describe('search container', () => {
       });
 
       const queryHandler = jest.fn().mockResolvedValue({});
-      link.setRequestHandler(SEARCH, queryHandler);
+      link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({});
 
       mount(
@@ -101,7 +101,7 @@ describe('search container', () => {
     });
 
     const queryHandler = jest.fn().mockResolvedValue({});
-    link.setRequestHandler(SEARCH, queryHandler);
+    link.setRequestHandler(SEARCH_REMARKS, queryHandler);
 
     mount(
       <ApolloProvider client={client}>
@@ -116,7 +116,7 @@ describe('search container', () => {
 
   it('runs query', async () => {
     const queryHandler = jest.fn().mockResolvedValue(searchData);
-    link.setRequestHandler(SEARCH, queryHandler);
+    link.setRequestHandler(SEARCH_REMARKS, queryHandler);
     useParams.mockReturnValue({ query: 'searchTerm' });
 
     const wrapper = mount(
