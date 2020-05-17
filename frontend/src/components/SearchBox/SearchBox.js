@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { form, input, button } from './style.css';
+
 export default ({ initialValue, onClick }) => {
   const [searchQuery, updateSearchQuery] = useState(initialValue);
 
@@ -9,14 +11,15 @@ export default ({ initialValue, onClick }) => {
   };
 
   return (
-    <form>
+    <form className={form}>
       <input
-        placeholder="search"
+        className={input}
+        placeholder="passenger name"
         type="search"
         value={searchQuery || ''}
         onChange={e => updateSearchQuery(e.target.value)}
       />
-      <button type="submit" onClick={search}>
+      <button className={button} type="submit" onClick={search}>
         search
       </button>
     </form>

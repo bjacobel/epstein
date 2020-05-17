@@ -9,6 +9,7 @@ import MiniFlight from '../../components/Mini/MiniFlight';
 import { link } from '../../stylesheets/shared.css';
 import MetaTags from '../../components/MetaTags';
 import { FLIGHT_LIMIT } from '../../constants';
+import { skinnyResults } from './style.css';
 
 export const PASSENGER = gql`
   query Passenger($slug: String!, $offset: Int, $limit: Int!) {
@@ -103,38 +104,40 @@ export default ({ match }) => {
           </>
         ) : null}
         <span>flights</span>
-        <PaginatedBrowser
-          browserComponent={MiniFlight}
-          ids={data.passenger.flights.edges.map(x => x.id)}
-          totalAvailable={data.passenger.flightCount}
-          pageSize={FLIGHT_LIMIT}
-          fetchMore={() =>
-            fetchMore({
-              variables: { offset: data.passenger.flights.edges.length + 1 },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                return {
-                  passenger: {
-                    ...prev.passenger,
-                    flights: {
-                      ...fetchMoreResult.passenger.flights,
-                      pageInfo: {
-                        ...fetchMoreResult.passenger.flights.pageInfo,
-                        count:
-                          prev.passenger.flights.pageInfo.count +
-                          fetchMoreResult.passenger.flights.pageInfo.count,
+        <div className={skinnyResults}>
+          <PaginatedBrowser
+            browserComponent={MiniFlight}
+            ids={data.passenger.flights.edges.map(x => x.id)}
+            totalAvailable={data.passenger.flightCount}
+            pageSize={FLIGHT_LIMIT}
+            fetchMore={() =>
+              fetchMore({
+                variables: { offset: data.passenger.flights.edges.length + 1 },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  return {
+                    passenger: {
+                      ...prev.passenger,
+                      flights: {
+                        ...fetchMoreResult.passenger.flights,
+                        pageInfo: {
+                          ...fetchMoreResult.passenger.flights.pageInfo,
+                          count:
+                            prev.passenger.flights.pageInfo.count +
+                            fetchMoreResult.passenger.flights.pageInfo.count,
+                        },
+                        edges: [
+                          ...prev.passenger.flights.edges,
+                          ...fetchMoreResult.passenger.flights.edges,
+                        ],
                       },
-                      edges: [
-                        ...prev.passenger.flights.edges,
-                        ...fetchMoreResult.passenger.flights.edges,
-                      ],
                     },
-                  },
-                };
-              },
-            })
-          }
-        />
+                  };
+                },
+              })
+            }
+          />
+        </div>
       </Details>
     </>
   );

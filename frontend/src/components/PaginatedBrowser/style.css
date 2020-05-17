@@ -2,7 +2,7 @@
 @value black, lightgrey from '../../stylesheets/colors';
 
 .browser {
-  max-width: 450px;
+  composes: roboto from '../../stylesheets/shared';
 }
 
 .controls {
@@ -14,7 +14,6 @@
 }
 
 .pageCount {
-  composes: roboto from '../../stylesheets/shared';
   margin: 0 calc(margin / 2);
 }
 

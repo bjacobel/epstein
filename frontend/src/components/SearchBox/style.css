@@ -1,0 +1,30 @@
+@value margin from '../../stylesheets/measurements';
+@value lightgrey from '../../stylesheets/colors';
+
+.form {
+  width: 100%;
+  composes: roboto from '../../stylesheets/shared.css';
+}
+
+.input {
+  width: calc(100% - 120px);
+  padding: margin;
+  border: 1px solid lightgrey;
+  border-radius: 0;
+  border-right: none;
+  font-size: 1em;
+}
+
+.button {
+  width: 120px;
+  padding: margin 0;
+  background: none;
+  composes: hoverEffect from '../../stylesheets/shared';
+  border: 1px solid lightgrey;
+  font-size: 1em;
+  font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
