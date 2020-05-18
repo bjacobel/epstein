@@ -150,12 +150,22 @@ exports[`Flight page container details rendering passengers listing matches snap
             <span>
               As well as the following, who 
             </span>
-            <a
+            <HashLink
               className="link"
-              href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+              to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
             >
-              have not been linked to an identified passenger
-            </a>
+              <Link
+                className="link"
+                onClick={[Function]}
+                to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+              >
+                <a
+                  href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+                >
+                  have not been linked to an identified passenger
+                </a>
+              </Link>
+            </HashLink>
             :
           </span>
           <li

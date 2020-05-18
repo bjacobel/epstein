@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import Details from '../../components/Details';
 import Loading from '../../components/Loading';
@@ -145,12 +146,12 @@ export default ({ match }) => {
                 <hr />
                 <span className={explainLiteral}>
                   <span>As well as the following, who </span>
-                  <a
+                  <HashLink
                     className={link}
-                    href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+                    to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
                   >
                     have not been linked to an identified passenger
-                  </a>
+                  </HashLink>
                   :
                 </span>
                 {data.flight.passengers.edges

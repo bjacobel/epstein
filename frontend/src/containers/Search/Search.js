@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useLazyQuery, gql } from '@apollo/client';
+import { HashLink } from 'react-router-hash-link';
 
 import MetaTags from '../../components/MetaTags';
 import PaginatedBrowser from '../../components/PaginatedBrowser';
-import MiniFlight from '../../components/Mini/MiniFlight';
+import MidiFlight from '../../components/Mini/MidiFlight';
 import Loading from '../../components/Loading';
 import SearchBox from '../../components/SearchBox';
 import { FLIGHT_LIMIT } from '../../constants';
 import { container, remarkResultsHeader, searchControl } from './style.css';
+import { link } from '../../stylesheets/shared.css';
 
 export const SEARCH_REMARKS = gql`
   query Search($query: String!, $offset: Int, $limit: Int!) {
@@ -65,11 +67,19 @@ export default () => {
             <span>{remarksData.countFlightSearchResults}</span>
             <span> matches for &#8220;</span>
             <span>{query}</span>
-            <span>&#8221; found in the raw flight logs</span>
+            <span>&#8221; found in the </span>
+            <span>
+              <HashLink
+                to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+                className={link}
+              >
+                raw flight logs
+              </HashLink>
+            </span>
           </p>
           {remarksData.countFlightSearchResults > 0 && (
             <PaginatedBrowser
-              browserComponent={MiniFlight}
+              browserComponent={MidiFlight}
               ids={remarksData.searchRemarksForFlights.edges.map(x => x.id)}
               totalAvailable={remarksData.countFlightSearchResults}
               pageSize={FLIGHT_LIMIT}
