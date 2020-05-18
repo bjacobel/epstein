@@ -112,7 +112,7 @@ export default ({ match }) => {
             pageSize={FLIGHT_LIMIT}
             fetchMore={() =>
               fetchMore({
-                variables: { offset: data.passenger.flights.edges.length + 1 },
+                variables: { offset: data.passenger.flights.edges.length },
                 updateQuery: (prev, { fetchMoreResult }) => {
                   if (!fetchMoreResult) return prev;
                   return {

@@ -86,7 +86,7 @@ export default () => {
               fetchMore={() =>
                 fetchMore({
                   variables: {
-                    offset: remarksData.searchRemarksForFlights.edges.length + 1,
+                    offset: remarksData.searchRemarksForFlights.edges.length,
                   },
                   updateQuery: (prev, { fetchMoreResult }) => {
                     if (!fetchMoreResult) return prev;
