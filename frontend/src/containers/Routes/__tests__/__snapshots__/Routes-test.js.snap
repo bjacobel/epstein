@@ -4,7 +4,7 @@ exports[`Router matches snapshot 1`] = `
 <div>
   <Switch>
     <GARoute
-      component={[MockFunction]}
+      component={[Function]}
       exact={true}
       ga={Object {}}
       path="/"

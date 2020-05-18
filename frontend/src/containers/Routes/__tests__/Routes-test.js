@@ -8,7 +8,7 @@ import Passenger from '../../Passenger';
 import Analytics from '../../../utils/Analytics';
 import { hasValidJwtToken } from '../../../utils/auth';
 
-jest.mock('containers/Home');
+jest.mock('containers/Home', () => () => null);
 jest.mock('containers/Flight', () => () => null);
 jest.mock('containers/Passenger', () => () => null);
 jest.mock('containers/NotFound');
@@ -34,12 +34,6 @@ describe('Router', () => {
   });
 
   describe('Routing config', () => {
-    it('has a home route', () => {
-      setPath('/');
-      const routes = mount(<RoutedRoutes />);
-      expect(routes.find('Home').length).toBe(1);
-    });
-
     it('routes flights/:id to the Flight component', () => {
       setPath('/flight/125');
       const routes = mount(<RoutedRoutes />);

@@ -28,7 +28,8 @@ export const SEARCH_REMARKS = gql`
 `;
 
 export default () => {
-  const { query } = useParams() || {};
+  const { query: urlEncodedQuery } = useParams() || {};
+  const query = urlEncodedQuery ? decodeURIComponent(urlEncodedQuery) : undefined;
   const history = useHistory();
 
   // if query is defined, instantly kick off search - else wait for doSearch
