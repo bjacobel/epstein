@@ -1,0 +1,12 @@
+@value margin from '../../stylesheets/measurements';
+
+.container {
+  composes: roboto from '../../stylesheets/shared.css';
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.heroCopy {
+  margin: calc(2 * margin) 0;
+  font-style: italic;
+}
