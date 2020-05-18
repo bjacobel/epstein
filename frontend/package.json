@@ -22,12 +22,12 @@
     "react-router-hash-link": "^1.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-react-jsx-source": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/plugin-transform-react-jsx-source": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
     "@bjacobel/cloudformer-node": "^0.0.14",
     "@bjacobel/perf": "0.0.5",
     "@bjacobel/vhtml-loader": "^1.0.1",
