@@ -57,16 +57,18 @@ describe('search container', () => {
       expect(queryHandler).toHaveBeenCalledTimes(1);
     });
 
-    it('does not search if no params', () => {
+    it('does not search if no params', async () => {
       const queryHandler = jest.fn().mockResolvedValue({});
       link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({});
 
-      mount(
+      const wrapper = mount(
         <ApolloProvider client={client}>
           <Search />
         </ApolloProvider>,
       );
+
+      await updateWrapper(wrapper);
 
       expect(queryHandler).not.toHaveBeenCalled();
     });
@@ -81,17 +83,19 @@ describe('search container', () => {
       link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({});
 
-      mount(
+      const wrapper = mount(
         <ApolloProvider client={client}>
           <Search />
         </ApolloProvider>,
       );
 
+      await updateWrapper(wrapper);
+
       expect(queryHandler).toHaveBeenCalledTimes(1);
     });
   });
 
-  it('updates pathname after search', () => {
+  it('updates pathname after search', async () => {
     const push = jest.fn();
     useHistory.mockReturnValueOnce({ push });
     useParams.mockReturnValueOnce({});
@@ -103,11 +107,13 @@ describe('search container', () => {
     const queryHandler = jest.fn().mockResolvedValue({});
     link.setRequestHandler(SEARCH_REMARKS, queryHandler);
 
-    mount(
+    const wrapper = mount(
       <ApolloProvider client={client}>
         <Search />
       </ApolloProvider>,
     );
+
+    await updateWrapper(wrapper);
 
     expect(push).toHaveBeenCalledWith({
       pathname: '/search/newSearchTerm',

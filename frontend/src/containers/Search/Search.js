@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
+import { useLazyQuery, gql } from '@apollo/client';
 
 import MetaTags from '../../components/MetaTags';
 import PaginatedBrowser from '../../components/PaginatedBrowser';
@@ -30,19 +30,19 @@ export default () => {
   const history = useHistory();
 
   // if query is defined, instantly kick off search - else wait for doSearch
-  const {
-    data: remarksData,
-    loading: remarksLoading,
-    error: remarksError,
-    refetch,
-    fetchMore,
-  } = useQuery(SEARCH_REMARKS, {
-    skip: !query || query.length < 1,
+  const [
+    executeQuery,
+    { data: remarksData, loading: remarksLoading, error: remarksError, fetchMore },
+  ] = useLazyQuery(SEARCH_REMARKS, {
     variables: { query, limit: FLIGHT_LIMIT },
   });
 
+  useEffect(() => {
+    if (query) executeQuery();
+  }, [query]);
+
   const doSearch = searchQuery => {
-    refetch();
+    executeQuery();
 
     // Update URL with search query
     history.push({
