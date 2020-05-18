@@ -20,3 +20,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+.leftJustifyRow {
+  margin-top: calc(margin / 2);
+}
+
+.greyName {
+  color: lightgrey;
+}
