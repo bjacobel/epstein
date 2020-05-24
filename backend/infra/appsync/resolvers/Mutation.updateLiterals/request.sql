@@ -9,7 +9,7 @@ with currentLiterals as (
   select literal, passenger as id from canonical
   where canonical.passenger = (
     select id from passengers
-    where passengers.slug = '$ctx.args.slug'
+    where passengers.slug = :slug
   )
 ),
 literalUnion as (
@@ -17,7 +17,7 @@ literalUnion as (
   union
   select *, (
     select id from passengers
-    where passengers.slug = '$ctx.args.slug'
+    where passengers.slug = :slug
   ) as id from unnest(ARRAY[$singleQuoteArray]::text[])
 )
 insert into canonical(literal, passenger)
@@ -28,7 +28,7 @@ with currentLiterals as (
   select literal, passenger as id from canonical
   where canonical.passenger = (
     select id from passengers
-    where passengers.slug = '$ctx.args.slug'
+    where passengers.slug = :slug
   )
 ),
 toDelete as (
@@ -36,11 +36,11 @@ toDelete as (
   except
   select *, (
     select id from passengers
-    where passengers.slug = '$ctx.args.slug'
+    where passengers.slug = :slug
   ) as id from unnest(ARRAY[$singleQuoteArray]::text[])
 )
 delete from canonical where literal in (select literal from toDelete);
 
 -- statementbreak
 
-select * from passengers where slug = '$ctx.args.slug'
+select * from passengers where slug = :slug

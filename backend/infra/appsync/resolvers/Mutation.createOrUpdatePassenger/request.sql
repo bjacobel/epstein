@@ -1,10 +1,10 @@
 insert into passengers(slug, name, biography, wikipedia_link, image)
 values(
-  '$ctx.args.slug',
-  '$util.defaultIfNull($ctx.args.name, $ctx.args.slug)',
-  nullif('$util.defaultIfNull($ctx.args.biography, "")', ''),
-  nullif('$util.defaultIfNull($ctx.args.wikipedia_link, "")', ''),
-  nullif('$util.defaultIfNull($ctx.args.image, "")', '')
+  :slug,
+  $util.defaultIfNull(":name", ":slug"),
+  nullif($util.defaultIfNull(":biography", ""), ''),
+  nullif($util.defaultIfNull(":wikipedia_link", ""), ''),
+  nullif($util.defaultIfNull(":image", ""), '')
 )
 on conflict (slug) do update set
   name = EXCLUDED.name,
@@ -14,4 +14,4 @@ on conflict (slug) do update set
 
 -- statementbreak
 
-select * from passengers where slug = '$ctx.args.slug'
+select * from passengers where slug = :slug

@@ -26,7 +26,12 @@ resource "aws_appsync_resolver" "query_resolver" {
         "${join("\",\"", split("-- statementbreak", replace(file("${local.resolver_dir}/${each.value}"), "/[\\n\\t]/", " ")))}"
     ],
     "variableMap": {
-        ":query": $util.toJson($ctx.args.query.replace("'", "''"))
+        ":query": $util.toJson($ctx.args.query.replace("'", "''")),
+        ":slug": $util.toJson($ctx.args.slug.replace("'", "''")),
+        ":name": $util.toJson($ctx.args.name.replace("'", "''")),
+        ":biography": $util.toJson($ctx.args.biography.replace("'", "''")),
+        ":wikipedia_link": $util.toJson($ctx.args.wikipedia_link.replace("'", "''")),
+        ":image": $util.toJson($ctx.args.image.replace("'", "''"))
     }
 }
 EOF

@@ -1,1 +1,1 @@
-select * from passengers where slug = '$ctx.args.slug'
+select * from passengers where slug = :slug
