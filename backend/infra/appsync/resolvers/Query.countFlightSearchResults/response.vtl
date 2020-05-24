@@ -1,10 +1,5 @@
 ${errorHandler}
-## makes this easier to test in aws console
-#if($ctx.arguments['test'])
-  #set($resp = $ctx.result)
-#{else}
-  #set($resp = $utils.rds.toJsonObject($ctx.result)[1])
-#end
+${rdsResp}
 
 ## returns an Int!
-$resp[0].countflightsearchresults
+$resp[0].count
