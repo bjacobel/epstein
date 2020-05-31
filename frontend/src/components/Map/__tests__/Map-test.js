@@ -10,7 +10,12 @@ jest.mock('react-leaflet-curve/src/Curve', () => jest.fn(() => null));
 describe('map component', () => {
   describe('great circle computation', () => {
     it('draws a curve with the right commands', () => {
-      const wrapper = mount(<Map source={[0, 0]} dest={[0, 10]} />);
+      const wrapper = mount(
+        <Map
+          source={{ longitude_deg: 0, latitude_deg: 0 }}
+          dest={{ longitude_deg: 10, latitude_deg: 0 }}
+        />,
+      );
 
       expect(wrapper.find(Curve).prop('positions')).toMatchInlineSnapshot(`
         Array [

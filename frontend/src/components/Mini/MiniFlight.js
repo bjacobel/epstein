@@ -5,7 +5,7 @@ import { format, parseISO } from 'date-fns';
 
 import Loading from '../Loading';
 import ErrorBoundary from '../ErrorBoundary';
-import logError from '../../utils/errors';
+import { airfieldHandler } from '../../containers/Flight';
 import { box, link, row, leftJustifyRow, greyName } from './mini.css';
 import { robotoMono as mono } from '../../stylesheets/shared.css';
 
@@ -37,21 +37,6 @@ export const FLIGHT = gql`
     }
   }
 `;
-
-const airfieldHandler = (data, error, type) => {
-  if (data.flight[type] && 'iata_code' in data.flight[type]) {
-    return data.flight[type].iata_code;
-  } else {
-    try {
-      return error.graphQLErrors.find(
-        err => err.path[0] === 'flight' && err.path[1] === type,
-      ).errorInfo.query;
-    } catch (e) {
-      logError('Failure to find airfield or fallback value', error);
-      return '';
-    }
-  }
-};
 
 export default ({ id, done, fullManifest }) => {
   const { loading, error, data } = useQuery(FLIGHT, {
