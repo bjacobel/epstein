@@ -24,187 +24,59 @@ exports[`Flight page container details rendering passengers listing doesn't show
 `;
 
 exports[`Flight page container details rendering passengers listing matches snapshot 1`] = `
-<_default
-  match={
-    Object {
-      "params": Object {
-        "id": 65,
-      },
-    }
-  }
+<div
+  className="passengers"
 >
-  <mockConstructor
-    description="2 passengers were listed on the manifest, including Bill Clinton"
-    title="LTN to LTN on 9/1/02"
-    uri="flight/100"
-  />
-  <_default>
-    <div
-      className="container"
+  <ul>
+    <li
+      key="bill-clinton"
+    >
+      <Link
+        className="link"
+        to="/passenger/bill-clinton"
+      >
+        <a
+          href="/passenger/bill-clinton"
+        >
+          Bill Clinton
+        </a>
+      </Link>
+    </li>
+    <hr />
+    <span
+      className="explainLiteral"
     >
       <span>
-        date
+        As well as the following, who 
       </span>
-      <span>
-        Sep 1, 2002
-      </span>
-      <span>
-        source
-      </span>
-      <Airfield
-        iata_code="LTN"
-        iso_country="GB"
-        latitude_deg={100.01}
-        longitude_deg={50.05}
-        municipality="London"
-        name="Luton"
+      <HashLink
+        className="link"
+        to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
       >
-        <span>
-          Luton (London, GB)
-        </span>
-      </Airfield>
-      <span>
-        destination
-      </span>
-      <Airfield
-        iata_code="LTN"
-        iso_country="GB"
-        latitude_deg={100.01}
-        longitude_deg={50.05}
-        municipality="London"
-        name="Luton"
-      >
-        <span>
-          Luton (London, GB)
-        </span>
-      </Airfield>
-      <span>
-        distance
-      </span>
-      <span>
-        937.5 km
-      </span>
-      <span>
-        map
-      </span>
-      <div>
-        <Suspense
-          fallback={<_default />}
-        >
-          <Component
-            dest={
-              Array [
-                100.01,
-                50.05,
-              ]
-            }
-            source={
-              Array [
-                100.01,
-                50.05,
-              ]
-            }
-          >
-            Map goes here
-          </Component>
-        </Suspense>
-      </div>
-      <span>
-        source
-      </span>
-      <span>
-        <a
+        <Link
           className="link"
-          href="https://files.epstein.flights/page-09.png"
-          rel="noopener noreferrer"
-          target="_blank"
+          onClick={[Function]}
+          to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
         >
-          original PDF document
-        </a>
-      </span>
+          <a
+            href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
+          >
+            have not been linked to an identified passenger
+          </a>
+        </Link>
+      </HashLink>
+      :
+    </span>
+    <li
+      className="noslug"
+      key="ABC"
+    >
       <span>
-        passengers
+        “ABC”
       </span>
-      <div
-        className="passengers"
-      >
-        <ul>
-          <li
-            key="bill-clinton"
-          >
-            <Link
-              className="link"
-              to="/passenger/bill-clinton"
-            >
-              <a
-                href="/passenger/bill-clinton"
-              >
-                Bill Clinton
-              </a>
-            </Link>
-          </li>
-          <hr />
-          <span
-            className="explainLiteral"
-          >
-            <span>
-              As well as the following, who 
-            </span>
-            <HashLink
-              className="link"
-              to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
-            >
-              <Link
-                className="link"
-                onClick={[Function]}
-                to="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
-              >
-                <a
-                  href="/about#why-are-some-entries-not-linked-to-an-identified-passenger"
-                >
-                  have not been linked to an identified passenger
-                </a>
-              </Link>
-            </HashLink>
-            :
-          </span>
-          <li
-            className="noslug"
-            key="ABC"
-          >
-            <span>
-              “ABC”
-            </span>
-          </li>
-        </ul>
-      </div>
-      <span>
-        aircraft
-      </span>
-      <div>
-        <span>
-          G-1159B
-        </span>
-        <br />
-        <span>
-          <span>
-            tailsign 
-          </span>
-          <Link
-            className="link"
-            to="/aircraft/uuid"
-          >
-            <a
-              href="/aircraft/uuid"
-            >
-              N909JE
-            </a>
-          </Link>
-        </span>
-      </div>
-    </div>
-  </_default>
-</_default>
+    </li>
+  </ul>
+</div>
 `;
 
 exports[`Flight page container details rendering renders spinner while query is loading 1`] = `

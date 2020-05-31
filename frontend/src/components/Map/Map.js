@@ -24,8 +24,11 @@ const icon = new Icon({
   iconSize: new Point(25, 41),
 });
 
-export default ({ source, dest }) => {
-  if (!source || !dest) return null;
+export default props => {
+  const { source: sourceAirfield, dest: destAirfield } = props;
+  if (!sourceAirfield || !destAirfield) return null;
+  const source = [sourceAirfield.latitude_deg, sourceAirfield.longitude_deg];
+  const dest = [destAirfield.latitude_deg, destAirfield.longitude_deg];
   const didTravel = checkForTravel(source, dest);
   const leafletSource = new LatLng(...source);
   const leafletDest = new LatLng(...dest);

@@ -9,6 +9,7 @@ import Loading from '../../components/Loading';
 import MetaTags from '../../components/MetaTags';
 import { passengers, noslug, explainLiteral } from './style.css';
 import { link } from '../../stylesheets/shared.css';
+import logError from '../../utils/errors';
 
 export const FLIGHT = gql`
   fragment airfield on Airfield {
@@ -55,10 +56,44 @@ const formatKm = m =>
   `${new Intl.NumberFormat().format(Number.parseFloat(m / 1000).toPrecision(4))} km`;
 
 /* eslint-disable camelcase */
-const Airfield = ({ name, municipality, iso_country }) => (
-  <span>{`${name} (${municipality}, ${iso_country})`}</span>
-);
+const Airfield = ({ data, error, type }) => {
+  if (data.flight[type]) {
+    const { name, municipality, iso_country } = data.flight[type];
+    return <span>{`${name} (${municipality}, ${iso_country})`}</span>;
+  } else {
+    try {
+      return (
+        <span>
+          {
+            error.graphQLErrors.find(
+              err => err.path[0] === 'flight' && err.path[1] === type,
+            ).errorInfo.query
+          }
+          <span> (unknown airport)</span>
+        </span>
+      );
+    } catch (e) {
+      logError('Failure to find airfield or fallback value', error);
+      return <span />;
+    }
+  }
+};
 /* eslint-enable camelcase */
+
+export const airfieldHandler = (data, error, type) => {
+  if (data.flight[type] && 'iata_code' in data.flight[type]) {
+    return data.flight[type].iata_code;
+  } else {
+    try {
+      return error.graphQLErrors.find(
+        err => err.path[0] === 'flight' && err.path[1] === type,
+      ).errorInfo.query;
+    } catch (e) {
+      logError('Failure to find airfield or fallback value', error);
+      return '';
+    }
+  }
+};
 
 export const describePassengers = plist => {
   const notablePassengers = plist.filter(x => x.name).map(x => x.name);
@@ -77,10 +112,12 @@ export const describePassengers = plist => {
 
 export default ({ match }) => {
   const { id } = match.params;
-  const { loading, error, data } = useQuery(FLIGHT, { variables: { id } });
+  const { loading, data, error } = useQuery(FLIGHT, {
+    variables: { id },
+    errorPolicy: 'all', // this request is prone to nonfatal NotFoundErrors
+  });
 
   if (loading) return <Loading text />;
-  if (error) throw error;
 
   const isoDate = parseISO(data.flight.date);
 
@@ -91,9 +128,11 @@ export default ({ match }) => {
   return (
     <>
       <MetaTags
-        title={`${data.flight.source.iata_code} to ${
-          data.flight.destination.iata_code
-        } on ${format(isoDate, 'M/d/yy')}`}
+        title={`${airfieldHandler(data, error, 'source')} to ${airfieldHandler(
+          data,
+          error,
+          'destination',
+        )} on ${format(isoDate, 'M/d/yy')}`}
         description={describePassengers(data.flight.passengers.edges)}
         uri={`flight/${data.flight.id}`}
       />
@@ -101,23 +140,21 @@ export default ({ match }) => {
         <span>date</span>
         <span>{format(isoDate, 'MMM d, y')}</span>
         <span>source</span>
-        <Airfield {...data.flight.source} />
+        <Airfield data={data} error={error} type="source" />
         <span>destination</span>
-        <Airfield {...data.flight.destination} />
-        <span>distance</span>
-        <span>{formatKm(data.flight.distance)}</span>
-        <span>map</span>
-        <div>
-          <Suspense fallback={<Loading />}>
-            <SuspenseMap
-              source={[data.flight.source.latitude_deg, data.flight.source.longitude_deg]}
-              dest={[
-                data.flight.destination.latitude_deg,
-                data.flight.destination.longitude_deg,
-              ]}
-            />
-          </Suspense>
-        </div>
+        <Airfield data={data} error={error} type="destination" />
+        {data.flight.source && data.flight.destination && (
+          <>
+            <span>distance</span>
+            <span>{formatKm(data.flight.distance)}</span>
+            <span>map</span>
+            <div>
+              <Suspense fallback={<Loading />}>
+                <SuspenseMap source={data.flight.source} dest={data.flight.destination} />
+              </Suspense>
+            </div>
+          </>
+        )}
         <span>source</span>
         <span>
           <a

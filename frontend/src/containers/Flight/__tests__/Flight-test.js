@@ -139,7 +139,7 @@ describe('Flight page container', () => {
 
         await updateWrapper(wrapper);
 
-        expect(wrapper.find(Flight)).toMatchSnapshot();
+        expect(wrapper.find(Flight).find('.passengers')).toMatchSnapshot();
       });
 
       it('separates LiteralPassengers and VerifiedPassengers', async () => {
@@ -153,7 +153,7 @@ describe('Flight page container', () => {
         );
 
         await updateWrapper(wrapper);
-        const passList = wrapper.find(`.${passengers} > ul > li`);
+        const passList = wrapper.find('.passengers > ul > li');
 
         expect(passList).toMatchInlineSnapshot(`
           Array [
@@ -199,7 +199,7 @@ describe('Flight page container', () => {
         );
 
         await updateWrapper(wrapper);
-        const passList = wrapper.find(`.${passengers}`);
+        const passList = wrapper.find('.passengers');
 
         expect(passList).toMatchSnapshot();
       });
