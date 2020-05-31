@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniFlight viewer search results mode matches snapshot 1`] = `
+<_default
+  fullManifest={true}
+  id={205}
+>
+  <ErrorBoundary>
+    <div
+      className="box"
+    >
+      <Link
+        className="link"
+        to="/flight/206"
+      >
+        <a
+          href="/flight/206"
+        >
+          <div
+            className="row"
+          >
+            <span>
+              Apr 6, 2003
+            </span>
+            <span>
+              <span
+                className="robotoMono"
+              >
+                GRU
+              </span>
+              <span>
+                 to 
+              </span>
+              <span
+                className="robotoMono"
+              >
+                LBG
+              </span>
+            </span>
+          </div>
+          <div
+            className="row"
+          >
+            <div
+              className="leftJustifyRow"
+            >
+              <span
+                key="jeffrey-epstein"
+              >
+                Jeffrey Epstein, 
+              </span>
+              <span
+                key="ghislane-maxwell"
+              >
+                Ghislane Maxwell, 
+              </span>
+              <span
+                key="sean-koo"
+              >
+                Sean Koo, 
+              </span>
+              <span
+                key="jean-luc-brunel"
+              >
+                Jean-Luc Brunel, 
+              </span>
+              <span
+                className="greyName"
+                key="MAGALE BLACHOU"
+              >
+                MAGALE BLACHOU
+              </span>
+            </div>
+          </div>
+        </a>
+      </Link>
+    </div>
+  </ErrorBoundary>
+</_default>
+`;
+
+exports[`MiniFlight viewer standard mode matches snapshot 1`] = `
+<_default
+  id={205}
+>
+  <ErrorBoundary>
+    <div
+      className="box"
+    >
+      <Link
+        className="link"
+        to="/flight/206"
+      >
+        <a
+          href="/flight/206"
+        >
+          <div
+            className="row"
+          >
+            <span>
+              Apr 6, 2003
+            </span>
+            <span>
+              5 passengers
+            </span>
+          </div>
+          <div
+            className="row"
+          >
+            <span>
+              <span
+                className="robotoMono"
+              >
+                GRU
+              </span>
+              <span>
+                 to 
+              </span>
+              <span
+                className="robotoMono"
+              >
+                LBG
+              </span>
+            </span>
+          </div>
+        </a>
+      </Link>
+    </div>
+  </ErrorBoundary>
+</_default>
+`;

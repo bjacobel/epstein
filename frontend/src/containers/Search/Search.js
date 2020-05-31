@@ -5,7 +5,7 @@ import { HashLink } from 'react-router-hash-link';
 
 import MetaTags from '../../components/MetaTags';
 import PaginatedBrowser from '../../components/PaginatedBrowser';
-import MidiFlight from '../../components/Mini/MidiFlight';
+import MiniFlight from '../../components/Mini/MiniFlight';
 import Loading from '../../components/Loading';
 import SearchBox from '../../components/SearchBox';
 import { FLIGHT_LIMIT } from '../../constants';
@@ -80,7 +80,8 @@ export default () => {
           </p>
           {remarksData.countFlightSearchResults > 0 && (
             <PaginatedBrowser
-              browserComponent={MidiFlight}
+              browserComponent={MiniFlight}
+              passProps={{ fullManifest: true }}
               ids={remarksData.searchRemarksForFlights.edges.map(x => x.id)}
               totalAvailable={remarksData.countFlightSearchResults}
               pageSize={FLIGHT_LIMIT}

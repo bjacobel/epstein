@@ -6,11 +6,11 @@ import { format, parseISO } from 'date-fns';
 import Loading from '../Loading';
 import ErrorBoundary from '../ErrorBoundary';
 import logError from '../../utils/errors';
-import { box, link, row } from './mini.css';
+import { box, link, row, leftJustifyRow, greyName } from './mini.css';
 import { robotoMono as mono } from '../../stylesheets/shared.css';
 
-const FLIGHT = gql`
-  query flight($id: Int!) {
+export const FLIGHT = gql`
+  query flight($id: Int!, $fetchPassengers: Boolean!) {
     flight(id: $id) {
       id
       date
@@ -24,22 +24,75 @@ const FLIGHT = gql`
         pageInfo {
           count
         }
+        edges @include(if: $fetchPassengers) {
+          ... on VerifiedPassenger {
+            name
+            slug
+          }
+          ... on LiteralPassenger {
+            literal
+          }
+        }
       }
     }
   }
 `;
 
-export default ({ id, done }) => {
+const airfieldHandler = (data, error, type) => {
+  if (data.flight[type] && 'iata_code' in data.flight[type]) {
+    return data.flight[type].iata_code;
+  } else {
+    try {
+      return error.graphQLErrors.find(
+        err => err.path[0] === 'flight' && err.path[1] === type,
+      ).errorInfo.query;
+    } catch (e) {
+      logError('Failure to find airfield or fallback value', error);
+      return '';
+    }
+  }
+};
+
+export default ({ id, done, fullManifest }) => {
   const { loading, error, data } = useQuery(FLIGHT, {
-    variables: { id },
+    variables: { id, fetchPassengers: fullManifest || false },
     onCompleted: done,
     onError: done,
+    errorPolicy: 'all', // this request is prone to nonfatal NotFoundErrors
   });
 
   if (loading) return done ? null : <Loading />;
-  if (error) {
-    logError(error);
-    return null;
+
+  const fromTo = (
+    <span>
+      <span className={mono}>{airfieldHandler(data, error, 'source')}</span>
+      <span> to </span>
+      <span className={mono}>{airfieldHandler(data, error, 'destination')}</span>
+    </span>
+  );
+
+  const passengerCount = (
+    <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>
+  );
+
+  let passengerManifest;
+  if (fullManifest) {
+    const verifiedPassengers = data.flight.passengers.edges.filter(x => x.slug);
+    const literalPassengers = data.flight.passengers.edges.filter(x => x.literal);
+    passengerManifest = (
+      <div className={leftJustifyRow}>
+        {verifiedPassengers.map(({ slug, name }, i, arr) => (
+          <span key={slug}>
+            {`${name}${i < arr.length - 1 || literalPassengers.length ? ', ' : ''}`}
+          </span>
+        ))}
+        {literalPassengers.map(({ literal }, i, arr) => (
+          <span className={greyName} key={literal}>
+            {`${literal}${i < arr.length - 1 ? ', ' : ''}`}
+          </span>
+        ))}
+      </div>
+    );
   }
 
   return (
@@ -48,15 +101,9 @@ export default ({ id, done }) => {
         <Link to={`/flight/${data.flight.id}`} className={link}>
           <div className={row}>
             <span>{format(parseISO(data.flight.date), 'MMM d, y')}</span>
-            <span>{`${data.flight.passengers.pageInfo.count} passengers`}</span>
+            {fullManifest ? fromTo : passengerCount}
           </div>
-          <div className={row}>
-            <span>
-              <span className={mono}>{data.flight.source.iata_code}</span>
-              <span> to </span>
-              <span className={mono}>{data.flight.destination.iata_code}</span>
-            </span>
-          </div>
+          <div className={row}>{fullManifest ? passengerManifest : fromTo}</div>
         </Link>
       </div>
     </ErrorBoundary>

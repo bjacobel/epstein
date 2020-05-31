@@ -2,7 +2,7 @@ ${errorHandler}
 ${rdsResp}
 
 #if($resp.size() == 0)
-  $utils.error("Couldn't find Airfield with IATA, GPS or ident code $ctx.source.destination", "NotFound")
+  $utils.error("Couldn't find Airfield with IATA, GPS or ident code $ctx.source.destination", "NotFound", {}, {"query": $ctx.source.destination})
 #end
 
 ## Returns an Airfield

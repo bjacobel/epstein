@@ -12,7 +12,7 @@ import PaginatedBrowser from '../../../components/PaginatedBrowser';
 jest.mock('react-router-dom');
 jest.mock('../../../components/MetaTags');
 jest.mock('../../../components/SearchBox', () => jest.fn(() => null));
-jest.mock('../../../components/Mini/MidiFlight', () => jest.fn(() => null));
+jest.mock('../../../components/Mini/MiniFlight', () => jest.fn(() => null));
 
 const searchData = {
   data: {
