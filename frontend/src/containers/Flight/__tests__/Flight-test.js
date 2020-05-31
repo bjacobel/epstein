@@ -3,7 +3,6 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { mount } from 'enzyme';
 
 import Flight, { describePassengers, FLIGHT } from '../Flight';
-import { passengers } from '../style.css';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
 
