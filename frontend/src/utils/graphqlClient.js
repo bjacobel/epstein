@@ -14,16 +14,17 @@ const httpLink = new HttpLink({
 class GraphQLError extends ExtendableError {}
 
 const errorLink = onError(({ graphQLErrors, networkError, response }) => {
-  if (graphQLErrors) {
-    graphQLErrors.forEach(err =>
+  (graphQLErrors || []).forEach(err => {
+    // Ignore NotFoundError
+    if (err.errorType !== 'NotFound') {
       logErr(new GraphQLError(err.message), {
         errorType: err.errorType,
         query: err.path && err.path.length ? err.path.join('.') : undefined,
         source: 'graphql',
         response,
-      }),
-    );
-  }
+      });
+    }
+  });
   if (networkError) logErr(networkError, { source: 'apollo-link-http', response });
 });
 

@@ -5,7 +5,14 @@ import Loading from '../Loading';
 import { hidden } from '../../stylesheets/shared.css';
 import { pageControl, controls, browser, pageCount } from './style.css';
 
-export default ({ ids, totalAvailable, pageSize, fetchMore, browserComponent }) => {
+export default ({
+  ids,
+  totalAvailable,
+  pageSize,
+  fetchMore,
+  browserComponent,
+  passProps,
+}) => {
   const pages = Math.ceil(totalAvailable / pageSize);
 
   const [page, setPage] = useState(0);
@@ -70,6 +77,7 @@ export default ({ ids, totalAvailable, pageSize, fetchMore, browserComponent }) 
             id,
             key: id,
             done: () => setDone(done => ({ ...done, [id]: true })),
+            ...passProps,
           }),
         )}
       </div>
