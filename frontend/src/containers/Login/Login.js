@@ -1,14 +1,16 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import { setJwtToken, hasValidJwtToken } from '../../utils/auth';
 import { COGNITO_LOGIN_FORM } from '../../constants';
 import { loginLink } from './style.css';
 
-export default ({ history }) => {
+export default () => {
+  const history = useHistory();
+  const location = useLocation();
   // if a hash is set, we're finishing an auth redirect. store it in cookies and clear it
-  if (window.location.hash && window.location.hash.length) {
-    const hash = new URLSearchParams(window.location.hash.slice(1));
+  if (location.hash && location.hash.length) {
+    const hash = new URLSearchParams(location.hash.slice(1));
     if (!hash.has('access_token')) {
       return <span>Error: Redirect uri should include an access_token</span>;
     }
@@ -16,9 +18,9 @@ export default ({ history }) => {
     const expiry = hash.get('expires_in');
     setJwtToken(token, expiry);
     history.replace({
-      ...window.location,
+      ...location,
       hash: undefined,
-      href: `${window.location.origin}${window.location.pathname}`,
+      href: `${location.origin}${location.pathname}`,
     });
   }
 

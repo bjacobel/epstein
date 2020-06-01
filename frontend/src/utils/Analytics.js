@@ -6,7 +6,7 @@ import { GA_ID, TRACK_ANALYTICS } from '../constants';
 
 export default class Analytics {
   constructor() {
-    if (!window.ga) {
+    if (typeof window !== 'undefined' && !window.ga) {
       window.ga =
         window.ga ||
         // eslint-disable-next-line func-names
@@ -24,13 +24,13 @@ export default class Analytics {
   }
 
   pageview() {
-    if (TRACK_ANALYTICS) {
+    if (typeof window !== 'undefined' && TRACK_ANALYTICS) {
       window.ga('send', 'pageview');
     }
   }
 
   event(category, action, value) {
-    if (TRACK_ANALYTICS) {
+    if (typeof window !== 'undefined' && TRACK_ANALYTICS) {
       window.ga(
         'send',
         'event',

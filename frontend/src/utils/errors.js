@@ -5,7 +5,7 @@ import { LOG_ERRORS, RAVEN_ENDPT, RELEASE, IGNORED_ERRORS } from '../constants';
 export const setup = () => {
   if (LOG_ERRORS) {
     /* eslint-disable no-underscore-dangle */
-    if (!window.__SENTRY_READY__) {
+    if (typeof window !== 'undefined' && !window.__SENTRY_READY__) {
       init({ dsn: RAVEN_ENDPT, release: RELEASE, ignoreErrors: IGNORED_ERRORS });
       window.__SENTRY_READY__ = true;
     }
@@ -24,5 +24,7 @@ export default (ex, context) => {
     captureException(ex);
   }
 
-  return window.console && console.error && console.error(ex);
+  return (
+    typeof window !== 'undefined' && window.console && console.error && console.error(ex)
+  );
 };
