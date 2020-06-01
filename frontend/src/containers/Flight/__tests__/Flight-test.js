@@ -55,6 +55,27 @@ const flightData = {
   },
 };
 
+const errorData = [
+  {
+    path: ['flight', 'destination'],
+    data: {
+      iata_code: null,
+    },
+    errorType: 'NotFound',
+    errorInfo: {
+      query: 'GVAL',
+    },
+    locations: [
+      {
+        line: 8,
+        column: 5,
+        sourceName: null,
+      },
+    ],
+    message: "Couldn't find Airfield with IATA, GPS or ident code GVAL",
+  },
+];
+
 describe('Flight page container', () => {
   describe('describePassengers function', () => {
     it('displays correctly when no passengers are canonical', () => {
@@ -123,6 +144,27 @@ describe('Flight page container', () => {
       await updateWrapper(wrapper);
 
       expect(wrapper.find(Flight)).toMatchSnapshot();
+    });
+
+    it('does not error when a NotFound error occurs during airfield fetch', async () => {
+      const flightDataWithError = {
+        data: {
+          flight: { ...flightData.data.flight, destination: null },
+        },
+        errors: errorData,
+      };
+      const queryHandler = jest.fn().mockResolvedValue(flightDataWithError);
+      link.setRequestHandler(FLIGHT, queryHandler);
+
+      const wrapper = mount(
+        <ApolloProvider client={client}>
+          <Flight match={{ params: { id: 65 } }} />
+        </ApolloProvider>,
+      );
+
+      await updateWrapper(wrapper);
+
+      expect(wrapper.find(Flight).text()).not.toMatch('distance');
     });
 
     describe('passengers listing', () => {
@@ -200,7 +242,7 @@ describe('Flight page container', () => {
         await updateWrapper(wrapper);
         const passList = wrapper.find('.passengers');
 
-        expect(passList).toMatchSnapshot();
+        expect(passList.text()).not.toMatch('not been linked to an identified passenger');
       });
     });
   });

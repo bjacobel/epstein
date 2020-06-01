@@ -1,28 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Flight page container details rendering passengers listing doesn't show literal explanation if they don't exist 1`] = `
-<div
-  className="passengers"
->
-  <ul>
-    <li
-      key="bill-clinton"
-    >
-      <Link
-        className="link"
-        to="/passenger/bill-clinton"
-      >
-        <a
-          href="/passenger/bill-clinton"
-        >
-          Bill Clinton
-        </a>
-      </Link>
-    </li>
-  </ul>
-</div>
-`;
-
 exports[`Flight page container details rendering passengers listing matches snapshot 1`] = `
 <div
   className="passengers"
