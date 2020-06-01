@@ -9,7 +9,6 @@ import Loading from '../../components/Loading';
 import MetaTags from '../../components/MetaTags';
 import { passengers, noslug, explainLiteral } from './style.css';
 import { link } from '../../stylesheets/shared.css';
-import logError from '../../utils/errors';
 
 export const FLIGHT = gql`
   fragment airfield on Airfield {
@@ -57,41 +56,31 @@ const formatKm = m =>
 
 /* eslint-disable camelcase */
 const Airfield = ({ data, error, type }) => {
-  if (data.flight[type]) {
+  try {
     const { name, municipality, iso_country } = data.flight[type];
     return <span>{`${name} (${municipality}, ${iso_country})`}</span>;
-  } else {
-    try {
-      return (
-        <span>
-          {
-            error.graphQLErrors.find(
-              err => err.path[0] === 'flight' && err.path[1] === type,
-            ).errorInfo.query
-          }
-          <span> (unknown airport)</span>
-        </span>
-      );
-    } catch (e) {
-      logError('Failure to find airfield or fallback value', error);
-      return <span />;
-    }
+  } catch (e) {
+    return (
+      <span>
+        {
+          error.graphQLErrors.find(
+            err => err.path[0] === 'flight' && err.path[1] === type,
+          ).errorInfo.query
+        }
+        <span> (unknown airport)</span>
+      </span>
+    );
   }
 };
 /* eslint-enable camelcase */
 
 export const airfieldHandler = (data, error, type) => {
-  if (data.flight[type] && 'iata_code' in data.flight[type]) {
+  try {
     return data.flight[type].iata_code;
-  } else {
-    try {
-      return error.graphQLErrors.find(
-        err => err.path[0] === 'flight' && err.path[1] === type,
-      ).errorInfo.query;
-    } catch (e) {
-      logError('Failure to find airfield or fallback value', error);
-      return '';
-    }
+  } catch (e) {
+    return error.graphQLErrors.find(
+      err => err.path[0] === 'flight' && err.path[1] === type,
+    ).errorInfo.query;
   }
 };
 
