@@ -26,7 +26,11 @@ type Query @aws_cognito_user_pools @aws_api_key {
     query: String!,
     limit: Int,
     offset: Int
-  ): FlightConnection
+  ): FlightConnection!
+
+  searchVerifiedPassengers(
+    query: String!
+  ): [VerifiedPassenger]!
 
   countFlightSearchResults(
     query: String!,
