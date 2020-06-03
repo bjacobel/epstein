@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniPassenger matches snapshot 1`] = `
+<_default
+  slug="bill-clinton"
+>
+  <ErrorBoundary>
+    <div
+      className="box passengerBox"
+    >
+      <Link
+        className="link"
+        to="/passenger/bill-clinton"
+      >
+        <a
+          href="/passenger/bill-clinton"
+        >
+          <div
+            className="row name"
+          >
+            Bill Clinton
+          </div>
+          <div
+            className="row"
+          >
+            prez
+          </div>
+          <div
+            className="row"
+          >
+            Appears in the Epstein flight logs 26 times between February and March 2002
+          </div>
+        </a>
+      </Link>
+    </div>
+  </ErrorBoundary>
+</_default>
+`;

@@ -13,3 +13,7 @@
 .remarkResultsHeader {
   text-align: center;
 }
+
+.verifieds {
+  margin-bottom: calc(2 * margin);
+}

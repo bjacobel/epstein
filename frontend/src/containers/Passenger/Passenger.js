@@ -55,7 +55,7 @@ export const range = histogram => {
   }
 };
 
-const historyText = ({ passenger }) => {
+export const historyText = ({ passenger }) => {
   return `Appears in the Epstein flight logs ${passenger.flightCount} times ${range(
     passenger.histogram,
   )}`;

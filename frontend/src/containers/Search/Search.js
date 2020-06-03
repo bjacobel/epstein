@@ -6,10 +6,11 @@ import { HashLink } from 'react-router-hash-link';
 import MetaTags from '../../components/MetaTags';
 import PaginatedBrowser from '../../components/PaginatedBrowser';
 import MiniFlight from '../../components/Mini/MiniFlight';
+import MiniPassenger from '../../components/Mini/MiniPassenger';
 import Loading from '../../components/Loading';
 import SearchBox from '../../components/SearchBox';
 import { FLIGHT_LIMIT } from '../../constants';
-import { container, remarkResultsHeader, searchControl } from './style.css';
+import { container, remarkResultsHeader, searchControl, verifieds } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
 export const SEARCH_REMARKS = gql`
@@ -31,6 +32,14 @@ export const SEARCH_VERIFIEDS = gql`
   query Search($query: String!) {
     searchVerifiedPassengers(query: $query) {
       id
+      name
+      slug
+      biography
+      flightCount
+      histogram {
+        count
+        month
+      }
     }
   }
 `;
@@ -81,7 +90,14 @@ export default () => {
       <div className={searchControl}>
         <SearchBox initialValue={query} onClick={doSearch} />
       </div>
-      {verifiedsData && <pre>{JSON.stringify(verifiedsData, null, 2)}</pre>}
+      {verifiedsData && (
+        <div className={verifieds}>
+          <p className={remarkResultsHeader}>Possibly matching verified passengers:</p>
+          {verifiedsData.searchVerifiedPassengers.map(({ slug }) => (
+            <MiniPassenger key={slug} slug={slug} />
+          ))}
+        </div>
+      )}
       {remarksData && (
         <>
           <p className={remarkResultsHeader}>
