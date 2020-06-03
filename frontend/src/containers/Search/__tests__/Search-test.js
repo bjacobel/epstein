@@ -3,7 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { useParams, useHistory } from 'react-router-dom';
 import { mount } from 'enzyme';
 
-import Search, { SEARCH_REMARKS } from '../Search';
+import Search, { SEARCH_REMARKS, SEARCH_VERIFIEDS } from '../Search';
 import SearchBox from '../../../components/SearchBox';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
@@ -14,7 +14,7 @@ jest.mock('../../../components/MetaTags');
 jest.mock('../../../components/SearchBox', () => jest.fn(() => null));
 jest.mock('../../../components/Mini/MiniFlight', () => jest.fn(() => null));
 
-const searchData = {
+const searchRemarksData = {
   data: {
     countFlightSearchResults: 3,
     searchRemarksForFlights: {
@@ -24,6 +24,12 @@ const searchData = {
         hasNext: false,
       },
     },
+  },
+};
+
+const searchVerifiedsData = {
+  data: {
+    searchVerifiedPassengers: [{ id: 1 }],
   },
 };
 
@@ -121,8 +127,14 @@ describe('search container', () => {
   });
 
   it('runs query', async () => {
-    const queryHandler = jest.fn().mockResolvedValue(searchData);
-    link.setRequestHandler(SEARCH_REMARKS, queryHandler);
+    link.setRequestHandler(
+      SEARCH_REMARKS,
+      jest.fn().mockResolvedValue(searchRemarksData),
+    );
+    link.setRequestHandler(
+      SEARCH_VERIFIEDS,
+      jest.fn().mockResolvedValue(searchVerifiedsData),
+    );
     useParams.mockReturnValue({ query: 'searchTerm' });
 
     const wrapper = mount(

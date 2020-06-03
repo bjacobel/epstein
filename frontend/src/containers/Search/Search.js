@@ -27,6 +27,14 @@ export const SEARCH_REMARKS = gql`
   }
 `;
 
+export const SEARCH_VERIFIEDS = gql`
+  query Search($query: String!) {
+    searchVerifiedPassengers(query: $query) {
+      id
+    }
+  }
+`;
+
 export default () => {
   const { query: urlEncodedQuery } = useParams() || {};
   const query = urlEncodedQuery ? decodeURIComponent(urlEncodedQuery) : undefined;
@@ -34,18 +42,28 @@ export default () => {
 
   // if query is defined, instantly kick off search - else wait for doSearch
   const [
-    executeQuery,
+    executeRemarksQuery,
     { data: remarksData, loading: remarksLoading, error: remarksError, fetchMore },
   ] = useLazyQuery(SEARCH_REMARKS, {
     variables: { query, limit: FLIGHT_LIMIT },
   });
+  const [
+    executeVerifiedsQuery,
+    { data: verifiedsData, loading: verifiedsLoading, error: verifiedsError },
+  ] = useLazyQuery(SEARCH_VERIFIEDS, {
+    variables: { query },
+  });
 
   useEffect(() => {
-    if (query) executeQuery();
+    if (query) {
+      executeRemarksQuery();
+      executeVerifiedsQuery();
+    }
   }, [query]);
 
   const doSearch = searchQuery => {
-    executeQuery();
+    executeRemarksQuery();
+    executeVerifiedsQuery();
 
     // Update URL with search query
     history.push({
@@ -53,8 +71,9 @@ export default () => {
     });
   };
 
-  if (remarksLoading) return <Loading text />;
+  if (remarksLoading || verifiedsLoading) return <Loading text />;
   if (remarksError) throw remarksError;
+  if (verifiedsError) throw verifiedsError;
 
   return (
     <div className={container}>
@@ -62,6 +81,7 @@ export default () => {
       <div className={searchControl}>
         <SearchBox initialValue={query} onClick={doSearch} />
       </div>
+      {verifiedsData && <pre>{JSON.stringify(verifiedsData, null, 2)}</pre>}
       {remarksData && (
         <>
           <p className={remarkResultsHeader}>
