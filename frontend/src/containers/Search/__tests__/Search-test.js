@@ -13,8 +13,9 @@ jest.mock('react-router-dom');
 jest.mock('../../../components/MetaTags');
 jest.mock('../../../components/SearchBox', () => jest.fn(() => null));
 jest.mock('../../../components/Mini/MiniFlight', () => jest.fn(() => null));
+jest.mock('../../../components/Mini/MiniPassenger', () => jest.fn(() => null));
 
-const searchRemarksData = {
+const searchRemarksData = jest.fn().mockResolvedValue({
   data: {
     countFlightSearchResults: 3,
     searchRemarksForFlights: {
@@ -25,16 +26,30 @@ const searchRemarksData = {
       },
     },
   },
-};
+});
 
-const searchVerifiedsData = {
+const searchVerifiedsData = jest.fn().mockResolvedValue({
   data: {
-    searchVerifiedPassengers: [{ id: 1 }],
+    searchVerifiedPassengers: [
+      {
+        id: 1,
+        slug: 'bill-clinton',
+        name: 'Bill Clinton',
+        biography: 'prez',
+        flightCount: 26,
+        histogram: [
+          { month: '2002-02-01', count: 2 },
+          { month: '2002-03-01', count: 4 },
+        ],
+      },
+    ],
   },
-};
+});
 
 describe('search container', () => {
   let client, link;
+  let queryRemarksHandler;
+  let queryVerifiedsHandler;
 
   beforeEach(() => {
     link = new MockLink();
@@ -44,12 +59,15 @@ describe('search container', () => {
       }),
       link,
     });
+
+    queryRemarksHandler = jest.fn().mockResolvedValue({});
+    link.setRequestHandler(SEARCH_REMARKS, queryRemarksHandler);
+    queryVerifiedsHandler = jest.fn().mockResolvedValue({});
+    link.setRequestHandler(SEARCH_VERIFIEDS, queryVerifiedsHandler);
   });
 
   describe('delayed search', () => {
     it('triggers a search if routed with a param', async () => {
-      const queryHandler = jest.fn().mockResolvedValue({});
-      link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({ query: 'searchTerm' });
 
       const wrapper = mount(
@@ -60,12 +78,11 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryHandler).toHaveBeenCalledTimes(1);
+      expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
+      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
     });
 
     it('does not search if no params', async () => {
-      const queryHandler = jest.fn().mockResolvedValue({});
-      link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({});
 
       const wrapper = mount(
@@ -76,7 +93,8 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryHandler).not.toHaveBeenCalled();
+      expect(queryRemarksHandler).not.toHaveBeenCalled();
+      expect(queryVerifiedsHandler).not.toHaveBeenCalled();
     });
 
     it('triggers a search if onClick prop of searchBox is run', async () => {
@@ -85,8 +103,6 @@ describe('search container', () => {
         return null;
       });
 
-      const queryHandler = jest.fn().mockResolvedValue({});
-      link.setRequestHandler(SEARCH_REMARKS, queryHandler);
       useParams.mockReturnValueOnce({});
 
       const wrapper = mount(
@@ -97,7 +113,8 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryHandler).toHaveBeenCalledTimes(1);
+      expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
+      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -109,9 +126,6 @@ describe('search container', () => {
       onClick('newSearchTerm');
       return null;
     });
-
-    const queryHandler = jest.fn().mockResolvedValue({});
-    link.setRequestHandler(SEARCH_REMARKS, queryHandler);
 
     const wrapper = mount(
       <ApolloProvider client={client}>
@@ -127,14 +141,9 @@ describe('search container', () => {
   });
 
   it('runs query', async () => {
-    link.setRequestHandler(
-      SEARCH_REMARKS,
-      jest.fn().mockResolvedValue(searchRemarksData),
-    );
-    link.setRequestHandler(
-      SEARCH_VERIFIEDS,
-      jest.fn().mockResolvedValue(searchVerifiedsData),
-    );
+    link.clearRequestHandlers();
+    link.setRequestHandler(SEARCH_REMARKS, searchRemarksData);
+    link.setRequestHandler(SEARCH_VERIFIEDS, searchVerifiedsData);
     useParams.mockReturnValue({ query: 'searchTerm' });
 
     const wrapper = mount(
