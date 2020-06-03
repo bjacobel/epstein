@@ -12,7 +12,7 @@ export default (
       <title>{htmlWebpackPlugin.options.title}</title>
     </head>
     <body>
-      <div id="main" />
+      <div id="main">{'{{prerender}}'}</div>
     </body>
   </html>
 );

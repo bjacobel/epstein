@@ -2,10 +2,18 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const config = require('./config.js');
+
+const htmlPluginSettings = {
+  template: './src/index.html.jsx',
+  favicon: './src/assets/images/favicon.ico',
+  title: config.ProjectFQDomain,
+  description: config.Description,
+  scriptLoading: 'defer',
+  inject: true,
+};
 
 module.exports = (env = {}, { mode } = {}) => {
   const isProd =
@@ -28,10 +36,7 @@ module.exports = (env = {}, { mode } = {}) => {
     },
   };
 
-  return {
-    entry: {
-      main: './src/index.js',
-    },
+  const base = {
     mode: isProd ? 'production' : 'development',
     output: {
       path: `${__dirname}/dist`,
@@ -72,10 +77,8 @@ module.exports = (env = {}, { mode } = {}) => {
           ],
         },
         {
-          test: /\.html\.jsx$/,
-          use: {
-            loader: '@bjacobel/vhtml-loader',
-          },
+          test: /\.html.jsx$/,
+          use: '@bjacobel/vhtml-loader',
         },
       ],
     },
@@ -120,17 +123,6 @@ module.exports = (env = {}, { mode } = {}) => {
         process: undefined,
         projectConfig: JSON.stringify(config),
       }),
-      new HtmlWebpackPlugin({
-        template: './src/index.html.jsx',
-        favicon: './src/assets/images/favicon.ico',
-        title: config.ProjectFQDomain,
-        description: config.Description,
-        inject: true,
-      }),
-      new ScriptExtHtmlWebpackPlugin({
-        defaultAttribute: 'defer',
-      }),
-      !isProd && new webpack.HotModuleReplacementPlugin(),
       isProd &&
         new MiniCssExtractPlugin({
           filename: '[name].[contenthash].css',
@@ -149,4 +141,48 @@ module.exports = (env = {}, { mode } = {}) => {
       hints: isProd ? 'warning' : false,
     },
   };
+
+  const appBuild = {
+    name: 'app',
+    ...base,
+    entry: {
+      main: './src/index.js',
+    },
+    plugins: [
+      ...base.plugins,
+      !isProd && new webpack.HotModuleReplacementPlugin(),
+      new HtmlWebpackPlugin(htmlPluginSettings),
+    ].filter(Boolean),
+  };
+
+  const prerenderedRoutes = ['/', '/search/'];
+
+  const serverBuild = {
+    name: 'server',
+    ...base,
+    entry: {
+      server: './src/server.js',
+    },
+    devtool: false,
+    optimization: {
+      noEmitOnErrors: true,
+    },
+    plugins: [
+      ...base.plugins,
+      ...prerenderedRoutes.map(
+        url =>
+          new HtmlWebpackPlugin({
+            ...htmlPluginSettings,
+            template: `!!prerender-loader?${JSON.stringify({
+              string: true,
+              params: { url },
+            })}!./dist/index.html`,
+            filename: path.join(__dirname, `/dist${url}index.html`),
+            inject: false,
+          }),
+      ),
+    ],
+  };
+
+  return [appBuild, isProd && serverBuild].filter(Boolean);
 };

@@ -60,9 +60,9 @@
     "postcss-loader": "^3.0.0",
     "postcss-modules-values": "^3.0.0",
     "precss": "^2.0.0",
+    "prerender-loader": "^1.3.0",
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.2.0",
-    "script-ext-html-webpack-plugin": "^2.0.1",
     "style-loader": "^1.0.0",
     "stylelint": "^10.0.0",
     "stylelint-config-css-modules": "^1.0.0",
@@ -86,7 +86,9 @@
     "style": "prettier -l --ignore-path .eslintignore \"**/*.{js,jsx,json,md,html,yaml,yml,css}\"",
     "lint": "yarn --silent style && eslint . && stylelint src/stylesheets/*.css",
     "start": "webpack-dev-server",
-    "test": "jest"
+    "btr": "yarn --silent clean && webpack --mode=production --config-name app && webpack --mode=production --config-name server",
+    "test": "jest",
+    "clean": "rm -rf dist"
   },
   "version": "1.0.0",
   "browserslist": [

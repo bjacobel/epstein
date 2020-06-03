@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render, hydrate } from 'react-dom';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -10,8 +10,10 @@ import client from './utils/graphqlClient';
 sentrySetup();
 
 const rootEl = document.getElementById('main');
-const render = () => {
-  ReactDOM.render(
+const renderInDOM = () => {
+  // handle case where initial markup was build-time rendered
+  const renderFn = rootEl.hasChildNodes() ? hydrate : render;
+  renderFn(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <App />
@@ -23,8 +25,8 @@ const render = () => {
 
 if (module.hot) {
   module.hot.accept('./containers/App', () => {
-    render();
+    renderInDOM();
   });
 }
 
-render();
+renderInDOM();
