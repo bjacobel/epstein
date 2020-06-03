@@ -90,14 +90,14 @@ export default () => {
       <div className={searchControl}>
         <SearchBox initialValue={query} onClick={doSearch} />
       </div>
-      {verifiedsData && (
+      {verifiedsData && verifiedsData.searchVerifiedPassengers.length ? (
         <div className={verifieds}>
           <p className={remarkResultsHeader}>Possibly matching verified passengers:</p>
           {verifiedsData.searchVerifiedPassengers.map(({ slug }) => (
             <MiniPassenger key={slug} slug={slug} />
           ))}
         </div>
-      )}
+      ) : null}
       {remarksData && (
         <>
           <p className={remarkResultsHeader}>
