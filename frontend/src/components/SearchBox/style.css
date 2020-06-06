@@ -3,20 +3,25 @@
 
 .form {
   width: 100%;
+  display: flex;
+  align-items: top;
   composes: roboto from '../../stylesheets/shared.css';
 }
 
 .input {
   width: calc(100% - 120px);
+  height: calc(2 * margin + 1em);
   padding: margin;
   border: 1px solid lightgrey;
   border-radius: 0;
   border-right: none;
   font-size: 1em;
+  -webkit-appearance: none;
 }
 
 .button {
   width: 120px;
+  height: calc(2 * margin + 1em);
   padding: margin 0;
   background: none;
   composes: hoverEffect from '../../stylesheets/shared';
