@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 const config = require('./config.js');
+const { getRoutesToPrerender } = require('./src/server/routes.js');
 
 const htmlPluginSettings = {
   template: './src/index.html.jsx',
@@ -155,13 +156,11 @@ module.exports = (env = {}, { mode } = {}) => {
     ].filter(Boolean),
   };
 
-  const prerenderedRoutes = ['/', '/search/'];
-
   const serverBuild = {
     name: 'server',
     ...base,
     entry: {
-      server: './src/server.js',
+      server: './src/server/entry.js',
     },
     devtool: false,
     optimization: {
@@ -169,7 +168,7 @@ module.exports = (env = {}, { mode } = {}) => {
     },
     plugins: [
       ...base.plugins,
-      ...prerenderedRoutes.map(
+      ...getRoutesToPrerender().map(
         url =>
           new HtmlWebpackPlugin({
             ...htmlPluginSettings,
