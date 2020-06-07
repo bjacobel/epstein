@@ -33,7 +33,7 @@ jobs:
           name: coverage
           path: ./frontend/coverage
       - name: Build
-        run: yarn fe webpack
+        run: yarn fe btr
         env:
           NODE_ENV: production
   codecov:
@@ -82,7 +82,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile --ignore-scripts
       - name: Build
-        run: yarn fe webpack
+        run: yarn fe btr
         env:
           NODE_ENV: production
           GITHUB_SHA: ${{ github.sha }}
