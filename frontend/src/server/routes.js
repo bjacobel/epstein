@@ -2,7 +2,7 @@
 
 module.exports = {
   getRoutesToPrerender() {
-    const staticRoutes = ['/', 'search'];
+    const staticRoutes = ['/', 'search', 'passenger/bill-clinton'];
     return [...staticRoutes].map(r => {
       let slashed = r;
       if (!slashed.startsWith('/')) slashed = `/${slashed}`;

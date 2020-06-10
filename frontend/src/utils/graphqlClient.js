@@ -6,7 +6,7 @@ import { getJwtToken, hasValidJwtToken } from './auth';
 import logErr from './errors';
 import { BACKEND_URL, BACKEND_UNCACHED_URL, SHOW_DEV_TOOLS } from '../constants';
 
-const httpLink = new HttpLink({
+export const httpLink = new HttpLink({
   uri: BACKEND_URL,
   useGETForQueries: true,
 });

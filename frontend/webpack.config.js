@@ -162,12 +162,16 @@ module.exports = (env = {}, { mode } = {}) => {
     entry: {
       server: './src/server/entry.js',
     },
+    target: 'node',
     devtool: false,
     optimization: {
       noEmitOnErrors: true,
     },
     plugins: [
       ...base.plugins,
+      new webpack.DefinePlugin({
+        global: {},
+      }),
       ...getRoutesToPrerender().map(
         url =>
           new HtmlWebpackPlugin({
@@ -183,5 +187,5 @@ module.exports = (env = {}, { mode } = {}) => {
     ],
   };
 
-  return [appBuild, isProd && serverBuild].filter(Boolean);
+  return [appBuild, serverBuild];
 };
