@@ -71,6 +71,7 @@ export default () => {
   }, [query]);
 
   const doSearch = searchQuery => {
+    if (!searchQuery || searchQuery.length < 1) return;
     executeRemarksQuery();
     executeVerifiedsQuery();
 
