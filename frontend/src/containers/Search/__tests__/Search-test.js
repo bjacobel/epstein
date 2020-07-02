@@ -99,7 +99,7 @@ describe('search container', () => {
 
     it('triggers a search if onClick prop of searchBox is run', async () => {
       SearchBox.mockImplementationOnce(({ onClick }) => {
-        onClick();
+        onClick('something');
         return null;
       });
 
@@ -115,6 +115,26 @@ describe('search container', () => {
 
       expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
       expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
+    });
+
+    it("won't search if there's nothing in the search field", async () => {
+      SearchBox.mockImplementationOnce(({ onClick }) => {
+        onClick(); // with undefined - no good
+        return null;
+      });
+
+      useParams.mockReturnValueOnce({});
+
+      const wrapper = mount(
+        <ApolloProvider client={client}>
+          <Search />
+        </ApolloProvider>,
+      );
+
+      await updateWrapper(wrapper);
+
+      expect(queryRemarksHandler).toHaveBeenCalledTimes(0);
+      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(0);
     });
   });
 
