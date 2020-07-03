@@ -33,3 +33,9 @@
     cursor: pointer;
   }
 }
+
+.errorText {
+  padding-left: margin;
+  font-size: 0.8em;
+  color: #e03719;
+}
