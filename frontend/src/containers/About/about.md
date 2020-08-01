@@ -16,4 +16,4 @@ The original flight logs used a pattern of referring to some passengers by their
 
 ## contact
 
-You can contact the site admins at [admin@epstein.flights](admin@epstein.flights).
+You can contact the site admins at [admin@epstein.flights](mailto:admin@epstein.flights).
