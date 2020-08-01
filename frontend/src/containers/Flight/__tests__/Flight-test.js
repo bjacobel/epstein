@@ -176,7 +176,37 @@ describe('Flight page container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(wrapper.find(Flight).text()).not.toMatch('distance');
+      const text = wrapper.find(Flight).text();
+      expect(text).not.toMatch('distance');
+      expect(text).toMatch('GVAL (unknown airport)');
+    });
+
+    it('does not error when a non-nullable error occurs during airfield fetch', async () => {
+      const flightDataWithError = {
+        data: {
+          flight: { ...flightData.data.flight, source: null },
+        },
+        errors: [
+          {
+            path: ['flight', 'source', 'municipality'],
+            locations: null,
+            message:
+              "Cannot return null for non-nullable type: 'String' within parent 'Airfield' (/flight/source/municipality)",
+          },
+        ],
+      };
+      const queryHandler = jest.fn().mockResolvedValue(flightDataWithError);
+      link.setRequestHandler(FLIGHT, queryHandler);
+
+      const wrapper = mount(
+        <ApolloProvider client={client}>
+          <Flight match={{ params: { id: 67 } }} />
+        </ApolloProvider>,
+      );
+
+      await updateWrapper(wrapper);
+
+      expect(wrapper.find(Flight).text()).toMatch('??? (unknown airport)');
     });
 
     describe('passengers listing', () => {

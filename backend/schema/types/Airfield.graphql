@@ -8,6 +8,6 @@ type Airfield @aws_api_key @aws_cognito_user_pools {
   longitude_deg: Float!
   iso_country: String!,
   iso_region: String!,
-  municipality: String!,
+  municipality: String,
   wikipedia_link: String,
 }

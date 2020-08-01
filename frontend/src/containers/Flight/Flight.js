@@ -55,6 +55,16 @@ export const FLIGHT = gql`
 const formatKm = m =>
   `${new Intl.NumberFormat().format(Number.parseFloat(m / 1000).toPrecision(4))} km`;
 
+const getAirportCodeFromError = (error, type) => {
+  try {
+    return error.graphQLErrors.find(
+      err => err.path[0] === 'flight' && err.path[1] === type,
+    ).errorInfo.query;
+  } catch (e) {
+    return '???';
+  }
+};
+
 /* eslint-disable camelcase */
 const Airfield = ({ data, error, type }) => {
   try {
@@ -63,11 +73,7 @@ const Airfield = ({ data, error, type }) => {
   } catch (e) {
     return (
       <span>
-        {
-          error.graphQLErrors.find(
-            err => err.path[0] === 'flight' && err.path[1] === type,
-          ).errorInfo.query
-        }
+        {getAirportCodeFromError(error, type)}
         <span> (unknown airport)</span>
       </span>
     );
@@ -79,13 +85,7 @@ export const airfieldHandler = (data, error, type) => {
   try {
     return data.flight[type].iata_code;
   } catch (e) {
-    try {
-      return error.graphQLErrors.find(
-        err => err.path[0] === 'flight' && err.path[1] === type,
-      ).errorInfo.query;
-    } catch (e2) {
-      return 'unknown';
-    }
+    return getAirportCodeFromError(error, type);
   }
 };
 
