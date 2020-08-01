@@ -78,9 +78,13 @@ export const airfieldHandler = (data, error, type) => {
   try {
     return data.flight[type].iata_code;
   } catch (e) {
-    return error.graphQLErrors.find(
-      err => err.path[0] === 'flight' && err.path[1] === type,
-    ).errorInfo.query;
+    try {
+      return error.graphQLErrors.find(
+        err => err.path[0] === 'flight' && err.path[1] === type,
+      ).errorInfo.query;
+    } catch (e2) {
+      return 'unknown';
+    }
   }
 };
 

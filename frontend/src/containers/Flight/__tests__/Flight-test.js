@@ -2,7 +2,7 @@ import React from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { mount } from 'enzyme';
 
-import Flight, { describePassengers, FLIGHT } from '../Flight';
+import Flight, { describePassengers, airfieldHandler, FLIGHT } from '../Flight';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
 
@@ -115,6 +115,14 @@ describe('Flight page container', () => {
       ).toMatchInlineSnapshot(
         `"4 passengers were listed on the manifest, including Mr. B, Mrs. C and Dr. D"`,
       );
+    });
+  });
+
+  describe('airfieldHandler', () => {
+    it('handles a RDS error gracefully', () => {
+      expect(() =>
+        airfieldHandler(undefined, { graphQLErrors: [{ message: 'RDSHttp:{}' }] }),
+      ).not.toThrow();
     });
   });
 
