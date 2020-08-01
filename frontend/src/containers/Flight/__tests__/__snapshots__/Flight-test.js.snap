@@ -84,3 +84,23 @@ exports[`Flight page container details rendering renders spinner while query is 
   </_default>
 </_default>
 `;
+
+exports[`Flight page container details rendering when encountering network error does not error out the component 1`] = `
+<_default
+  match={
+    Object {
+      "params": Object {
+        "id": 205,
+      },
+    }
+  }
+>
+  <_default>
+    <h3
+      className="errorHeader"
+    >
+      Something went wrong.
+    </h3>
+  </_default>
+</_default>
+`;

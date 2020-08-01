@@ -76,6 +76,10 @@ const errorData = [
   },
 ];
 
+const networkError = [
+  { graphQLErrors: [], networkError: {}, message: 'Network error: Failed to fetch' },
+];
+
 describe('Flight page container', () => {
   describe('describePassengers function', () => {
     it('displays correctly when no passengers are canonical', () => {
@@ -251,6 +255,22 @@ describe('Flight page container', () => {
         const passList = wrapper.find('.passengers');
 
         expect(passList.text()).not.toMatch('not been linked to an identified passenger');
+      });
+    });
+
+    describe('when encountering network error', () => {
+      it('does not error out the component', async () => {
+        const queryHandler = jest.fn(() =>
+          Promise.resolve({ data: {}, errors: networkError }),
+        );
+        link.setRequestHandler(FLIGHT, queryHandler);
+        const wrapper = mount(
+          <ApolloProvider client={client}>
+            <Flight match={{ params: { id: 205 } }} />
+          </ApolloProvider>,
+        );
+        await updateWrapper(wrapper);
+        expect(wrapper.find(Flight)).toMatchSnapshot();
       });
     });
   });

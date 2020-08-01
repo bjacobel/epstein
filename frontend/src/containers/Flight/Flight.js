@@ -7,6 +7,7 @@ import { HashLink } from 'react-router-hash-link';
 import Details from '../../components/Details';
 import Loading from '../../components/Loading';
 import MetaTags from '../../components/MetaTags';
+import Error from '../../components/ErrorBoundary/Error';
 import { passengers, noslug, explainLiteral } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
@@ -111,6 +112,7 @@ export default ({ match }) => {
   });
 
   if (loading) return <Loading text />;
+  if (!data) return <Error />;
 
   const isoDate = parseISO(data.flight.date);
 

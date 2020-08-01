@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import sentry from '../../utils/errors';
-import { SHOW_DEV_TOOLS } from '../../constants';
+import Error from './Error';
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -20,12 +20,7 @@ export default class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <>
-          <h3>Something went wrong.</h3>
-          {SHOW_DEV_TOOLS && <pre>{this.state.error.stack}</pre>}
-        </>
-      );
+      return <Error error={this.state.error} />;
     }
 
     return this.props.children;

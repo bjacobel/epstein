@@ -1,0 +1,3 @@
+.errorHeader {
+  composes: robotoMono from '../../stylesheets/shared';
+}

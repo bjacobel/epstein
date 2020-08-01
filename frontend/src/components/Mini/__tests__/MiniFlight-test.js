@@ -74,6 +74,10 @@ const errors = [
   },
 ];
 
+const networkError = [
+  { graphQLErrors: [], networkError: {}, message: 'Network error: Failed to fetch' },
+];
+
 describe('MiniFlight viewer', () => {
   let client, link;
 
@@ -144,6 +148,26 @@ describe('MiniFlight viewer', () => {
           .at(1)
           .text(),
       ).toEqual('GRU to GVAL');
+    });
+  });
+
+  describe('when encountering network error', () => {
+    it('does not error out the component', async () => {
+      const queryHandler = jest.fn(() =>
+        Promise.resolve({ data: {}, errors: networkError }),
+      );
+      link.setRequestHandler(FLIGHT, queryHandler);
+      const wrapper = mount(
+        <ApolloProvider client={client}>
+          <MiniFlight id={205} />
+        </ApolloProvider>,
+      );
+      await updateWrapper(wrapper);
+      expect(wrapper.find(MiniFlight)).toMatchInlineSnapshot(`
+        <_default
+          id={205}
+        />
+      `);
     });
   });
 });
