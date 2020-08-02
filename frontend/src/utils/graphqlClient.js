@@ -11,22 +11,37 @@ const httpLink = new HttpLink({
   useGETForQueries: true,
 });
 
-class GraphQLError extends ExtendableError {}
+export class GraphQLError extends ExtendableError {}
 
-const errorLink = onError(({ graphQLErrors, networkError, response }) => {
-  (graphQLErrors || []).forEach(err => {
-    // Ignore NotFoundError
-    if (err.errorType !== 'NotFound') {
-      logErr(new GraphQLError(err.message), {
-        errorType: err.errorType,
-        query: err.path && err.path.length ? err.path.join('.') : undefined,
-        source: 'graphql',
-        response,
+export const errorLink = onError(
+  ({ operation, graphQLErrors, networkError, response }) => {
+    (graphQLErrors || []).forEach(err => {
+      // Ignore NotFoundError
+      if (err.errorType === 'NotFound') {
+        response.errors = undefined;
+      } else {
+        logErr(
+          new GraphQLError(err.message),
+          {
+            errorType: err.errorType,
+            query: err.path && err.path.length ? err.path.join('.') : undefined,
+            response,
+          },
+          {
+            operationName: operation.operationName,
+            source: 'graphql',
+          },
+        );
+      }
+    });
+    if (networkError) {
+      logErr(networkError, undefined, {
+        operationName: operation.operationName,
+        source: 'apollo-link-http',
       });
     }
-  });
-  if (networkError) logErr(networkError, { source: 'apollo-link-http', response });
-});
+  },
+);
 
 export default new ApolloClient({
   cache: new InMemoryCache(),

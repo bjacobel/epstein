@@ -13,12 +13,20 @@ export const setup = () => {
   }
 };
 
-export default (ex, context) => {
+export default (ex, context, tags) => {
   if (LOG_ERRORS) {
     setup(); // memoized, it is fine to call this on every log
 
     if (context) {
       configureScope(scope => scope.setExtra('context', context));
+    }
+
+    if (tags) {
+      configureScope(scope => {
+        Object.entries(tags).forEach(([tagKey, tagValue]) => {
+          scope.setTag(tagKey, tagValue);
+        });
+      });
     }
 
     captureException(ex);
