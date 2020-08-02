@@ -54,26 +54,31 @@ export default () => {
     executeRemarksQuery,
     { data: remarksData, loading: remarksLoading, error: remarksError, fetchMore },
   ] = useLazyQuery(SEARCH_REMARKS, {
-    variables: { query, limit: FLIGHT_LIMIT },
+    variables: { limit: FLIGHT_LIMIT },
   });
   const [
     executeVerifiedsQuery,
     { data: verifiedsData, loading: verifiedsLoading, error: verifiedsError },
-  ] = useLazyQuery(SEARCH_VERIFIEDS, {
-    variables: { query },
-  });
+  ] = useLazyQuery(SEARCH_VERIFIEDS);
+
+  const executeQueries = q => {
+    executeRemarksQuery({
+      variables: { query: q },
+    });
+    executeVerifiedsQuery({
+      variables: { query: q },
+    });
+  };
 
   useEffect(() => {
     if (query) {
-      executeRemarksQuery();
-      executeVerifiedsQuery();
+      executeQueries(query);
     }
   }, [query]);
 
   const doSearch = searchQuery => {
     if (!searchQuery || searchQuery.length < 1) return;
-    executeRemarksQuery();
-    executeVerifiedsQuery();
+    executeQueries(searchQuery);
 
     // Update URL with search query
     history.push({
@@ -91,7 +96,10 @@ export default () => {
       <div className={searchControl}>
         <SearchBox initialValue={query} onClick={doSearch} />
       </div>
-      {verifiedsData && verifiedsData.searchVerifiedPassengers.length ? (
+      {query &&
+      query.length &&
+      verifiedsData &&
+      verifiedsData.searchVerifiedPassengers.length ? (
         <div className={verifieds}>
           <p className={remarkResultsHeader}>Possibly matching verified passengers:</p>
           {verifiedsData.searchVerifiedPassengers.map(({ slug }) => (
@@ -99,7 +107,7 @@ export default () => {
           ))}
         </div>
       ) : null}
-      {remarksData && (
+      {query && query.length && remarksData && (
         <>
           <p className={remarkResultsHeader}>
             <span>{remarksData.countFlightSearchResults}</span>

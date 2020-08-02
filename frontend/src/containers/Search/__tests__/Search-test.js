@@ -66,7 +66,7 @@ describe('search container', () => {
     link.setRequestHandler(SEARCH_VERIFIEDS, queryVerifiedsHandler);
   });
 
-  describe('delayed search', () => {
+  describe('immediate search', () => {
     it('triggers a search if routed with a param', async () => {
       useParams.mockReturnValueOnce({ query: 'searchTerm' });
 
@@ -81,7 +81,9 @@ describe('search container', () => {
       expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
       expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
     });
+  });
 
+  describe('delayed search', () => {
     it('does not search if no params', async () => {
       useParams.mockReturnValueOnce({});
 
@@ -135,6 +137,37 @@ describe('search container', () => {
 
       expect(queryRemarksHandler).toHaveBeenCalledTimes(0);
       expect(queryVerifiedsHandler).toHaveBeenCalledTimes(0);
+    });
+
+    it('pushes new route when search is done', async () => {
+      useParams.mockReturnValueOnce({});
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+
+      SearchBox.mockImplementationOnce(({ onClick }) => (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+        <div onClick={() => onClick('searchQuery')} />
+      ));
+
+      const wrapper = mount(
+        <ApolloProvider client={client}>
+          <Search />
+        </ApolloProvider>,
+      );
+
+      await updateWrapper(wrapper);
+
+      expect(queryRemarksHandler).not.toHaveBeenCalled();
+      expect(queryVerifiedsHandler).not.toHaveBeenCalled();
+
+      wrapper.find(SearchBox).simulate('click');
+      await updateWrapper(wrapper);
+
+      expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
+      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
+      expect(push).toHaveBeenCalledWith({
+        pathname: '/search/searchQuery',
+      });
     });
   });
 
