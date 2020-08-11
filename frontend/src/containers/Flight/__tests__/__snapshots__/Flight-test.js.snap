@@ -96,7 +96,7 @@ exports[`Flight page container details rendering when encountering network error
   }
 >
   <_default
-    error={[Error: GraphQL error: Network error: Failed to fetch]}
+    error={[Error: Network error: Failed to fetch]}
   >
     <h3
       className="errorHeader"
