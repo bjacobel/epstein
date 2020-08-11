@@ -29,10 +29,12 @@ export const FLIGHT = gql`
       passengers {
         edges {
           ... on VerifiedPassenger {
+            __typename
             name
             slug
           }
           ... on LiteralPassenger {
+            __typename
             literal
           }
         }
