@@ -34,7 +34,7 @@ describe('graphQL client', () => {
     it('does not trigger any logs for a sucessful query', async () => {
       const queryHandler = jest.fn().mockResolvedValue({ data: { test: true } });
       link.setRequestHandler(query, queryHandler);
-      await client.query({ query });
+      await client.query({ query, fetchPolicy: 'no-cache' });
       expect(logErr).not.toHaveBeenCalled();
     });
 
@@ -43,7 +43,7 @@ describe('graphQL client', () => {
         .fn()
         .mockResolvedValue({ data: {}, errors: [{ errorType: 'NotFound' }] });
       link.setRequestHandler(query, queryHandler);
-      await client.query({ query });
+      await client.query({ query, fetchPolicy: 'no-cache' });
       expect(logErr).not.toHaveBeenCalled();
     });
 
@@ -58,7 +58,7 @@ describe('graphQL client', () => {
         ],
       });
       link.setRequestHandler(query, queryHandler);
-      await client.query({ query });
+      await client.query({ query, fetchPolicy: 'no-cache' });
       expect(logErr).toHaveBeenCalledWith(
         expect.any(GraphQLError),
         {
@@ -75,7 +75,7 @@ describe('graphQL client', () => {
         status: 500,
       });
       link.setRequestHandler(query, queryHandler);
-      await client.query({ query });
+      await client.query({ query, fetchPolicy: 'no-cache' });
       expect(logErr).toHaveBeenCalledWith({ status: 500 }, undefined, {
         operationName: 'testQuery',
         source: 'apollo-link-http',
