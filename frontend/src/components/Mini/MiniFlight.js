@@ -47,7 +47,7 @@ export default ({ id, done, fullManifest }) => {
   });
 
   if (loading) return done ? null : <Loading />;
-  if (!data) return null;
+  if (!data || !data.flight) return null;
 
   const fromTo = (
     <span>

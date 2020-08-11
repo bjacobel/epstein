@@ -112,7 +112,10 @@ export default ({ match }) => {
   });
 
   if (loading) return <Loading text />;
-  if (!data) return <Error />;
+  if (!data || !data.flight) {
+    if (error) return <Error error={error} />;
+    return null;
+  }
 
   const isoDate = parseISO(data.flight.date);
 

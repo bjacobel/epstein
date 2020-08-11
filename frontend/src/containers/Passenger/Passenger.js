@@ -6,6 +6,7 @@ import Details from '../../components/Details';
 import PaginatedBrowser from '../../components/PaginatedBrowser';
 import Loading from '../../components/Loading';
 import MiniFlight from '../../components/Mini/MiniFlight';
+import Error from '../../components/ErrorBoundary/Error';
 import { link } from '../../stylesheets/shared.css';
 import MetaTags from '../../components/MetaTags';
 import { FLIGHT_LIMIT } from '../../constants';
@@ -68,7 +69,10 @@ export default ({ match }) => {
   });
 
   if (loading) return <Loading text />;
-  if (error) return <p>{error.message}</p>;
+  if (!data || !data.passenger) {
+    if (error) return <Error error={error} />;
+    return null;
+  }
 
   return (
     <>

@@ -9,6 +9,7 @@ import updateWrapper from '../../../utils/testing/updateWrapper';
 jest.mock('../../../components/MetaTags');
 jest.mock('react-router-dom');
 jest.mock('../../../components/Map', () => () => 'Map goes here');
+jest.mock('../../../components/ErrorBoundary/Error');
 
 const airfieldData = {
   name: 'Luton',
