@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`error rendering component in dev mode matches snapshot without an error 1`] = `
+<Fragment>
+  <h3
+    className="errorHeader"
+  >
+    Something went wrong.
+  </h3>
+</Fragment>
+`;

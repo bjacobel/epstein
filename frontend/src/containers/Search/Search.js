@@ -9,7 +9,7 @@ import MiniFlight from '../../components/Mini/MiniFlight';
 import MiniPassenger from '../../components/Mini/MiniPassenger';
 import Loading from '../../components/Loading';
 import SearchBox from '../../components/SearchBox';
-import Error from '../../components/ErrorBoundary/Error';
+import ErrorComponent from '../../components/ErrorBoundary/ErrorComponent';
 import { FLIGHT_LIMIT } from '../../constants';
 import { container, remarkResultsHeader, searchControl, verifieds } from './style.css';
 import { link } from '../../stylesheets/shared.css';
@@ -70,7 +70,7 @@ export default () => {
   };
 
   if (loading) return <Loading text />;
-  if (error) return <Error error={error} />;
+  if (error) return <ErrorComponent error={error} />;
 
   return (
     <div className={container}>

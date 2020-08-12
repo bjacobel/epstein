@@ -7,7 +7,7 @@ import { HashLink } from 'react-router-hash-link';
 import Details from '../../components/Details';
 import Loading from '../../components/Loading';
 import MetaTags from '../../components/MetaTags';
-import Error from '../../components/ErrorBoundary/Error';
+import ErrorComponent from '../../components/ErrorBoundary/ErrorComponent';
 import { passengers, noslug, explainLiteral } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
@@ -115,7 +115,7 @@ export default ({ match }) => {
 
   if (loading) return <Loading text />;
   if (!data || !data.flight) {
-    if (error) return <Error error={error} />;
+    if (error) return <ErrorComponent error={error} />;
     return null;
   }
 
