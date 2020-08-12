@@ -26,10 +26,12 @@ export const FLIGHT = gql`
         }
         edges @include(if: $fetchPassengers) {
           ... on VerifiedPassenger {
+            __typename
             name
             slug
           }
           ... on LiteralPassenger {
+            __typename
             literal
           }
         }
