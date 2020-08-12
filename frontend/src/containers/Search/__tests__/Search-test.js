@@ -3,7 +3,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { useParams, useHistory } from 'react-router-dom';
 import { mount } from 'enzyme';
 
-import Search, { SEARCH_REMARKS, SEARCH_VERIFIEDS } from '../Search';
+import Search, { SEARCH_REMARKS_AND_VERIFIEDS } from '../Search';
 import SearchBox from '../../../components/SearchBox';
 import MockLink from '../../../utils/testing/MockLink';
 import updateWrapper from '../../../utils/testing/updateWrapper';
@@ -15,7 +15,7 @@ jest.mock('../../../components/SearchBox', () => jest.fn(() => null));
 jest.mock('../../../components/Mini/MiniFlight', () => jest.fn(() => null));
 jest.mock('../../../components/Mini/MiniPassenger', () => jest.fn(() => null));
 
-const searchRemarksData = jest.fn().mockResolvedValue({
+const searchData = jest.fn().mockResolvedValue({
   data: {
     countFlightSearchResults: 3,
     searchRemarksForFlights: {
@@ -25,11 +25,6 @@ const searchRemarksData = jest.fn().mockResolvedValue({
         hasNext: false,
       },
     },
-  },
-});
-
-const searchVerifiedsData = jest.fn().mockResolvedValue({
-  data: {
     searchVerifiedPassengers: [
       {
         id: 1,
@@ -48,8 +43,7 @@ const searchVerifiedsData = jest.fn().mockResolvedValue({
 
 describe('search container', () => {
   let client, link;
-  let queryRemarksHandler;
-  let queryVerifiedsHandler;
+  let queryHandler;
 
   beforeEach(() => {
     link = new MockLink();
@@ -60,10 +54,8 @@ describe('search container', () => {
       link,
     });
 
-    queryRemarksHandler = jest.fn().mockResolvedValue({});
-    link.setRequestHandler(SEARCH_REMARKS, queryRemarksHandler);
-    queryVerifiedsHandler = jest.fn().mockResolvedValue({});
-    link.setRequestHandler(SEARCH_VERIFIEDS, queryVerifiedsHandler);
+    queryHandler = jest.fn().mockResolvedValue({});
+    link.setRequestHandler(SEARCH_REMARKS_AND_VERIFIEDS, queryHandler);
   });
 
   describe('immediate search', () => {
@@ -78,8 +70,7 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
-      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
+      expect(queryHandler).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -95,8 +86,7 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryRemarksHandler).not.toHaveBeenCalled();
-      expect(queryVerifiedsHandler).not.toHaveBeenCalled();
+      expect(queryHandler).not.toHaveBeenCalled();
     });
 
     it('triggers a search if onClick prop of searchBox is run', async () => {
@@ -115,8 +105,7 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
-      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
+      expect(queryHandler).toHaveBeenCalledTimes(1);
     });
 
     it("won't search if there's nothing in the search field", async () => {
@@ -135,8 +124,7 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryRemarksHandler).toHaveBeenCalledTimes(0);
-      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(0);
+      expect(queryHandler).toHaveBeenCalledTimes(0);
     });
 
     it('pushes new route when search is done', async () => {
@@ -157,14 +145,12 @@ describe('search container', () => {
 
       await updateWrapper(wrapper);
 
-      expect(queryRemarksHandler).not.toHaveBeenCalled();
-      expect(queryVerifiedsHandler).not.toHaveBeenCalled();
+      expect(queryHandler).not.toHaveBeenCalled();
 
       wrapper.find(SearchBox).simulate('click');
       await updateWrapper(wrapper);
 
-      expect(queryRemarksHandler).toHaveBeenCalledTimes(1);
-      expect(queryVerifiedsHandler).toHaveBeenCalledTimes(1);
+      expect(queryHandler).toHaveBeenCalledTimes(1);
       expect(push).toHaveBeenCalledWith({
         pathname: '/search/searchQuery',
       });
@@ -195,8 +181,7 @@ describe('search container', () => {
 
   it('runs query', async () => {
     link.clearRequestHandlers();
-    link.setRequestHandler(SEARCH_REMARKS, searchRemarksData);
-    link.setRequestHandler(SEARCH_VERIFIEDS, searchVerifiedsData);
+    link.setRequestHandler(SEARCH_REMARKS_AND_VERIFIEDS, searchData);
     useParams.mockReturnValue({ query: 'searchTerm' });
 
     const wrapper = mount(

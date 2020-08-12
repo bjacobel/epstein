@@ -9,11 +9,12 @@ import MiniFlight from '../../components/Mini/MiniFlight';
 import MiniPassenger from '../../components/Mini/MiniPassenger';
 import Loading from '../../components/Loading';
 import SearchBox from '../../components/SearchBox';
+import Error from '../../components/ErrorBoundary/Error';
 import { FLIGHT_LIMIT } from '../../constants';
 import { container, remarkResultsHeader, searchControl, verifieds } from './style.css';
 import { link } from '../../stylesheets/shared.css';
 
-export const SEARCH_REMARKS = gql`
+export const SEARCH_REMARKS_AND_VERIFIEDS = gql`
   query Search($query: String!, $offset: Int, $limit: Int!) {
     countFlightSearchResults(query: $query)
     searchRemarksForFlights(query: $query, offset: $offset, limit: $limit) {
@@ -25,11 +26,6 @@ export const SEARCH_REMARKS = gql`
         hasNext
       }
     }
-  }
-`;
-
-export const SEARCH_VERIFIEDS = gql`
-  query Search($query: String!) {
     searchVerifiedPassengers(query: $query) {
       id
       name
@@ -50,35 +46,22 @@ export default () => {
   const history = useHistory();
 
   // if query is defined, instantly kick off search - else wait for doSearch
-  const [
-    executeRemarksQuery,
-    { data: remarksData, loading: remarksLoading, error: remarksError, fetchMore },
-  ] = useLazyQuery(SEARCH_REMARKS, {
-    variables: { limit: FLIGHT_LIMIT },
-  });
-  const [
-    executeVerifiedsQuery,
-    { data: verifiedsData, loading: verifiedsLoading, error: verifiedsError },
-  ] = useLazyQuery(SEARCH_VERIFIEDS);
-
-  const executeQueries = q => {
-    executeRemarksQuery({
-      variables: { query: q },
-    });
-    executeVerifiedsQuery({
-      variables: { query: q },
-    });
-  };
+  const [executeQuery, { data, loading, error, fetchMore }] = useLazyQuery(
+    SEARCH_REMARKS_AND_VERIFIEDS,
+    {
+      variables: { limit: FLIGHT_LIMIT },
+    },
+  );
 
   useEffect(() => {
     if (query) {
-      executeQueries(query);
+      executeQuery({ variables: { query } });
     }
   }, [query]);
 
   const doSearch = searchQuery => {
     if (!searchQuery || searchQuery.length < 1) return;
-    executeQueries(searchQuery);
+    executeQuery({ variables: { query: searchQuery } });
 
     // Update URL with search query
     history.push({
@@ -86,9 +69,8 @@ export default () => {
     });
   };
 
-  if (remarksLoading || verifiedsLoading) return <Loading text />;
-  if (remarksError) throw remarksError;
-  if (verifiedsError) throw verifiedsError;
+  if (loading) return <Loading text />;
+  if (error) return <Error error={error} />;
 
   return (
     <div className={container}>
@@ -96,21 +78,18 @@ export default () => {
       <div className={searchControl}>
         <SearchBox initialValue={query} onClick={doSearch} />
       </div>
-      {query &&
-      query.length &&
-      verifiedsData &&
-      verifiedsData.searchVerifiedPassengers.length ? (
+      {query && query.length && data && data.searchVerifiedPassengers.length ? (
         <div className={verifieds}>
           <p className={remarkResultsHeader}>Possibly matching verified passengers:</p>
-          {verifiedsData.searchVerifiedPassengers.map(({ slug }) => (
+          {data.searchVerifiedPassengers.map(({ slug }) => (
             <MiniPassenger key={slug} slug={slug} />
           ))}
         </div>
       ) : null}
-      {query && query.length && remarksData && (
+      {query && query.length && data && (
         <>
           <p className={remarkResultsHeader}>
-            <span>{remarksData.countFlightSearchResults}</span>
+            <span>{data.countFlightSearchResults}</span>
             <span> matches for &#8220;</span>
             <span>{query}</span>
             <span>&#8221; found in the </span>
@@ -123,17 +102,17 @@ export default () => {
               </HashLink>
             </span>
           </p>
-          {remarksData.countFlightSearchResults > 0 && (
+          {data.countFlightSearchResults > 0 && (
             <PaginatedBrowser
               browserComponent={MiniFlight}
               passProps={{ fullManifest: true }}
-              ids={remarksData.searchRemarksForFlights.edges.map(x => x.id)}
-              totalAvailable={remarksData.countFlightSearchResults}
+              ids={data.searchRemarksForFlights.edges.map(x => x.id)}
+              totalAvailable={data.countFlightSearchResults}
               pageSize={FLIGHT_LIMIT}
               fetchMore={() =>
                 fetchMore({
                   variables: {
-                    offset: remarksData.searchRemarksForFlights.edges.length,
+                    offset: data.searchRemarksForFlights.edges.length,
                   },
                   updateQuery: (prev, { fetchMoreResult }) => {
                     if (!fetchMoreResult) return prev;
