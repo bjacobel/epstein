@@ -5,6 +5,7 @@ export const PASSENGERS = gql`
     passengers(includeUnverified: false) {
       edges {
         ... on VerifiedPassenger {
+          __typename
           id
           slug
           name

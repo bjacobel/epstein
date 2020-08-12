@@ -83,7 +83,6 @@ describe('PassengerSelect component', () => {
     expect(wrapper.find(PassengerAdmin).props()).toEqual({
       mode: 'update',
       ...passengersData.data.passengers.edges[0],
-      __typename: undefined,
     });
   });
 
