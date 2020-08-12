@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import sentry from '../../utils/errors';
-import Error from './Error';
+import ErrorComponent from './ErrorComponent';
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      return <Error error={this.state.error} />;
+      return <ErrorComponent error={this.state.error} />;
     }
 
     return this.props.children;
