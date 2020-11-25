@@ -25,7 +25,7 @@ resource "aws_appsync_graphql_api" "appsync" {
 
 resource "aws_appsync_api_key" "default" {
   api_id  = aws_appsync_graphql_api.appsync.id
-  expires = "2020-11-25T00:00:00Z"
+  expires = "2021-11-25T00:00:00Z"
 }
 
 // -----------------------------------
