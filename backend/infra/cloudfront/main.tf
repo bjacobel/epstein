@@ -6,6 +6,7 @@ resource "aws_cloudfront_distribution" "appsync_distro" {
   origin {
     domain_name = local.appsync_domain
     origin_id   = "appsync-${local.appsync_domain}"
+    origin_path = "/graphql"
 
     custom_origin_config {
       http_port              = 80
@@ -28,8 +29,6 @@ resource "aws_cloudfront_distribution" "appsync_distro" {
   is_ipv6_enabled = true
   http_version    = "http2"
   price_class     = "PriceClass_100"
-
-  default_root_object = "/graphql"
 
   default_cache_behavior {
     target_origin_id = "appsync-${local.appsync_domain}"
